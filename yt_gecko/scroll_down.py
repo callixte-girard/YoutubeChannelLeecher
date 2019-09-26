@@ -1,6 +1,5 @@
 from my_py import disp
 
-import time
 import itertools
 from selenium import webdriver
 from selenium.webdriver.common.by import By

@@ -2,7 +2,8 @@ from my_py import disp
 from static import constants as cst
 from yt_vid import playlists as plst
 from yt_vid import all_videos as all_v
-from yt_vid import download
+from dl_vid import dl_pytube
+from dl_vid import dl_y2mate
 # from notion_so import tests
 
 
@@ -30,7 +31,8 @@ for vid_url in vids_urls:
     print(vid_url)
     print(disp.line)
 print("total at the end :", len(vids_urls), "urls")
+print(disp.star)
 
 
 ## download them : NOT WORKING :(
-# download.downloadVideosFromLinks(vids_urls)
+dl_y2mate.downloadVideosFromLinks(vids_urls)
