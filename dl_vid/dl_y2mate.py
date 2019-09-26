@@ -37,17 +37,29 @@ def downloadVideosFromLinks(vids_urls):
                 # print("turn:", turn, " | ", "table:", tab)
                 # print(disp.line)
 
-                rows = all_html.find_all('a', attrs={'href':'#', 'rel':'nofollow'})
+                links = all_html.find_all('a', attrs={'href':'#', 'rel':'nofollow'}) ### includes header
                 ### select one format : try 720p —> 360p —> take 1st available
-                row = getRowForQueriedBitrate(rows, '720p')
-                if row is None: 
-                    row = getRowForQueriedBitrate(rows, '360p')
-                    if row is None:
-                        row = rows[0] ### last resort : take the first one available
+                row_index = getRowForQueriedBitrate(links, '720p')
+                if row_index is None: 
+                    row_index = getRowForQueriedBitrate(links, '360p')
+                    if row_index is None:
+                        row_index = 1 ### last resort : take the first one available ( [0] is headers)
 
-                ### do your downloading
-                print("video at [", full_url, "] will be downloaded at [", row, "]")
-                print(disp.star)
+                rows = all_html.find_all('tr') ### includes header
+                # row = rows[row_index]
+                # print(row.prettify())
+
+                ### find download button                
+                # dl_button = all_html.find_all('a', attrs={'class':'btn btn-success btn-download btn-file'})[row_index]
+                dl_button = driver.find_element_by_xpath(
+                    "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[1]/div[2]/div/div[1]/table/tbody/tr[" 
+                    + str(row_index) + "]/td[3]/a")
+
+                filename = dl_button.get_attribute("download")
+                print("video at [", full_url, "] will be downloaded ...")
+                # print(disp.line)
+                dl_button.click()
+                ### faire une boucle dans le vide tant que filename + ".part" est présent dans ~/downloads
 
                 ### once it's done —> go to next.
                 driver.quit()
@@ -59,7 +71,9 @@ def downloadVideosFromLinks(vids_urls):
 
 
 def getRowForQueriedBitrate(rows, q_bitrate):
+    row_index = 0
     for row in rows:
+        row_index += 1
         # print(row)
         # print(disp.line)
         # print(row_soup)
@@ -71,4 +85,4 @@ def getRowForQueriedBitrate(rows, q_bitrate):
         if q_bitrate in bitrate:
             # print(bitrate)
             # print(disp.line)
-            return row
+            return row_index
