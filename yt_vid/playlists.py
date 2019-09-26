@@ -1,6 +1,7 @@
 from my_py import disp
 from static import constants as cst
 from static import methods as mth
+from yt_gecko import scroll_down as scrd
 
 from bs4 import BeautifulSoup as bs
 import requests
@@ -15,16 +16,13 @@ def getPlaylistsLinksFromChannelUrl(url_channel):
 def getVideosLinksFromPlaylistUrl(url_playlist):
 
     url_full = mth.reassembleUrl(cst.url_main, url_playlist)
-    r  = requests.get(url_full)
-    page = r.text
-    soup = bs(page, "html.parser")
 
-    vids = soup.findAll('a', attrs={'class':'pl-video-title-link'})
+    vids = scrd.untilAllVideosLoaded(url_full, True)
     # print(vids)
 
     vids_urls = []
     for vid in vids :
-        # print(vid)
+        print(vid)
         
         ### get interesting info
         # vid_title = vid.text
@@ -41,7 +39,7 @@ def getVideosLinksFromPlaylistUrl(url_playlist):
         
         vids_urls.append(vid_url)
 
-        # print(vid_url)
-        # print(disp.line)
+        print(vid_url)
+        print(disp.line)
 
     return vids_urls

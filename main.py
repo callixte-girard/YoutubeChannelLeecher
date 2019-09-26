@@ -18,17 +18,17 @@ print(disp.star)
 ################ DER MAIN LOOP ###################
 
 ## get links of all videos in a playlist
-url_playlist = "/playlist?list=PLNefH6S6myiOfykOcgIc2sYrpr1Zk5Mhi"
+url_playlist = "/playlist?list=LL4PasDd25MXqlXBogBw9CAg"
 channel_name = "scilabus"
 ## get links of all videos in channel/videos
-# plst_vids_urls = plst.getVideosLinksFromPlaylistUrl(url_playlist)
-all_vids_urls = all_v.getVideosLinksFromChannelUrl(channel_name)
+# vids_urls = plst.getVideosLinksFromPlaylistUrl(url_playlist)
+vids_urls = all_v.getVideosLinksFromChannelUrl(channel_name)
 
 ## grab their infos
-for vid in all_vids_urls:
-    print(vid)
+for vid_url in vids_urls:
+    print(vid_url)
     print(disp.line)
-print(len(all_vids_urls))
+print("total at the end :", len(vids_urls), "urls")
 
 
 ## download them : NOT WORKING :(
