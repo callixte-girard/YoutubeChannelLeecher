@@ -18,22 +18,21 @@ def getVideosLinksFromPlaylistUrl(url_playlist):
     url_full = mth.reassembleUrl(cst.url_main, url_playlist)
 
     vids = scrd.untilAllVideosLoaded(url_full, True)
-    # print(vids)
 
     vids_urls = []
     for vid in vids :
-        print(vid)
+        # print(vid)
+
+        ### go one level deeper to the <a>
+        # vid_details = vid.find('a')
+        # print(vid_details)
         
         ### get interesting info
         # vid_title = vid.text
         vid_url = vid['href']
 
-        ### lil formatting
-        vid_url = vid_url.replace('\n', '')
-        vid_url = vid_url.strip(' ')
-
-        ### removing the list part of the url
-        ### !!! warning !!! remove this part in all_videos mode.
+        # ### removing the list part of the url
+        # ### !!! warning !!! remove this part in all_videos mode.
         split_index = vid_url.find('&')
         vid_url = vid_url[:split_index]
         
