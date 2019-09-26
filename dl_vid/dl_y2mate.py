@@ -36,31 +36,18 @@ def downloadVideosFromLinks(vids_urls):
                 table = tab[0] ### loading is complete
                 # print("turn:", turn, " | ", "table:", tab)
                 # print(disp.line)
-                
-                ### select one format : try 720p | else, take 1st available
-                # rows = all_html.find_all('tr', recursive=True, text="720p")
+
                 rows = all_html.find_all('a', attrs={'href':'#', 'rel':'nofollow'})
-                # rows = driver.find_elements_by_tag_name('tr')
-                # table_html = bs(table, "html.parser")
-                for row in rows:
-                    # print(row)
-                    # print(disp.line)
-                    # print(row_soup)
-                    ### [0] is headers (th)
-                    ### [other] : any can be 720p !
-                    # soup = bs(row)
-                    bitrate = row.get_text()
-                    # print(bitrate)
-                    if '720p' in bitrate:
-                        print(bitrate)
-                        print(disp.line)
-                        ### download from its parent.
-                        par = row.parent() ### yeah it works !
-                        print(par)
-                    print(disp.star)
+                ### select one format : try 720p —> 360p —> take 1st available
+                row = getRowForQueriedBitrate(rows, '720p')
+                if row is None: 
+                    row = getRowForQueriedBitrate(rows, '360p')
+                    if row is None:
+                        row = rows[0] ### last resort : take the first one available
 
                 ### do your downloading
-                
+                print("video at [", full_url, "] will be downloaded at [", row, "]")
+                print(disp.star)
 
                 ### once it's done —> go to next.
                 driver.quit()
@@ -69,3 +56,19 @@ def downloadVideosFromLinks(vids_urls):
         print("download finished successfully ;-)")
         print(disp.star)
     return 
+
+
+def getRowForQueriedBitrate(rows, q_bitrate):
+    for row in rows:
+        # print(row)
+        # print(disp.line)
+        # print(row_soup)
+        ### [0] is headers (th)
+        ### [other] : any can be 720p !
+        # soup = bs(row)
+        bitrate = row.get_text()
+        # print(bitrate)
+        if q_bitrate in bitrate:
+            # print(bitrate)
+            # print(disp.line)
+            return row
