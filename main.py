@@ -33,6 +33,11 @@ for vid_url in vids_urls:
 print("total at the end :", len(vids_urls), "urls")
 print(disp.star)
 
-
-## download them : NOT WORKING :(
+## download them one by one
 dl_y2mate.downloadVideosFromLinks(vids_urls)
+
+print(disp.star)
+print(disp.star)
+print("CONGRATS !!! YOU SCRAPED THE CHANNEL [", channel_name, "] !!!")
+print(disp.star)
+print(disp.star)

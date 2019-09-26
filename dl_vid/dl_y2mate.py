@@ -29,17 +29,18 @@ def downloadVideosFromLinks(vids_urls):
 
         for turn in itertools.count():
             all_html = bs(driver.page_source, "html.parser")
-            tab = all_html.find_all('table', attrs={'class':'table table-bordered'})
-            # print(len(tab), "tables")
-            try:
-                table = tab[0] ### loading is complete
-                # print("turn:", turn, " | ", "table:", table)
-                ### once it 
-                # driver.quit()
-                # break
-            except:
-                # tab = all_html.find('table', attrs={'class':'table table-bordered'})
-                time.sleep(0.00001)
+            tab = all_html.find_all('table', attrs={'class':'table table-bordered'})            
+            if len(tab) > 0:
+                # table = tab[0] ### loading is complete
+                # print("turn:", turn, " | ", "table:", tab)
+                
+                ### do your downloading
+
+
+
+                ### once it's done —> go to next.
+                driver.quit()
+                break
         
         print("download finished successfully ;-)")
         print(disp.line)
