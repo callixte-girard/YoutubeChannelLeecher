@@ -43,8 +43,11 @@ def untilAllVideosLoaded(url_full, for_plst):
         spin = driver.find_elements_by_id('spinnerContainer')
         try:
             # print(len(spin), "spinners")
-            spinnou = spin[2] ### just suppose to throw an exc is there are only 2 spinners
-            # print("turn:", turn, " | ", "spinnou:", spinnou)
+            if not for_plst:        
+                spinner = spin[1] ### throw an exception if only 1 spinner –> loading is complete
+            else:               
+                spinner = spin[2] ### just suppose to throw an exc is there are only 2 spinners
+            # print("turn:", turn, " | ", "spinner:", spinner)
             vids = getVidsFromDriver(driver, for_plst)
             loaded_now = len(vids)
             print(loaded_now, "videos loaded now ...")            

@@ -23,10 +23,6 @@ def getVideosLinksFromPlaylistUrl(url_playlist):
     for vid in vids :
         # print(vid)
 
-        ### go one level deeper to the <a>
-        # vid_details = vid.find('a')
-        # print(vid_details)
-        
         ### get interesting info
         # vid_title = vid.text
         vid_url = vid['href']
