@@ -1,0 +1,12 @@
+# ignoring IDE-specific files (must import if just opening doesn't work in IntelliJ)
+.idea
+.vscode
+*.iml
+# macOS-specific
+.DS_Store
+# personal files
+#private_data
+# python specific
+**__pycache__*
+# gecko driver
+geckodriver.log
