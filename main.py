@@ -38,7 +38,7 @@ print(disp.star)
 dl_y2mate.downloadVideosFromLinks(vids_urls)
 
 ## then quit the browser and end program
-var.driver_gecko.quit()
+var.gecko_driver.quit()
 
 print(disp.star)
 print(disp.star)

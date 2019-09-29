@@ -4,6 +4,7 @@ from static import constants as cst
 from static import variables as var
 from static import methods as mth
 
+import asyncio
 import time
 import itertools
 from bs4 import BeautifulSoup as bs
@@ -15,11 +16,11 @@ def downloadVideosFromLinks(vids_urls):
 
     for vid_url in vids_urls:        
         ### first transform url for y2mate
-        # print("downloading video at :", vid_url)
+        # print(vid_url)
         delimiter_index = vid_url.find("=")
         full_url = cst.download_site + "/youtube/" + vid_url[delimiter_index+1:]
+        # full_url = cst.url_main + vid_url
         print("downloading video at :", full_url)
-        # print(full_url)
         # print(disp.line)
 
         ### get page for video download
@@ -30,13 +31,14 @@ def downloadVideosFromLinks(vids_urls):
         browser.get(full_url)
         last_window_index = len(windows)-1
         print("last_window_index:", last_window_index)
-        # browser.switch_to.window( windows[last_window_index] )
+
 
         for turn in itertools.count():
             all_html = bs(browser.page_source, "html.parser")
-            tab = all_html.find_all('table', attrs={'class':'table table-bordered'})            
-            if len(tab) > 0:
-                table = tab[0] ### loading is complete
+            btn = all_html.find_all('table', attrs={'class':'table table-bordered'})            
+            # btn = all_html.find_all('button', attrs={'id':'eytd_btn'})            
+            if len(btn) > 0:
+                # button = btn[0] ### loading is complete
                 # print("turn:", turn, " | ", "table:", tab)
                 # print(disp.line)
 
@@ -48,25 +50,39 @@ def downloadVideosFromLinks(vids_urls):
                     if row_index is None:
                         row_index = 1 ### last resort : take the first one available ( [0] is headers)
 
-                rows = all_html.find_all('tr') ### includes header
+                # rows = all_html.find_all('tr') ### includes header
                 # row = rows[row_index]
                 # print(row.prettify())
 
                 ### find download button                
-                # dl_button = all_html.find_all('a', attrs={'class':'btn btn-success btn-download btn-file'})[row_index]
+                dl_button = all_html.find_all('a', attrs={'class':'btn btn-success btn-download btn-file'})[row_index]
                 dl_button = browser.find_element_by_xpath(
                     "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[1]/div[2]/div/div[1]/table/tbody/tr[" 
-                    + str(row_index) + "]/td[3]/a")
-
-                filename = dl_button.get_attribute("download")
+                    + str(row_index) 
+                    + "]/td[3]/a"
+                )
+                video_filename = dl_button.get_attribute("download")
+                # dl_button = browser.find_element_by_id("eytd_btn")
                 print("video at [", full_url, "] will be downloaded ...")
                 # print(disp.line)
-                dl_button.click()
-                ### faire une boucle dans le vide tant que filename + ".part" est présent dans ~/downloads
-                rw.readFile(cst.download_path)
-                
-                ### once it's done —> go to next.
-                break
+                # files_before = rw.readFilesInPath(cst.download_path)
+                ### now tries to download and close the banner infinitely
+                while True:
+                    try:
+                        dl_button.click()
+                        break
+                    except:
+                        banner_close = browser.find_element_by_xpath(
+                            "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[3]/div[2]/div/div[3]"
+                        )
+                        banner_close.click()
+                    
+                # files_after = rw.readFilesInPath(cst.download_path)
+                # video_filename = rw.getNewestFile(files_before, files_after)
+
+                ### faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/downloads
+                print("video_filename:", video_filename)
+                mth.closeWindowWhenDownloadFinished(cst.download_path, video_filename, last_window_index) ### window index is necesarily the last ONLY NOW
         
         print("download finished successfully ;-)")
         print(disp.star)
