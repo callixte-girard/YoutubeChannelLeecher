@@ -1,5 +1,6 @@
 from my_py import disp
 from static import constants as cst
+from static import variables as var
 from yt_vid import playlists as plst
 from yt_vid import all_videos as all_v
 from dl_vid import dl_pytube
@@ -35,6 +36,9 @@ print(disp.star)
 
 ## download them one by one
 dl_y2mate.downloadVideosFromLinks(vids_urls)
+
+## then quit the browser and end program
+var.driver_gecko.quit()
 
 print(disp.star)
 print(disp.star)

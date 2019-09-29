@@ -1,16 +1,14 @@
 from my_py import disp
+from my_py import read_write as rw
 from static import constants as cst
+from static import variables as var
+from static import methods as mth
 
 import time
 import itertools
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup as bs
-import re
-import pprint
+# import re
+# import pprint
 
 
 def downloadVideosFromLinks(vids_urls):
@@ -25,12 +23,17 @@ def downloadVideosFromLinks(vids_urls):
         # print(disp.line)
 
         ### get page for video download
-        driver = webdriver.Firefox()
-        driver.get(full_url)
-
+        browser = var.gecko_driver
+        windows = browser.window_handles
+        # browser.execute_script("window.open('" + full_url + "', '_blank');") ### SHIT DOESNT WORK
+        # browser.find_element_by_tag_name('body').send_keys(mth.Keys.chord(mth.Keys.COMMAND, 't')) ### fucking shit don't work !!!     
+        browser.get(full_url)
+        last_window_index = len(windows)-1
+        print("last_window_index:", last_window_index)
+        # browser.switch_to.window( windows[last_window_index] )
 
         for turn in itertools.count():
-            all_html = bs(driver.page_source, "html.parser")
+            all_html = bs(browser.page_source, "html.parser")
             tab = all_html.find_all('table', attrs={'class':'table table-bordered'})            
             if len(tab) > 0:
                 table = tab[0] ### loading is complete
@@ -51,7 +54,7 @@ def downloadVideosFromLinks(vids_urls):
 
                 ### find download button                
                 # dl_button = all_html.find_all('a', attrs={'class':'btn btn-success btn-download btn-file'})[row_index]
-                dl_button = driver.find_element_by_xpath(
+                dl_button = browser.find_element_by_xpath(
                     "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[1]/div[2]/div/div[1]/table/tbody/tr[" 
                     + str(row_index) + "]/td[3]/a")
 
@@ -60,9 +63,9 @@ def downloadVideosFromLinks(vids_urls):
                 # print(disp.line)
                 dl_button.click()
                 ### faire une boucle dans le vide tant que filename + ".part" est présent dans ~/downloads
-
+                rw.readFile(cst.download_path)
+                
                 ### once it's done —> go to next.
-                driver.quit()
                 break
         
         print("download finished successfully ;-)")

@@ -1,4 +1,5 @@
 from my_py import disp
+from static import variables as var
 
 import itertools
 from selenium import webdriver
@@ -29,17 +30,18 @@ def getVidsFromDriver(driver, for_plst): ### if !for_plst —> all_videos
 
 ### simulate firefox to scroll down
 def untilAllVideosLoaded(url_full, for_plst):
-    driver = webdriver.Firefox()
-    driver.get(url_full)
+    browser = var.gecko_driver
+    browser.get(url_full)
+    # browser.execute_script("window.open('" + url_full + "', '_blank');")
 
-    vids = getVidsFromDriver(driver, for_plst)
+    vids = getVidsFromDriver(browser, for_plst)
     loaded_init = len(vids)
     loaded_now = loaded_init
 
     for turn in itertools.count():
         # time.sleep(.3)
-        driver.execute_script('window.scrollBy(0, 100000)')
-        spin = driver.find_elements_by_id('spinnerContainer')
+        browser.execute_script('window.scrollBy(0, 100000)')
+        spin = browser.find_elements_by_id('spinnerContainer')
         try:
             # print(len(spin), "spinners")
             if not for_plst:        
@@ -47,17 +49,16 @@ def untilAllVideosLoaded(url_full, for_plst):
             else:               
                 spinner = spin[2] ### just suppose to throw an exc is there are only 2 spinners
             # print("turn:", turn, " | ", "spinner:", spinner)
-            vids = getVidsFromDriver(driver, for_plst)
+            vids = getVidsFromDriver(browser, for_plst)
             loaded_now = len(vids)
             print(loaded_now, "videos loaded now ...")            
         except:
             break
         print(disp.line)
 
-    vids = getVidsFromDriver(driver, for_plst)
+    vids = getVidsFromDriver(browser, for_plst)
     loaded_now = len(vids)
     print(loaded_now, "videos loaded at last ;-)")
 
     print(disp.star)
-    driver.quit()
     return vids
