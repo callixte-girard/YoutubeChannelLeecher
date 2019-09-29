@@ -40,14 +40,15 @@ def reassembleUrl(url_prefix, url_partial):    ### must reassemble url first
 def initBrowserConfiguredProperly():
     ### set preferences for file download
     profile = webdriver.FirefoxProfile()
-    profile.set_preference("browser.download.dir", cst.download_path);
+    profile.set_preference("browser.download.dir", cst.path_downloads);
     profile.set_preference("browser.download.folderList", 2);
     profile.set_preference("browser.download.manager.showWhenStarting", False)
     profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "audio/mp4, video/mp4")
     ### then launch driver with these prefs
     driver_gecko = webdriver.Firefox(profile)
     ### install easy yt downloader
-    # driver_gecko.install_addon(cst.extensions_path + "4fanq78o.default/extensions/" + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True)
+    # driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True)
+    # driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
     # driver_gecko.maximize_window()
     return driver_gecko
 

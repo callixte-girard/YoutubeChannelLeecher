@@ -18,7 +18,7 @@ def downloadVideosFromLinks(vids_urls):
         ### first transform url for y2mate
         # print(vid_url)
         delimiter_index = vid_url.find("=")
-        full_url = cst.download_site + "/youtube/" + vid_url[delimiter_index+1:]
+        full_url = cst.url_y2mate + "/youtube/" + vid_url[delimiter_index+1:]
         # full_url = cst.url_main + vid_url
         print("downloading video at :", full_url)
         # print(disp.line)
@@ -65,7 +65,7 @@ def downloadVideosFromLinks(vids_urls):
                 # dl_button = browser.find_element_by_id("eytd_btn")
                 print("video at [", full_url, "] will be downloaded ...")
                 # print(disp.line)
-                # files_before = rw.readFilesInPath(cst.download_path)
+                # files_before = rw.readFilesInPath(cst.path_downloads)
                 ### now tries to download and close the banner infinitely
                 while True:
                     try:
@@ -77,12 +77,12 @@ def downloadVideosFromLinks(vids_urls):
                         )
                         banner_close.click()
                     
-                # files_after = rw.readFilesInPath(cst.download_path)
+                # files_after = rw.readFilesInPath(cst.path_downloads)
                 # video_filename = rw.getNewestFile(files_before, files_after)
 
                 ### faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/downloads
                 print("video_filename:", video_filename)
-                mth.closeWindowWhenDownloadFinished(cst.download_path, video_filename, last_window_index) ### window index is necesarily the last ONLY NOW
+                mth.closeWindowWhenDownloadFinished(cst.path_downloads, video_filename, last_window_index) ### window index is necesarily the last ONLY NOW
         
         print("download finished successfully ;-)")
         print(disp.star)
