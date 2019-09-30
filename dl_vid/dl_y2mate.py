@@ -55,7 +55,7 @@ def downloadVideosFromLinks(vids_urls):
                 # print(row.prettify())
 
                 ### find download button                
-                dl_button = all_html.find_all('a', attrs={'class':'btn btn-success btn-download btn-file'})[row_index]
+                dl_button = all_html.find_all('a', attrs={'class':'btn btn-success btn-download btn-file'})[row_index-1]
                 dl_button = browser.find_element_by_xpath(
                     "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[1]/div[2]/div/div[1]/table/tbody/tr[" 
                     + str(row_index) 
@@ -82,7 +82,9 @@ def downloadVideosFromLinks(vids_urls):
 
                 ### faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/downloads
                 print("video_filename:", video_filename)
-                mth.closeWindowWhenDownloadFinished(cst.path_downloads, video_filename, last_window_index) ### window index is necesarily the last ONLY NOW
+                downloadFinished = False
+                while not downloadFinished:
+                    downloadFinished = mth.isDownloadFinished(cst.path_downloads, video_filename, last_window_index)
         
         print("download finished successfully ;-)")
         print(disp.star)

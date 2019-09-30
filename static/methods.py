@@ -11,21 +11,23 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
+from os import listdir
 
-async def closeWindowWhenDownloadFinished(path, filename, window_index):
-    while True:
-        files = rw.readFilesInPath(path)
-        if not filename + ".part" in files:
-            ### close window
-            browser = var.gecko_driver
-            windows = browser.window_handles
-            # last_window_index = len(windows)-1
-            # print("last_window_index:", last_window_index)
-            browser.switch_to.window( windows[window_index] )
-            browser.close()
-            print("video [ {} ] finished downloading".format(filename))
-            ### leave function
-            break
+def isDownloadFinished(path, filename, window_index):
+    files = listdir(path)
+    if not filename + ".part" in files:
+        ### close window
+        browser = var.gecko_driver
+        windows = browser.window_handles
+        # last_window_index = len(windows)-1
+        # print("last_window_index:", last_window_index)
+        browser.switch_to.window( windows[window_index] )
+        browser.close()
+        print("video [ {} ] finished downloading".format(filename))
+        ### leave function
+        # break
+        return True
+    else: return False
 
 
 
@@ -46,9 +48,10 @@ def initBrowserConfiguredProperly():
     profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "audio/mp4, video/mp4")
     ### then launch driver with these prefs
     driver_gecko = webdriver.Firefox(profile)
-    ### install easy yt downloader
-    # driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True)
-    # driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
+    ### install necesary addons
+    driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True)
+    driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
+    # driver_gecko.close()
     # driver_gecko.maximize_window()
     return driver_gecko
 
