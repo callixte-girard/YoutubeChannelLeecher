@@ -38,7 +38,7 @@ def untilAllVideosLoaded(url_full, for_plst):
     loaded_init = len(vids)
     loaded_now = loaded_init
 
-    for turn in itertools.count():
+    for turn in itertools.count(): ### turn is used as debug
         # time.sleep(.3)
         browser.execute_script('window.scrollBy(0, 100000)')
         spin = browser.find_elements_by_id('spinnerContainer')
@@ -54,7 +54,6 @@ def untilAllVideosLoaded(url_full, for_plst):
             print(loaded_now, "videos loaded now ...")            
         except:
             break
-        print(disp.line)
 
     vids = getVidsFromDriver(browser, for_plst)
     loaded_now = len(vids)

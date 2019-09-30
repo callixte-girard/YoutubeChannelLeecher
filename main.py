@@ -35,7 +35,8 @@ print("total at the end :", len(vids_urls), "urls")
 print(disp.star)
 
 ## download them one by one
-dl_y2mate.downloadVideosFromLinks(vids_urls)
+downloaded_videos = dl_y2mate.downloadVideosFromLinks(vids_urls)
+# if downloaded_videos == len(vids_urls): ### checks that no video has been accidentally skipped
 
 ## then quit the browser and end program
 var.gecko_driver.quit()

@@ -13,8 +13,9 @@ from bs4 import BeautifulSoup as bs
 
 
 def downloadVideosFromLinks(vids_urls):
-
-    for vid_url in vids_urls:        
+    video_counter = 0
+    for vid_url in vids_urls:  
+        video_counter += 1      
         ### first transform url for y2mate
         # print(vid_url)
         delimiter_index = vid_url.find("=")
@@ -25,70 +26,55 @@ def downloadVideosFromLinks(vids_urls):
 
         ### get page for video download
         browser = var.gecko_driver
-        windows = browser.window_handles
         # browser.execute_script("window.open('" + full_url + "', '_blank');") ### SHIT DOESNT WORK
         # browser.find_element_by_tag_name('body').send_keys(mth.Keys.chord(mth.Keys.COMMAND, 't')) ### fucking shit don't work !!!     
-        browser.get(full_url)
-        last_window_index = len(windows)-1
-        print("last_window_index:", last_window_index)
-
-
-        for turn in itertools.count():
+        browser.get(full_url) ### only working version haha
+        # windows = browser.window_handles
+        # last_window_index = len(windows)-1
+        # print("last_window_index:", last_window_index)
+        
+        while True: ### wait for download button table to appear and perform dl by clicking adequate button
             all_html = bs(browser.page_source, "html.parser")
-            btn = all_html.find_all('table', attrs={'class':'table table-bordered'})            
-            # btn = all_html.find_all('button', attrs={'id':'eytd_btn'})            
-            if len(btn) > 0:
-                # button = btn[0] ### loading is complete
-                # print("turn:", turn, " | ", "table:", tab)
-                # print(disp.line)
-
-                links = all_html.find_all('a', attrs={'href':'#', 'rel':'nofollow'}) ### includes header
+            indicator = all_html.find_all('table', attrs={'class':'table table-bordered'})            
+            # indicator = all_html.find_all('button', attrs={'id':'eytd_btn'})            
+            ### wait for the indicator to appear
+            if len(indicator) > 0:
                 ### select one format : try 720p —> 360p —> take 1st available
-                row_index = getRowForQueriedBitrate(links, '720p')
+                dl_links = all_html.find_all('a', attrs={'href':'#', 'rel':'nofollow'}) ### includes header
+                row_index = getRowForQueriedBitrate(dl_links, '720p')
                 if row_index is None: 
-                    row_index = getRowForQueriedBitrate(links, '360p')
+                    row_index = getRowForQueriedBitrate(dl_links, '360p')
                     if row_index is None:
                         row_index = 1 ### last resort : take the first one available ( [0] is headers)
-
-                # rows = all_html.find_all('tr') ### includes header
-                # row = rows[row_index]
-                # print(row.prettify())
-
-                ### find download button                
-                dl_button = all_html.find_all('a', attrs={'class':'btn btn-success btn-download btn-file'})[row_index-1]
+                
+                ### find download button
+                # dl_button = browser.find_element_by_id("eytd_btn")
                 dl_button = browser.find_element_by_xpath(
                     "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[1]/div[2]/div/div[1]/table/tbody/tr[" 
                     + str(row_index) 
                     + "]/td[3]/a"
                 )
                 video_filename = dl_button.get_attribute("download")
-                # dl_button = browser.find_element_by_id("eytd_btn")
-                print("video at [", full_url, "] will be downloaded ...")
-                # print(disp.line)
-                # files_before = rw.readFilesInPath(cst.path_downloads)
-                ### now tries to download and close the banner infinitely
-                while True:
-                    try:
-                        dl_button.click()
-                        break
-                    except:
-                        banner_close = browser.find_element_by_xpath(
-                            "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[3]/div[2]/div/div[3]"
-                        )
-                        banner_close.click()
-                    
-                # files_after = rw.readFilesInPath(cst.path_downloads)
-                # video_filename = rw.getNewestFile(files_before, files_after)
 
-                ### faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/downloads
-                print("video_filename:", video_filename)
-                downloadFinished = False
-                while not downloadFinished:
-                    downloadFinished = mth.isDownloadFinished(cst.path_downloads, video_filename, last_window_index)
-        
-        print("download finished successfully ;-)")
-        print(disp.star)
-    return 
+                ### now tries to download, else, close the banner and try again
+                try:
+                    dl_button.click()
+                    break ### leave infinite loop as soon as download started !
+                except:
+                    banner_close = browser.find_element_by_xpath(
+                        "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[3]/div[2]/div/div[3]"
+                    )
+                    banner_close.click()
+
+        ### une fois le DL lancé, faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/Downloads/
+        print("video [ {} ] is being downloaded ... Please be patient ...".format(video_filename))
+        downloadFinished = False
+        while not downloadFinished:
+            downloadFinished = mth.isDownloadFinished(cst.path_downloads, video_filename)
+        print("video [ {} ] finished downloading successfully.".format(video_filename))
+        print("{} / {} videos done !".format(video_counter, len(vids_urls)))
+        print(disp.line)
+    return video_counter
 
 
 def getRowForQueriedBitrate(rows, q_bitrate):

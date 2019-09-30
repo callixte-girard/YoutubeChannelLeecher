@@ -13,22 +13,12 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 from os import listdir
 
-def isDownloadFinished(path, filename, window_index):
+def isDownloadFinished(path, filename):
     files = listdir(path)
-    if not filename + ".part" in files:
-        ### close window
-        browser = var.gecko_driver
-        windows = browser.window_handles
-        # last_window_index = len(windows)-1
-        # print("last_window_index:", last_window_index)
-        browser.switch_to.window( windows[window_index] )
-        browser.close()
-        print("video [ {} ] finished downloading".format(filename))
-        ### leave function
-        # break
+    if filename + ".part" in files: 
+        return False
+    else: 
         return True
-    else: return False
-
 
 
 def reassembleUrl(url_prefix, url_partial):    ### must reassemble url first
