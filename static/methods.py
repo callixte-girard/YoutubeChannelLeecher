@@ -11,16 +11,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 
-from os import listdir
 
-def isDownloadFinished(path, filename):
-    files = listdir(path)
-    if filename + ".part" in files: 
-        return False
-    else: 
-        return True
-
-
+### to assemble item url part with main root url part
 def reassembleUrl(url_prefix, url_partial):    ### must reassemble url first
     print("url before:", url_partial)
     url_full = url_prefix + url_partial
@@ -28,7 +20,7 @@ def reassembleUrl(url_prefix, url_partial):    ### must reassemble url first
     print(disp.star)
     return url_full
 
-
+### to init gecko will cool addons
 def initBrowserConfiguredProperly():
     ### set preferences for file download
     profile = webdriver.FirefoxProfile()
@@ -39,8 +31,8 @@ def initBrowserConfiguredProperly():
     ### then launch driver with these prefs
     driver_gecko = webdriver.Firefox(profile)
     ### install necesary addons
-    driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True)
-    driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
+    # driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True)
+    # driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
     # driver_gecko.close()
     # driver_gecko.maximize_window()
     return driver_gecko

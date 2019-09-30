@@ -9,5 +9,9 @@
 6) Inserts all this data into your notion.so account and... we'll see for the rest what's next. ;-)
 
 ## REMAINING TO-DO :
-- make video download async and run by 2 or 3 vids
+- add error handling when video is private or deleted
+✓ make video download async and run by 3 or 4 vids
+x make window auto close (impossible)
+✓ find a BETTER WAY to check if download has really started —> get filename by deduction : check which file popped the most recently !
+x add a way to check download has really STARTED —> if a file named video_filename + ".part" is present in the same time as video_filename (indirectly done)
 ✓ after downloading supposed to be finished, check if number files downloaded == len(vids_urls)

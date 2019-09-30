@@ -1,5 +1,6 @@
 from my_py import disp
 from my_py import read_write as rw
+from my_py import download_status as dl_st
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
@@ -8,8 +9,7 @@ import asyncio
 import time
 import itertools
 from bs4 import BeautifulSoup as bs
-# import re
-# import pprint
+from slugify import slugify
 
 
 def downloadVideosFromLinks(vids_urls):
@@ -21,7 +21,7 @@ def downloadVideosFromLinks(vids_urls):
         delimiter_index = vid_url.find("=")
         full_url = cst.url_y2mate + "/youtube/" + vid_url[delimiter_index+1:]
         # full_url = cst.url_main + vid_url
-        print("downloading video at :", full_url)
+        print("preparing to download video at :", full_url)
         # print(disp.line)
 
         ### get page for video download
@@ -32,8 +32,9 @@ def downloadVideosFromLinks(vids_urls):
         # windows = browser.window_handles
         # last_window_index = len(windows)-1
         # print("last_window_index:", last_window_index)
-        
-        while True: ### wait for download button table to appear and perform dl by clicking adequate button
+
+        ### wait for download button table to appear and perform dl by clicking adequate button
+        while True: 
             all_html = bs(browser.page_source, "html.parser")
             indicator = all_html.find_all('table', attrs={'class':'table table-bordered'})            
             # indicator = all_html.find_all('button', attrs={'id':'eytd_btn'})            
@@ -46,33 +47,44 @@ def downloadVideosFromLinks(vids_urls):
                     row_index = getRowForQueriedBitrate(dl_links, '360p')
                     if row_index is None:
                         row_index = 1 ### last resort : take the first one available ( [0] is headers)
-                
                 ### find download button
                 # dl_button = browser.find_element_by_id("eytd_btn")
-                dl_button = browser.find_element_by_xpath(
-                    "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[1]/div[2]/div/div[1]/table/tbody/tr[" 
-                    + str(row_index) 
-                    + "]/td[3]/a"
-                )
+                dl_button_xpath = "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[1]/div[2]/div/div[1]/table/tbody/tr[{}]/td[3]/a".format(str(row_index))
+                dl_button = browser.find_element_by_xpath(dl_button_xpath)
                 video_filename = dl_button.get_attribute("download")
-
+                ## quick fix to avoid error with forbidden characters in filenames like '?' for example.
+                # delimiter_index = video_filename.find('.mp4')
+                # video_filename = video_filename[:delimiter_index]
+                # video_filename = slugify(video_filename) + ".mp4"
+                ## reinsert back. ### not working, sniffff :'(
+                # browser.execute_script("arguments[0].setAttribute('{}','{}')".format("download", video_filename), dl_button)
+                # print("dl_button:", dl_button.get_attribute("download"))
                 ### now tries to download, else, close the banner and try again
                 try:
                     dl_button.click()
                     break ### leave infinite loop as soon as download started !
                 except:
-                    banner_close = browser.find_element_by_xpath(
-                        "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[3]/div[2]/div/div[3]"
-                    )
+                    banner_xpath = "/html/body/div[1]/div/div/div/div[1]/div/div[1]/div/div[4]/div[3]/div[2]/div/div[3]"
+                    banner_close = browser.find_element_by_xpath(banner_xpath)
                     banner_close.click()
 
         ### une fois le DL lancé, faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/Downloads/
-        print("video [ {} ] is being downloaded ... Please be patient ...".format(video_filename))
-        downloadFinished = False
-        while not downloadFinished:
-            downloadFinished = mth.isDownloadFinished(cst.path_downloads, video_filename)
-        print("video [ {} ] finished downloading successfully.".format(video_filename))
-        print("{} / {} videos done !".format(video_counter, len(vids_urls)))
+        print("video {} / {} — [ {} ] is being downloaded ... Please be patient ...".format(video_counter, len(vids_urls), video_filename))
+        ### wait for download to have started then close WINDOW
+        videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
+        # while videos_downloading != videos_downloading_before + 1:
+        #     videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
+        # windows = browser.window_handles
+        # last_window_index = len(windows)
+        # print("last_window_index:", last_window_index)
+        # browser.switch_to.window(windows[last_window_index-1])
+        # browser.close()
+        ### little slowdowner to limit nb of simlt dls
+        while videos_downloading >= cst.max_simultaneous_downloads:
+            # next_video = dl_st.isDownloadFinished(cst.path_downloads, video_filename)
+            videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
+        # print("video [ {} ] finished downloading successfully.".format(video_filename))
+        # print("{} / {} videos done !".format(video_counter, len(vids_urls)))
         print(disp.line)
     return video_counter
 

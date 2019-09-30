@@ -1,7 +1,7 @@
 from my_py import disp
 from static import constants as cst
 from static import methods as mth
-from yt_gecko import scroll_down as scrd
+from yt_dl import scroll_down as scrd
 
 # from bs4 import BeautifulSoup as bs
 import requests
@@ -36,7 +36,7 @@ def getVideosLinksFromChannelUrl(channel_name):
         
         vids_urls.append(vid_url)
 
-        print(vid_url)
-        print(disp.line)
+        # print(vid_url)
+        # print(disp.line)
 
     return vids_urls
