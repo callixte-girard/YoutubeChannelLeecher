@@ -1,4 +1,5 @@
 from static import methods as mth 
 
 
-gecko_driver = mth.initBrowserConfiguredProperly()
+driver = mth.initFirefoxConfiguredProperly()
+# driver = mth.initChromeConfiguredProperly()

@@ -4,4 +4,4 @@ path_downloads = '/Users/c/Downloads'
 path_extensions = '/Users/c/Library/Application Support/Firefox/Profiles/4fanq78o.default/extensions/'
 
 
-max_simultaneous_downloads = 4 ### recommended range : 2 — 5
+max_simultaneous_downloads = 3 ### recommended range : 2 — 5

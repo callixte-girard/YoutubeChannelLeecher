@@ -19,8 +19,7 @@ def getVidsFromDriver(driver, for_plst): ### if !for_plst —> all_videos
     else:
         # vids = all_html.find_all('div', attrs={'class':'style-scope ytd-playlist-video-renderer'})
         vids = all_html.find_all('a', attrs={'class':'yt-simple-endpoint style-scope ytd-playlist-video-renderer'})
-    vids.pop(0) ### to remove the first one, which is empty
-    ### lil debug
+    vids.pop(0) ### only needed with firefox
     # for vid in vids:
     #     print(vid)
     #     print(disp.line)
@@ -30,7 +29,7 @@ def getVidsFromDriver(driver, for_plst): ### if !for_plst —> all_videos
 
 ### simulate firefox to scroll down
 def untilAllVideosLoaded(url_full, for_plst):
-    browser = var.gecko_driver
+    browser = var.driver
     browser.get(url_full)
     # browser.execute_script("window.open('" + url_full + "', '_blank');")
 

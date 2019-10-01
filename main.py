@@ -3,8 +3,7 @@ from static import constants as cst
 from static import variables as var
 from yt_vid import playlists as plst
 from yt_vid import all_videos as all_v
-from yt_dl import dl_pytube
-from yt_dl import dl_y2mate
+from yt_dl import eytd
 
 
 print(">>> welcome to YoutubePlaylistLeecher.")
@@ -28,11 +27,11 @@ print("let's download all these cool people now !")
 print(disp.star)
 
 ## download them one by one
-downloaded_videos = dl_y2mate.downloadVideosFromLinks(vids_urls)
+downloaded_videos = eytd.downloadVideosFromLinks(vids_urls)
 # if downloaded_videos == len(vids_urls): ### checks that no video has been accidentally skipped
 
 ## then quit the browser and end program
-var.gecko_driver.quit()
+var.driver.quit()
 
 print(disp.star)
 print(disp.star)
