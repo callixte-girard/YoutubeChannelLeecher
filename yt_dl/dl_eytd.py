@@ -10,10 +10,12 @@ import time
 import itertools
 from bs4 import BeautifulSoup as bs
 from slugify import slugify
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 def downloadVideosFromLinks(vids_urls):
     video_counter = 0
+    browser = var.driver 
     for vid_url in vids_urls:  
         # print(vid_url)
         video_counter += 1      
@@ -21,16 +23,20 @@ def downloadVideosFromLinks(vids_urls):
         print("preparing to download video at :", full_url)
         # print(disp.line)
         ### get page for video download
-        browser = var.driver 
         browser.get(full_url) ### only working version haha
         ### wait for download button table to appear and perform dl by clicking adequate button
         while True:
             all_html = bs(browser.page_source, "html.parser")
             ### wait for the indicator to appear
             try:
-                eytd_button = all_html.find('button', attrs={'id':'eytd_btn'})
+                # eytd_button = all_html.find('button', attrs={'id':'eytd_btn'})
                 # print("der button ist:", eytd_button)
-                # eytd_button.click()
+                # act = ActionChains(browser)
+                # act.click(eytd_button).perform()
+                test_button = all_html.find("yt-formatted-string", text="J'ai compris")
+                print("der test ist:", test_button)                
+                act.click(test_button).perform()
+                # eytd_button.click() ### not working !
                 ### select one format : try 720p —> 360p —> take 1st available
                 # dl_links = all_html.find_all('div', attrs={'class':'eytd_list_item'}) 
                 dl_links = all_html.find_all('a', attrs={'target':"_blank"}) 
@@ -49,9 +55,11 @@ def downloadVideosFromLinks(vids_urls):
                     pass ### video link is not ready
                 else: 
                     print("dl url will be:", dl_url)
-                    browser.get(dl_url)
+                    # browser.get(dl_url)
+                    act = ActionChains(browser)
+                    act.click(dl_link).perform()
                     ### sorry mah we needa leave :'(
-                    break
+                    # break
                 print(disp.line)
             except: pass
         print("video {} / {} is being downloaded ... Please be patient ...".format(video_counter, len(vids_urls)))
@@ -62,6 +70,7 @@ def downloadVideosFromLinks(vids_urls):
         # print("video [ {} ] finished downloading successfully.".format(video_filename))
         print("video {} / {} has finished downloading ! :)".format(video_counter, len(vids_urls)))
         print(disp.star)
+    browser.quit()
     return video_counter
 
 

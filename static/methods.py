@@ -19,6 +19,7 @@ def reassembleUrl(url_prefix, url_partial):    ### must reassemble url first
     print("url after:", url_full)
     print(disp.star)
     return url_full
+    
 
 ### to init gecko will cool addons
 def initFirefoxConfiguredProperly():
@@ -31,12 +32,8 @@ def initFirefoxConfiguredProperly():
     ### then launch driver with these prefs
     driver_gecko = webdriver.Firefox(profile)
     ### install necesary addons
-    driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True) ### eytd
+    # driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True) ### eytd
     # driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
     # driver_gecko.close()
     # driver_gecko.maximize_window()
     return driver_gecko
-
-def initChromeConfiguredProperly():
-    driver_chrome = webdriver.Chrome()
-    return driver_chrome
