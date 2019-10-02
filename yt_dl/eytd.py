@@ -42,10 +42,10 @@ def downloadVideosFromLinks(vids_urls):
                         row_index = 1 ### last resort : take the first one available ( [0] is headers)
                 # print("row at index {} contains 720p".format(row_index))
                 dl_link = dl_links[row_index]
-                print("dl link will be:", dl_link)
+                # print("dl link will be:", dl_link)
                 # dl_link.click()
                 dl_url = dl_link['href']
-                # print("dl url will be:", dl_url)
+                print("dl url will be:", dl_url)
                 browser.get(dl_url)
             except: pass
             print(disp.line)
