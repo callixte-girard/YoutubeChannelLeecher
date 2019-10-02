@@ -45,17 +45,22 @@ def downloadVideosFromLinks(vids_urls):
                 # print("dl link will be:", dl_link)
                 # dl_link.click()
                 dl_url = dl_link['href']
-                print("dl url will be:", dl_url)
-                browser.get(dl_url)
+                if "feature=embeds_subscribe_title" in dl_url:
+                    pass ### video link is not ready
+                else: 
+                    print("dl url will be:", dl_url)
+                    browser.get(dl_url)
+                    ### sorry mah we needa leave :'(
+                    break
+                print(disp.line)
             except: pass
-            print(disp.line)
         print("video {} / {} is being downloaded ... Please be patient ...".format(video_counter, len(vids_urls)))
         ### une fois le DL lancé, faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/Downloads/
         videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
-        while videos_downloading >= cst.max_simultaneous_downloads: ### little slowdowner to limit nb of simlt dls
-            videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
+        # while videos_downloading > cst.max_simultaneous_downloads: ### little slowdowner to limit nb of simlt dls
+            # videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
         # print("video [ {} ] finished downloading successfully.".format(video_filename))
-        print("{} / {} videos done !".format(video_counter, len(vids_urls)))
+        print("video {} / {} has finished downloading ! :)".format(video_counter, len(vids_urls)))
         print(disp.star)
     return video_counter
 
