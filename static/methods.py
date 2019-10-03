@@ -20,6 +20,15 @@ def reassembleUrl(url_prefix, url_partial):    ### must reassemble url first
     print(disp.star)
     return url_full
     
+def addsParamsToUrl(url, params_names, params_values):
+    if len(params_names) == len(params_values):
+        url += "?"
+        for i in range(len(params_names)):
+            param_name = params_names[i]
+            param_value = params_values[i]
+            url += param_name + "=" + str(param_value) ### if it's not a string
+            if i < len(params_names)-1: url += "&"
+    return url
 
 ### to init gecko will cool addons
 def initFirefoxConfiguredProperly():

@@ -11,17 +11,11 @@ def downloadVideosFromLinks(vids_urls):
         # print(vid_url)
         video_counter += 1      
         full_url = cst.url_main + vid_url
-        print("preparing to download video at :", full_url)
-        vid = YouTube("https://www.youtube.com/watch?v=7HAGjU9Ldx4").streams.filter(mime_type='video/mp4', res='720p').first()
-        print(vid)
+        print("download video at :", full_url)
+        vid = YouTube(full_url).streams.filter(mime_type='video/mp4', res='720p').first()
+        # print(vid)
         vid.download('/Users/c/Downloads/')
         print(disp.line)
-        # print("video {} / {} is being downloaded ... Please be patient ...".format(video_counter, len(vids_urls)))
-        ### une fois le DL lancé, faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/Downloads/
-        videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
-        # while videos_downloading > cst.max_simultaneous_downloads: ### little slowdowner to limit nb of simlt dls
-            # videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
-        # print("video [ {} ] finished downloading successfully.".format(video_filename))
         print("video {} / {} has finished downloading ! :)".format(video_counter, len(vids_urls)))
         print(disp.star)
     return video_counter

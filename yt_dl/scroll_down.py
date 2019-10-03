@@ -11,52 +11,55 @@ from bs4 import BeautifulSoup as bs
 
 ### FOR NOW WORKS ONLY WITH ALL_VIDEOS
 
-def getVidsFromDriver(driver, for_plst): ### if !for_plst —> all_videos
+def getEltsFromDriver(driver, for_plst, get_plst): ### if !for_plst —> all_videos
     all_html = bs(driver.page_source, "html.parser")
     # print(all_html)
-    if not for_plst:
-        vids = all_html.find_all('h3', attrs={'class':'style-scope ytd-grid-video-renderer'})
+    if for_plst:
+        if not get_plst: ### get videos, normal case
+            elts = all_html.find_all('a', attrs={'class':'yt-simple-endpoint style-scope ytd-playlist-video-renderer'})
+        else:
+            elts = all_html.find_all('a', attrs={'class':'yt-simple-endpoint style-scope yt-formatted-string'})
     else:
-        # vids = all_html.find_all('div', attrs={'class':'style-scope ytd-playlist-video-renderer'})
-        vids = all_html.find_all('a', attrs={'class':'yt-simple-endpoint style-scope ytd-playlist-video-renderer'})
-    vids.pop(0) ### only needed with firefox
+        elts = all_html.find_all('h3', attrs={'class':'style-scope ytd-grid-video-renderer'})
+    elts.pop(0) ### only needed with firefox
     # for vid in vids:
     #     print(vid)
     #     print(disp.line)
     print(disp.star)
-    return vids
+    return elts
 
 
 ### simulate firefox to scroll down
-def untilAllVideosLoaded(url_full, for_plst):
+def untilAllElementsLoaded(url_full, for_plst, get_plst):
     browser = var.driver
     browser.get(url_full)
     # browser.execute_script("window.open('" + url_full + "', '_blank');")
 
-    vids = getVidsFromDriver(browser, for_plst)
-    loaded_init = len(vids)
+    elts = getEltsFromDriver(browser, for_plst, get_plst)
+    loaded_init = len(elts)
     loaded_now = loaded_init
 
-    for turn in itertools.count(): ### turn is used as debug
-        # time.sleep(.3)
+    for turn in itertools.count(): ### turn is used in debug
         browser.execute_script('window.scrollBy(0, 100000)')
-        spin = browser.find_elements_by_id('spinnerContainer')
+        spinners = browser.find_elements_by_id('spinnerContainer')
         try:
             # print(len(spin), "spinners")
-            if not for_plst:        
-                spinner = spin[1] ### throw an exception if only 1 spinner –> loading is complete
-            else:               
-                spinner = spin[2] ### just suppose to throw an exc is there are only 2 spinners
+            if for_plst:       
+                spinner = spinners[2] ### just suppose to throw an exc is there are only 2 spinners
+            else:
+                if not get_plst: ### normal case
+                    spinner = spinners[1] ### throw an exception if only 1 spinner –> loading is complete
+                else: pass ### should break instantly because there is no spinner there
             # print("turn:", turn, " | ", "spinner:", spinner)
-            vids = getVidsFromDriver(browser, for_plst)
-            loaded_now = len(vids)
-            print(loaded_now, "videos loaded now ...")            
+            elts = getEltsFromDriver(browser, for_plst, get_plst)
+            loaded_now = len(elts)
+            print(loaded_now, "elements loaded now ...")            
         except:
             break
 
-    vids = getVidsFromDriver(browser, for_plst)
-    loaded_now = len(vids)
-    print(loaded_now, "videos loaded at last ;-)")
+    elts = getEltsFromDriver(browser, for_plst, get_plst)
+    loaded_now = len(elts)
+    print(loaded_now, "elements loaded at last ;-)")
 
     print(disp.star)
-    return vids
+    return elts

@@ -16,11 +16,10 @@ from selenium.common.exceptions import TimeoutException
 
 ### channel_name must be written exactly like in its urls. Check the channel's url on the real yt if you're not sure
 def getVideosLinksFromChannelUrl(channel_name):
-    ### adds prefix and suffix
     url_channel = "/user/" + channel_name + "/videos"
     url_full = mth.reassembleUrl(cst.url_main, url_channel)
 
-    vids = scrd.untilAllVideosLoaded(url_full, False)
+    vids = scrd.untilAllElementsLoaded(url_full, False, False)
 
     vids_urls = []
     for vid in vids :

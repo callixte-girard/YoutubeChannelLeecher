@@ -7,17 +7,33 @@ from bs4 import BeautifulSoup as bs
 import requests
 
 
-def getPlaylistsLinksFromChannelUrl(url_channel):
+def getPlaylistsLinksFromChannelUrl(channel_name):
+    url_playlists = "/user/" + channel_name + "/playlists"
+    url_full = mth.reassembleUrl(cst.url_main, url_playlists)
+    ### !!! remove this in all other modes !!!
+    url_full = mth.addsParamsToUrl(url_full, ["view"], [1]) ### 0 = all playlists, 1 = only created by user
 
-    return 
+    plsts = scrd.untilAllElementsLoaded(url_full, True, True)
+
+    plsts_urls = []
+    for plst in plsts:
+        # print(plst)
+
+        ### get interesting info
+        plst_url = plst['href']
+        
+        plsts_urls.append(plst_url)
+
+        print(plst_url)
+        print(disp.line)
+
+    return plsts_urls
 
 
 
 def getVideosLinksFromPlaylistUrl(url_playlist):
-
     url_full = mth.reassembleUrl(cst.url_main, url_playlist)
-
-    vids = scrd.untilAllVideosLoaded(url_full, True)
+    vids = scrd.untilAllElementsLoaded(url_full, True, False)
 
     vids_urls = []
     for vid in vids :
@@ -28,7 +44,7 @@ def getVideosLinksFromPlaylistUrl(url_playlist):
         vid_url = vid['href']
 
         # ### removing the list part of the url
-        # ### !!! warning !!! remove this part in all_videos mode.
+        # ### !!! warning !!! remove this part in all other modes.
         split_index = vid_url.find('&')
         vid_url = vid_url[:split_index]
         
