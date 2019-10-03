@@ -49,7 +49,8 @@ def untilAllElementsLoaded(url_full, for_plst, get_plst):
             else:
                 if not get_plst: ### normal case
                     spinner = spinners[1] ### throw an exception if only 1 spinner –> loading is complete
-                else: pass ### should break instantly because there is no spinner there
+                else: ### shoud behave the same 
+                    spinner = spinners[1]
             # print("turn:", turn, " | ", "spinner:", spinner)
             elts = getEltsFromDriver(browser, for_plst, get_plst)
             loaded_now = len(elts)

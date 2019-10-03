@@ -14,8 +14,8 @@ print(disp.star)
 
 ## examples for testing
 # url_playlist = "/playlist?list=LL4PasDd25MXqlXBogBw9CAg"
-# channel_name = "DirtyBiology"
-channel_name = "scilabus"
+channel_name = "DirtyBiology"
+# channel_name = "scilabus"
 
 ## 1) get all videos links
 # vids_urls = all_v.getVideosLinksFromChannelUrl(channel_name)
