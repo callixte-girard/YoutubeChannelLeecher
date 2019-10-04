@@ -16,7 +16,11 @@
 - If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`
 
 ## Remaining TO-DO :
-- add error handling when video is private or deleted
+- make sure videos urls are FIRST saved in Notion (if not already) and then downloaded one by one, urls read directly from Notion and not from `vids_urls` array.
+- add functionality to save progress video by video in Notion and thus continuing after last video downloaded
+✓ add bitrate and video format in debugger at each vid and, if necesary, and handling for video that don't have : `mime_type='video/mp4'` and `res='720p'`
+✓ fix error that makes playlist grabber get one less that actual number
+- add error handling when video is private or deleted (pytube throws an exception : `pytube.exceptions.VideoUnavailable`)
 ✓ make video download async and run by 3 or 4 vids
 x make window auto close (impossible)
 ✓ find a BETTER WAY to check if download has really started —> get filename by deduction : check which file popped the most recently !

@@ -9,19 +9,19 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from bs4 import BeautifulSoup as bs
 
-### FOR NOW WORKS ONLY WITH ALL_VIDEOS
 
 def getEltsFromDriver(driver, for_plst, get_plst): ### if !for_plst —> all_videos
     all_html = bs(driver.page_source, "html.parser")
     # print(all_html)
     if for_plst:
-        if not get_plst: ### get videos, normal case
+        if not get_plst: ### get videos in playlist
             elts = all_html.find_all('a', attrs={'class':'yt-simple-endpoint style-scope ytd-playlist-video-renderer'})
-        else:
+            elts.pop(0) ### only needed with firefox        
+        else: ### get playlist 
             elts = all_html.find_all('a', attrs={'class':'yt-simple-endpoint style-scope yt-formatted-string'})
-    else:
+    else: ### get all videos
         elts = all_html.find_all('h3', attrs={'class':'style-scope ytd-grid-video-renderer'})
-    elts.pop(0) ### only needed with firefox
+        elts.pop(0) ### only needed with firefox
     # for vid in vids:
     #     print(vid)
     #     print(disp.line)
@@ -44,7 +44,7 @@ def untilAllElementsLoaded(url_full, for_plst, get_plst):
         spinners = browser.find_elements_by_id('spinnerContainer')
         try:
             # print(len(spin), "spinners")
-            if for_plst:       
+            if for_plst:
                 spinner = spinners[2] ### just suppose to throw an exc is there are only 2 spinners
             else:
                 if not get_plst: ### normal case

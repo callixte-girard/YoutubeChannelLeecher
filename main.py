@@ -1,37 +1,25 @@
 from my_py import disp
 from static import constants as cst
 from static import variables as var
-from yt_vid import playlists as plst
-from yt_vid import all_videos as all_v
-# from yt_dl import dl_eytd
-from yt_dl import dl_pytube
+from yt_channel import leech_channel as lch
 
 
 print(">>> welcome to YoutubePlaylistLeecher.")
 print(disp.star)
 
-################ DER MAIN LOOP ###################
+################ DER MAIN LOOP DEBUT ###################
 
 ## examples for testing
 # url_playlist = "/playlist?list=LL4PasDd25MXqlXBogBw9CAg"
-channel_name = "DirtyBiology"
-# channel_name = "scilabus"
+# vids_urls = plst.getVideosLinksFromPlaylistUrl(url_playlist)
+# print(vids_urls)
 
-## 1) get all videos links
-# vids_urls = all_v.getVideosLinksFromChannelUrl(channel_name)
-# print("total at the end :", len(vids_urls), "urls")
-print(disp.star)
+lch.leechChannelFromUrl("scilabus", "put the channel's notion page url here")
 
-## 2) get all playlists links
-plsts_urls = plst.getPlaylistsLinksFromChannelUrl(channel_name)
-
-## 3) download them one by one
-# print("let's download all these cool vids now !")
-# downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls)
-# if downloaded_videos == len(vids_urls): ### checks that no video has been accidentally skipped
+################ DER MAIN LOOP END ###################
 
 print(disp.star)
 print(disp.star)
-print("CONGRATS !!! YOU LEECHED THE CHANNEL [", channel_name, "] !!!")
+print("————— END OF PROGRAM —————")
 print(disp.star)
 print(disp.star)
