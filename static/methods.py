@@ -1,8 +1,5 @@
-from my_py import disp
-from my_py import read_write as rw
 from static import constants as cst
 from static import variables as var
-
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -16,8 +13,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 def reassembleUrl(url_prefix, url_partial):    ### must reassemble url first
     print("url before:", url_partial)
     url_full = url_prefix + url_partial
-    print("url after:", url_full)
-    print(disp.star)
+    print("url after:", url_full, end=cst.star)
     return url_full
     
 def addsParamsToUrl(url, params_names, params_values):

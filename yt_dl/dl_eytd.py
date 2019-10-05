@@ -1,16 +1,13 @@
-from my_py import disp
-from my_py import read_write as rw
-from my_py import download_status as dl_st
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
-
 import asyncio
 import time
 import itertools
 from bs4 import BeautifulSoup as bs
 from slugify import slugify
 from selenium.webdriver.common.action_chains import ActionChains
+from os import listdir
 
 
 def downloadVideosFromLinks(vids_urls):
@@ -21,7 +18,6 @@ def downloadVideosFromLinks(vids_urls):
         video_counter += 1      
         full_url = cst.url_main + vid_url
         print("preparing to download video at :", full_url)
-        # print(disp.line)
         ### get page for video download
         browser.get(full_url) ### only working version haha
         ### wait for download button table to appear and perform dl by clicking adequate button
@@ -54,22 +50,20 @@ def downloadVideosFromLinks(vids_urls):
                 if "feature=embeds_subscribe_title" in dl_url:
                     pass ### video link is not ready
                 else: 
-                    print("dl url will be:", dl_url)
+                    print("dl url will be:", dl_url, end=cst.line)
                     # browser.get(dl_url)
                     act = ActionChains(browser)
                     act.click(dl_link).perform()
                     ### sorry mah we needa leave :'(
                     # break
-                print(disp.line)
             except: pass
         print("video {} / {} is being downloaded ... Please be patient ...".format(video_counter, len(vids_urls)))
         ### une fois le DL lancé, faire une boucle dans le vide tant que video_filename + ".part" est présent dans ~/Downloads/
-        videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
+        videos_downloading = countUnfinishedDownloads(cst.path_downloads)
         # while videos_downloading > cst.max_simultaneous_downloads: ### little slowdowner to limit nb of simlt dls
             # videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
         # print("video [ {} ] finished downloading successfully.".format(video_filename))
-        print("video {} / {} has finished downloading ! :)".format(video_counter, len(vids_urls)))
-        print(disp.star)
+        print("video {} / {} has finished downloading ! :)".format(video_counter, len(vids_urls)), end=cst.star)
     browser.quit()
     return video_counter
 
@@ -78,14 +72,28 @@ def getRowForQueriedBitrate(rows, q_bitrate):
     row_index = 0
     for row in rows:
         # print(row)
-        # print(disp.line)
         ### [0] is headers (th)
         ### [other] : any can be 720p !
         bitrate = row.get_text()
         # print(bitrate)
         if q_bitrate in bitrate:
             # print(bitrate)
-            # print(disp.line)
             return row_index
         ### increment AFTER the return
         row_index += 1        
+
+
+def countUnfinishedDownloads(path):
+    counter = 0
+    files = listdir(path)
+    for file in files:
+        if ".part" in file: counter += 1
+    return counter
+
+
+def isDownloadFinished(path, filename):
+    files = listdir(path)
+    if filename + ".part" in files: 
+        return False
+    else: 
+        return True

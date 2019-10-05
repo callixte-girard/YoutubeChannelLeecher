@@ -1,26 +1,43 @@
-# from notion.block import VideoBlock
+from static import constants as cst
 from static import variables as var
+from uuid import uuid1
+from random import choice
 
-def insertPocketArticlesIntoTable(table_url, articles):
-    # Access a database using the URL of the database page or the inline block
-    art_index = 0
-    cv = var.client.get_collection_view(table_url)
-    for art in articles:
-        art_index += 1
-        row = cv.collection.add_row()
-        # if art.title != art.link : ### it's better with url as title than nothing
-        row.name = art.title
-        row.url = art.link
-        row.pocket_timestamp = art.added_on
-        # row.imported_from_pocket = True
-        langs = []
-        for tag in art.tags:
-            lang = tag.split(" ")[1]
-            lang = lang.replace("-", " ")
-            print("[ {} ]".format(lang))
-            langs.append(lang)
-        row.languages = langs
-        print("{} / {} done".format(art_index, len(articles)))
-        print("---------------------")
-        # render = row.children.add_new(VideoBlock, width=200)
-        # render.set_source_url(art.link)
+
+def addNewValueToCollectionMultiSelect(coll_view, prop, value, color=None):
+    """`prop` is the name of the multi select property."""
+    if color is None:
+        color = choice(cst.notion_colors)
+    
+    collection = coll_view.collection
+    collection_schema = collection.get("schema")
+    # print(collection_schema, end=cst.line)    
+
+    prop_schema = next(
+        (v for k, v in collection_schema.items() if v["name"] == prop), None
+    )
+    # print(prop_schema, end=cst.line)
+
+    # test = collection.get_schema_property(prop)
+    # print(test, end=cst.line)
+
+    if not prop_schema:
+        raise ValueError(
+            f'"{prop}" property does not exist on the collection!'
+        )
+    if prop_schema["type"] != "multi_select" and prop_schema["type"] != "select":
+        raise ValueError(f'"{prop}" is neither a single nor a multi select property!')
+
+    if "options" not in prop_schema: prop_schema["options"] = []
+
+    dupe = next(
+        (o for o in prop_schema["options"] if o["value"] == value), None
+    )
+
+    if dupe:
+        raise ValueError(f'"{value}" already exists in the schema!')
+    else:
+        prop_schema["options"].append(
+            {"id": str(uuid1()), "value": value, "color": color}
+        )
+        collection.set("schema", collection_schema)

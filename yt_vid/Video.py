@@ -1,8 +1,16 @@
-## define video with :
-# yt_url            string
-# in_playlists      []
+class Video:
+    channel = ""
+    yt_url = ""
+    in_playlists = []
+    title = ""
+    added_on = ""
+    description = ""
+    downloaded = False
 
-#########
-
-
-## then, create all pairs. 
+    def __init__(self, channel, yt_url, in_playlists, title, added_on, description):
+        self.channel = channel
+        self.yt_url = yt_url
+        self.in_playlists = in_playlists
+        self.title = title
+        self.added_on = added_on
+        self.description = description

@@ -1,6 +1,5 @@
-from my_py import disp
 from static import variables as var
-
+from static import constants as cst
 import itertools
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -23,9 +22,7 @@ def getEltsFromDriver(driver, for_plst, get_plst): ### if !for_plst —> all_vid
         elts = all_html.find_all('h3', attrs={'class':'style-scope ytd-grid-video-renderer'})
         elts.pop(0) ### only needed with firefox
     # for vid in vids:
-    #     print(vid)
-    #     print(disp.line)
-    print(disp.star)
+    #     print(vid, end=cst.line)
     return elts
 
 
@@ -60,7 +57,5 @@ def untilAllElementsLoaded(url_full, for_plst, get_plst):
 
     elts = getEltsFromDriver(browser, for_plst, get_plst)
     loaded_now = len(elts)
-    print(loaded_now, "elements loaded at last ;-)")
-
-    print(disp.star)
+    print(loaded_now, "elements loaded at last ;-)", end=cst.star)
     return elts

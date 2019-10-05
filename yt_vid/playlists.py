@@ -1,8 +1,6 @@
-from my_py import disp
 from static import constants as cst
 from static import methods as mth
 from yt_dl import scroll_down as scrd
-
 from bs4 import BeautifulSoup as bs
 import requests
 
@@ -24,11 +22,9 @@ def getPlaylistsLinksFromChannelUrl(channel_name):
         
         plsts_urls.append(plst_url)
 
-        print(plst_url)
-        print(disp.line)
+        print(plst_url, end=cst.line)
 
     return plsts_urls
-
 
 
 def getVideosLinksFromPlaylistUrl(url_playlist):
@@ -50,7 +46,6 @@ def getVideosLinksFromPlaylistUrl(url_playlist):
         
         vids_urls.append(vid_url)
 
-        # print(vid_url)
-        # print(disp.line)
+        # print(vid_url, end=cst.line)
 
     return vids_urls

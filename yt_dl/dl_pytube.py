@@ -1,5 +1,3 @@
-from my_py import disp
-from my_py import download_status as dl_st
 from static import constants as cst
 from static import variables as var
 from pytube import YouTube
@@ -17,9 +15,8 @@ def downloadVideosFromLinks(vids_urls):
         print(vid)
         try:
             vid.download(cst.path_downloads)
-            print("video {} / {} has finished downloading ! :-)".format(video_counter, len(vids_urls)))
+            print("video {} / {} has finished downloading ! :-)".format(video_counter, len(vids_urls)), end=cst.line)
         except py_ex.VideoUnavailable as e:
-            print("video {} / {} could not be downloaded :-( here's why :".format(video_counter, len(vids_urls)))
+            print("video {} / {} could not be downloaded :-( here's why :".format(video_counter, len(vids_urls)), end=cst.line)
             print(str(e))
-        print(disp.line)
     return video_counter
