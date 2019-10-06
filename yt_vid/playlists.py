@@ -19,11 +19,9 @@ def getPlaylistsLinksFromChannelUrl(channel_name):
 
         ### get interesting info
         plst_url = plst['href']
-        
+        # print(plst_url, end=cst.line)
+
         plsts_urls.append(plst_url)
-
-        print(plst_url, end=cst.line)
-
     return plsts_urls
 
 
@@ -43,9 +41,7 @@ def getVideosLinksFromPlaylistUrl(url_playlist):
         # ### !!! warning !!! remove this part in all other modes.
         split_index = vid_url.find('&')
         vid_url = vid_url[:split_index]
-        
-        vids_urls.append(vid_url)
-
         # print(vid_url, end=cst.line)
 
+        vids_urls.append(vid_url)
     return vids_urls

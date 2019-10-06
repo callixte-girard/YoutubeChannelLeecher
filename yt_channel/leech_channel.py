@@ -1,6 +1,7 @@
 from static import constants as cst
 from yt_vid import playlists as plst
 from yt_vid import all_videos as all_v
+from yt_vid import scrape_infos as inf
 # from yt_dl import dl_eytd
 from yt_dl import dl_pytube
 
@@ -16,10 +17,12 @@ def leechChannelFromUrl(channel_url, notion_url): ### must add manually a channe
     print("total playlists published by user [ {} ] :".format(channel_url), len(plsts_urls), end=cst.star)
 
     ## - for each video :
-    
-    ## 1) create a Video with its url and the playlists it belongs
-    ## 2) check if it is already present in channel's Notion collection. If not, add it.
-    ## 3) check if its labels are the same as the playlists it belongs. (postponed)
+    for vid_url in vids_urls:
+        ## 1) create a Video with its url and the playlists it belongs
+        vid = inf.scrapeVideoInfosFromLink(vid_url)
+        print(vid)
+        ## 2) check if it is already present in channel's Notion collection. If not, add it.
+        ## 3) check if its labels are the same as the playlists it belongs. (postponed)
 
 
     print("let's download all these cool vids now !", end=cst.star)

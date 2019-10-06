@@ -10,7 +10,6 @@ class Channel:
         self.videos = videos
 
 
-
 channels_urls = [
     # "fauxsceptique" ### DONE
     # "DirtyBiology" ### DONE

@@ -4,11 +4,12 @@ from uuid import uuid1
 from random import choice
 
 
-def addNewValueToCollectionMultiSelect(coll_view, prop, value, color=None):
+def addNewValueToCollectionMultiSelect(cv_url, prop, value, color=None):
     """`prop` is the name of the multi select property."""
     if color is None:
         color = choice(cst.notion_colors)
     
+    coll_view = var.client.get_collection_view(cv_url, force_refresh=True)
     collection = coll_view.collection
     collection_schema = collection.get("schema")
     # print(collection_schema, end=cst.line)    
