@@ -11,11 +11,11 @@ print(">>> welcome to YoutubePlaylistLeecher.", end=cst.star)
 # url_playlist = "/playlist?list=LL4PasDd25MXqlXBogBw9CAg"
 # vids_urls = plst.getVideosLinksFromPlaylistUrl(url_playlist)
 # print(vids_urls)
-scrape_infos.scrapeVideoInfosFromLink("/watch?v=4njWobbybnM")
+# scrape_infos.scrapeVideoInfosFromLink("/watch?v=4njWobbybnM")
 
 ############### DER MAIN LOOP DEBUT ####################
 
-# lch.leechChannelFromUrl("scilabus", "https://www.notion.so/496b868a1a154927ae2ebdb1cc2d1fdb?v=f0548ae1e0fa4414a0d88585bb208525")
+lch.leechChannelFromUrl("scilabus", "https://www.notion.so/496b868a1a154927ae2ebdb1cc2d1fdb?v=f0548ae1e0fa4414a0d88585bb208525")
 
 ################ DER MAIN LOOP END #####################
 

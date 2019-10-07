@@ -18,10 +18,11 @@ def leechChannelFromUrl(channel_url, notion_url): ### must add manually a channe
 
     ## - for each video :
     for vid_url in vids_urls:
-        ## 1) create a Video with its url and the playlists it belongs
+        ## 1) check if it is already present in channel's Notion collection (from URL). If not...
+        ########### TODO 
+        ## 2) ... create a Video with its url and the playlists it belongs. 
         vid = inf.scrapeVideoInfosFromLink(vid_url)
-        print(vid)
-        ## 2) check if it is already present in channel's Notion collection. If not, add it.
+        print("title: {} | added_on: {} —> done :)".format(vid.title, vid.added_on), end=cst.line)
         ## 3) check if its labels are the same as the playlists it belongs. (postponed)
 
 
