@@ -56,5 +56,5 @@ def leechChannelFromUrl(channel_url, cv_url): ### must add manually a channel co
     ## - check "downloaded" on notion if successful. Else, leave blank.
     
 
-    print(len(downloaded_videos), "videos have been downloaded.")
+    print(downloaded_videos, "videos have been downloaded.")
     print("CONGRATS !!! YOU LEECHED THE CHANNEL [", channel_url, "] !!!", end=cst.star)
