@@ -28,7 +28,8 @@ else:
     import locale
     locale.setlocale(locale.LC_TIME, "fr_FR")
 
-    lch.leechChannelFromUrl("scilabus", "https://www.notion.so/496b868a1a154927ae2ebdb1cc2d1fdb?v=f0548ae1e0fa4414a0d88585bb208525")
+    # lch.leechChannelFromUrl("scilabus", "https://www.notion.so/496b868a1a154927ae2ebdb1cc2dt1fdb?v=f0548ae1e0fa4414a0d88585bb208525")
+    lch.leechChannelFromUrl("Kurzgesagt", "https://www.notion.so/2f06110eb4f642acb44750581c667430?v=efdf0a31f4cc4a98bd177fe1fdec092c", True)
 
 ################ DER MAIN END #####################
 

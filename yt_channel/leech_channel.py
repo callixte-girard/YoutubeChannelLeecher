@@ -11,8 +11,11 @@ from notion.block import TextBlock
 from notion.block import DividerBlock
 
 
-def leechChannelFromUrl(channel_url, cv_url): ### must add manually a channel collection in Notion first.
+def leechChannelFromUrl(channel_url, cv_url, force_english=False): ### must add manually a channel collection in Notion first.
     collection = coll.getCollectionFromViewUrl(cv_url)
+
+    ## - manually change yt language to "English (UK)"
+    if force_english: pass ### TODO
 
     ## - get all videos links
     vids_urls = all_v.getVideosLinksFromChannelUrl(channel_url)
@@ -44,9 +47,9 @@ def leechChannelFromUrl(channel_url, cv_url): ### must add manually a channel co
             row.children.add_new(HeaderBlock, title="Decription de la vidéo")
             row.children.add_new(DividerBlock)
             row.children.add_new(TextBlock, title=vid.description)
-            print("video at [ {} ] successfully scraped infos and inserted into Notion :)".format(vid_url), end=cst.line)
+            print("video at [ {} ] — [ {} ] successfully scraped infos and inserted into Notion :)".format(vid_url, vid.title), end=cst.line)
         else:
-            print("video at [ {} ] already exists in Notion yet. Here is its title : [ {} ]".format(vid_url, vid.title), end=cst.line)
+            print("video at [ {} ] — [ {} ] already exists in Notion.".format(vid_url, vid.title), end=cst.line)
             ## 3) check if its labels are the same as the playlists it belongs. (postponed)
 
 

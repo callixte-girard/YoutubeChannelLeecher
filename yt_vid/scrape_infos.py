@@ -1,7 +1,7 @@
 from static import constants as cst
 from static import methods as mth
 from static import variables as var
-from yt_vid import Video as v
+from yt_vid.Video import Video 
 from bs4 import BeautifulSoup as bs
 import itertools
 from datetime import datetime
@@ -25,10 +25,14 @@ def scrapeVideoInfosFromLink(vid_url):
         if title != "" and published_on != "" and description != "" : break
 
     ### lil date formatting
-    spl = published_on.split(" ")
-    spl[1] = spl[1][:3] ### truncate month
-    published_on = " ".join(spl)
+    date_spl = published_on.split(" ")
+    month = date_spl[1]
+    ### horrible fix for juin = jui (normal) | juil = jul (july)
+    if "juil" in month: month = "july"
+    ### truncate month and insert it back into array
+    date_spl[1] = month[:3] 
+    published_on = " ".join(date_spl)
     published_on = datetime.strptime(published_on, "%d %b %Y").date()
 
-    vid = v.Video(vid_url, title, published_on, description)
+    vid = Video(vid_url, title, published_on, description)
     return vid
