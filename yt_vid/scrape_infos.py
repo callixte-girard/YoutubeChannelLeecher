@@ -10,7 +10,7 @@ from datetime import datetime
 ### channel_name must be written exactly like in its urls. Check the channel's url on the real yt if you're not sure
 def scrapeVideoInfosFromLink(vid_url):
     url_full = mth.reassembleUrl(cst.url_main, vid_url)
-    print("now scraping infos for the vid [ {} ] :".format(vid_url), end=cst.star)
+    print("now scraping infos for the vid [ {} ] ...".format(vid_url))
 
     browser = var.driver 
     browser.get(url_full)

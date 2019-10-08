@@ -6,6 +6,9 @@ from yt_vid import scrape_infos as inf
 # from yt_dl import dl_eytd
 from yt_dl import dl_pytube
 from notion_so import collection as coll
+from notion.block import HeaderBlock
+from notion.block import TextBlock
+from notion.block import DividerBlock
 
 
 def leechChannelFromUrl(channel_url, cv_url): ### must add manually a channel collection in Notion first.
@@ -27,14 +30,18 @@ def leechChannelFromUrl(channel_url, cv_url): ### must add manually a channel co
             print("video at {} doesn't exist. Let's scrape its infos.".format(vid_url))
             ## 2) ... create a Video with its url and the playlists it belongs. 
             vid = inf.scrapeVideoInfosFromLink(vid_url)
+            # print("title: {} | published_on: {} —> scraped infos done :)".format(vid.title, vid.published_on), end=cst.line)
             row = collection.add_row()
             row.url = vid_url
             row.title = vid.title
             row.published_on = vid.published_on
             row.downloaded = vid.downloaded
             # row.n = 
-            # row. = vid.description
-            print("title: {} | published_on: {} —> done :)".format(vid.title, vid.published_on), end=cst.line)
+            ### video description
+            row.children.add_new(HeaderBlock, title="Decription de la vidéo")
+            row.children.add_new(DividerBlock)
+            row.children.add_new(TextBlock, title=vid.description)
+            print("video at {} successfully scraped infos and inserted into Notion :)".format(vid_url), end=cst.line)
         else:
             print("video at {} already exists. Here is its title : [ {} ]".format(vid_url, vid.title), end=cst.line)
             ## 3) check if its labels are the same as the playlists it belongs. (postponed)
