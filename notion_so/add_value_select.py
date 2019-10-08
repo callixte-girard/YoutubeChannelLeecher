@@ -1,5 +1,6 @@
 from static import constants as cst
 from static import variables as var
+from notion_so import collection as coll
 from uuid import uuid1
 from random import choice
 
@@ -9,8 +10,7 @@ def addNewValueToCollectionMultiSelect(cv_url, prop, value, color=None):
     if color is None:
         color = choice(cst.notion_colors)
     
-    coll_view = var.client.get_collection_view(cv_url, force_refresh=True)
-    collection = coll_view.collection
+    collection = coll.getCollectionFromViewUrl(cv_url)    
     collection_schema = collection.get("schema")
     # print(collection_schema, end=cst.line)    
 
