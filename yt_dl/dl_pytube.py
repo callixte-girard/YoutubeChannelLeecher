@@ -16,34 +16,25 @@ def downloadVideosFromLinks(vids_urls, collection):
         row = coll.getCorrespondingRowFromVidUrl(collection, vid_url)
         if not row.downloaded:
             print("video at [ {} ] — [ {} ] will be downloaded ...".format(vid_url, row.title))
-            ### get appropriate bitrate and format
-            try:
-                vid = YouTube(full_url).streams.filter(mime_type='video/mp4', res='720p').first()
-                print(vid)
-                ### try to download video, if available
-                try:
-                    vid.download(cst.path_downloads)
-                    ### mark video as downloaded in Notion
-                    row.downloaded = True
-                    print("video has finished downloading ! :)", end=cst.line)
-                except py_ex.VideoUnavailable as e:
-                    print("video could not be downloaded :( here's why :", end=cst.line)
-                    print(str(e))
-            except:
-                print("!!! wanted bitrate + format combination does not exist ...")
-                print("taking first video available in wanted format.", end=cst.line)
-                ### take first bitrate available in mp4 format
-                try:
-                    vid = YouTube(full_url).streams.filter(mime_type='video/mp4').first()
-                    print(vid)
-                    ### try to download video, if available
-                    vid.download(cst.path_downloads)
-                    ### mark video as downloaded in Notion
-                    row.downloaded = True
-                    print("video has finally finished downloading ... phew :')", end=cst.line)
-                except py_ex.VideoUnavailable as e:
-                    print("video could eventually not be downloaded ... sniff :'( here's why though :", end=cst.line)
-                    print(str(e))
+            attemptStreamDownload(full_url, row, 1) ### crashes program after attempt 2 failed
         else:
             print("video at [ {} ] — [ {} ] has already been downloaded.".format(vid_url, row.title), end=cst.line)
     return vid_counter
+
+
+def attemptStreamDownload(full_url, row, attempt):
+    try:
+        if attempt == 1: vid = YouTube(full_url).streams.filter(mime_type='video/mp4', res='720p').first()
+        elif attempt == 2: vid = YouTube(full_url).streams.filter(mime_type='video/mp4').first()
+        else: raise py_ex.VideoUnavailable
+        print(vid)
+        ### try to download video, if available
+        vid.download(cst.path_downloads)
+        ### mark video as downloaded in Notion
+        row.downloaded = True
+        print("video has finished downloading at attempt n°{}".format(attempt), end=cst.line)
+        return True
+    except py_ex.VideoUnavailable as e:
+        print("video could not be downloaded at attempt n°{}".format(attempt), end=cst.line)
+        # print(e)
+        return attemptStreamDownload(full_url, row, attempt + 1)

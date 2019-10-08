@@ -15,7 +15,7 @@
 - If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`
 
 ### TO-DO
-[-] recode the handler looper by calling itself recursively
+[✓] recode the handler looper by calling itself recursively
 [-] inspect all playlists and record matches in existing Notion rows
 [-] force English with Selenium but only for channels spoken in English
 [✓] fix problem with dates somewhere (july truncated in jui like juin)
