@@ -12,22 +12,21 @@ from os import listdir
 
 def downloadVideosFromLinks(vids_urls):
     video_counter = 0
-    browser = var.driver 
     for vid_url in vids_urls:  
         # print(vid_url)
         video_counter += 1      
         full_url = cst.url_main + vid_url
         print("preparing to download video at :", full_url)
         ### get page for video download
-        browser.get(full_url) ### only working version haha
+        var.driver.get(full_url) ### only working version haha
         ### wait for download button table to appear and perform dl by clicking adequate button
         while True:
-            all_html = bs(browser.page_source, "html.parser")
+            all_html = bs(var.driver.page_source, "html.parser")
             ### wait for the indicator to appear
             try:
                 # eytd_button = all_html.find('button', attrs={'id':'eytd_btn'})
                 # print("der button ist:", eytd_button)
-                # act = ActionChains(browser)
+                # act = ActionChains(var.driver)
                 # act.click(eytd_button).perform()
                 test_button = all_html.find("yt-formatted-string", text="J'ai compris")
                 print("der test ist:", test_button)                
@@ -51,8 +50,8 @@ def downloadVideosFromLinks(vids_urls):
                     pass ### video link is not ready
                 else: 
                     print("dl url will be:", dl_url, end=cst.line)
-                    # browser.get(dl_url)
-                    act = ActionChains(browser)
+                    # var.driver.get(dl_url)
+                    act = ActionChains(var.driver)
                     act.click(dl_link).perform()
                     ### sorry mah we needa leave :'(
                     # break
@@ -64,7 +63,7 @@ def downloadVideosFromLinks(vids_urls):
             # videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
         # print("video [ {} ] finished downloading successfully.".format(video_filename))
         print("video {} / {} has finished downloading ! :)".format(video_counter, len(vids_urls)), end=cst.star)
-    browser.quit()
+    var.driver.quit()
     return video_counter
 
 

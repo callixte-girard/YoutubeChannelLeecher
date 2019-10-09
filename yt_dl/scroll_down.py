@@ -28,17 +28,16 @@ def getEltsFromDriver(driver, for_plst, get_plst): ### if !for_plst —> all_vid
 
 ### simulate firefox to scroll down
 def untilAllElementsLoaded(url_full, for_plst, get_plst):
-    browser = var.driver
-    browser.get(url_full)
-    # browser.execute_script("window.open('" + url_full + "', '_blank');")
+    var.driver.get(url_full)
+    # var.driver.execute_script("window.open('" + url_full + "', '_blank');")
 
-    elts = getEltsFromDriver(browser, for_plst, get_plst)
+    elts = getEltsFromDriver(var.driver, for_plst, get_plst)
     loaded_init = len(elts)
     loaded_now = loaded_init
 
     for turn in itertools.count(): ### turn is used in debug
-        browser.execute_script('window.scrollBy(0, 100000)')
-        spinners = browser.find_elements_by_id('spinnerContainer')
+        var.driver.execute_script('window.scrollBy(0, 100000)')
+        spinners = var.driver.find_elements_by_id('spinnerContainer')
         try:
             # print(len(spin), "spinners")
             if for_plst:
@@ -49,13 +48,13 @@ def untilAllElementsLoaded(url_full, for_plst, get_plst):
                 else: ### shoud behave the same 
                     spinner = spinners[1]
             # print("turn:", turn, " | ", "spinner:", spinner)
-            elts = getEltsFromDriver(browser, for_plst, get_plst)
+            elts = getEltsFromDriver(var.driver, for_plst, get_plst)
             loaded_now = len(elts)
             print(loaded_now, "elements loaded now ...")            
         except:
             break
 
-    elts = getEltsFromDriver(browser, for_plst, get_plst)
+    elts = getEltsFromDriver(var.driver, for_plst, get_plst)
     loaded_now = len(elts)
     print(loaded_now, "elements loaded at last ;-)", end=cst.star)
     return elts

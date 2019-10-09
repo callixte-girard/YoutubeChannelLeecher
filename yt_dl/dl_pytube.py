@@ -2,7 +2,7 @@ from static import constants as cst
 from static import variables as var
 from pytube import YouTube
 from pytube import exceptions as py_ex
-from notion_so import collection as coll
+from notion_so import collections 
 
 
 def downloadVideosFromLinks(vids_urls, collection):
@@ -13,7 +13,7 @@ def downloadVideosFromLinks(vids_urls, collection):
         full_url = cst.url_main + vid_url
         print("progress (downloading) : {} / {}".format(vid_counter, len(vids_urls)))
         ### check on Notion if video has already been downloaded or not
-        row = coll.getCorrespondingRowFromVidUrl(collection, vid_url)
+        row = collections.getCorrespondingRowFromVidUrl(collection, vid_url)
         if not row.downloaded:
             print("video at [ {} ] — [ {} ] will be downloaded ...".format(vid_url, row.title))
             attemptStreamDownload(full_url, row, 1) ### crashes program after attempt 2 failed
@@ -34,7 +34,7 @@ def attemptStreamDownload(full_url, row, attempt):
         row.downloaded = True
         print("video has finished downloading at attempt n°{}".format(attempt), end=cst.line)
         return True
-    except py_ex.VideoUnavailable as e:
+    except py_ex.VideoUnavailable:
         print("video could not be downloaded at attempt n°{}".format(attempt), end=cst.line)
         # print(e)
         return attemptStreamDownload(full_url, row, attempt + 1)

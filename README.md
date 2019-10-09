@@ -1,11 +1,23 @@
 # ———— YoutubeChannelLeecher ————
 
+## FUNCTIONALITIES
+
 ### How may I help you, lazy developer ?
-1) Go to the main videos page in channel you provided.
-2) Get all videos' URLs. Of course, scrolling down until the playlist's end is included.
-3) Write all the videos' data to the Notion page URL provided.
-4) Inspect all playlists and record in which playlist(s) each video in main videos page appears.
-5) 
+1) Go to the main videos page in user/channel you provided.
+2) Get all videos' URLs. 
+3) Get all playlists' URLs. 
+4) Scrape all playlists infos from their URLs obtained in 3) : title + the URLs of videos it contains.
+5) Scrape all videos infos from their URLs obtained in 2) : title + basic infos + description + inspects in which playlist(s) the video appears.
+6) At this point, all videos infos are written in Notion. Checkbox "downloaded" is off for every video.
+7) Downloads all videos one by one and mark them as downloaded in Notion when completed. 
+
+x) I update by myself : if a new video is published, it will appear on all videos section, and thus be automatically added in Notion and downloaded.
+x) I can continue where I stopped, but —> !!! Maybe you will have to manually delete the last video info that might have been only partially recorded !!!
+x) For each playlist / all videos section, I scroll down until the playlist's end is reached so that all URLs are present.
+
+=> Why "Leecher" ? Because —> Scrape + Record in Notion (videos infos) + Download (videos in mp4) = Leech.
+
+## SETUP
 
 ### Dependancies
 - selenium webdriver

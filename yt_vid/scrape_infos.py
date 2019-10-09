@@ -12,11 +12,9 @@ def scrapeVideoInfosFromLink(vid_url):
     url_full = mth.reassembleUrl(cst.url_main, vid_url)
     print("now scraping infos for the vid [ {} ] ...".format(vid_url))
 
-    browser = var.driver 
-    browser.get(url_full)
-
+    var.driver.get(url_full)
     while True:
-        all_html = bs(browser.page_source, "html.parser")
+        all_html = bs(var.driver.page_source, "html.parser")
 
         title = all_html.find('h1', attrs={'class':'title style-scope ytd-video-primary-info-renderer'}).find("yt-formatted-string").get_text().strip()
         published_on = all_html.find('div', attrs={'id':'date'}).find("yt-formatted-string").get_text()

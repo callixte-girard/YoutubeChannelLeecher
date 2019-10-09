@@ -30,10 +30,10 @@ def addsParamsToUrl(url, params_names, params_values):
 def initFirefoxConfiguredProperly():
     ### set preferences for file download
     profile = webdriver.FirefoxProfile()
-    profile.set_preference("browser.download.dir", cst.path_downloads)
-    profile.set_preference("browser.download.folderList", 2)
-    profile.set_preference("browser.download.manager.showWhenStarting", False)
-    profile.set_preference("browser.helperApps.neverAsk.saveToDisk", "audio/mp4, video/mp4")
+    profile.set_preference("var.driver.download.dir", cst.path_downloads)
+    profile.set_preference("var.driver.download.folderList", 2)
+    profile.set_preference("var.driver.download.manager.showWhenStarting", False)
+    profile.set_preference("var.driver.helperApps.neverAsk.saveToDisk", "audio/mp4, video/mp4")
     ### then launch driver with these prefs
     driver_gecko = webdriver.Firefox(profile)
     ### install necesary addons

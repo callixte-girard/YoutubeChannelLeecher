@@ -13,7 +13,7 @@ class Video:
         self.title = title
         self.published_on = published_on
         self.description = description
-        # self.in_playlists = in_playlists
+        self.in_playlists = []
 
     def __call__(self, yt_url, title, published_on, description):
         pass
