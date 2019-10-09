@@ -20,15 +20,15 @@ x) For each playlist / all videos section, I scroll down until the playlist's en
 ## SETUP
 
 ### Dependancies
-- selenium webdriver
-- pytube
+- `selenium` webdriver with `gecko` driver (firefox, not chrome)
+- `pytube` (pip package for downloading YouTube video from URL)
 
 ### Quick fices for common issues
 - If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`
 
 ### Progress
 #### To-do
-— force English with Selenium but only for channels spoken in English
+- force English with Selenium but only for channels spoken in English
 #### Done
 - inspect all playlists and record matches in existing Notion rows
 - fix problem with dates somewhere (july truncated in jui like juin)
