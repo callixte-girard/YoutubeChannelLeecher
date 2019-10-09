@@ -13,7 +13,8 @@ from notion.block import DividerBlock
 from yt_plst import Playlist
 
 
-def leechChannelFromUrl(channel_url, is_channel, cv_url, force_english=False): ### must add manually a channel collection in Notion first.
+ ### must add manually a channel collection in Notion first.
+def leechChannelFromUrl(channel_url, is_channel, cv_url, download_channel=True, force_english=False):
     ## - manually change yt language to "English (UK)"
     if force_english: pass ### TODO
 
@@ -53,7 +54,7 @@ def leechChannelFromUrl(channel_url, is_channel, cv_url, force_english=False): #
             row.downloaded = vid.downloaded
             # row.n = 
             ### video description
-            row.children.add_new(HeaderBlock, title="Decription de la vidéo")
+            row.children.add_new(HeaderBlock, title=cst.label_description)
             row.children.add_new(DividerBlock)
             row.children.add_new(TextBlock, title=vid.description)
             ### in which playlist am I ?
@@ -67,10 +68,10 @@ def leechChannelFromUrl(channel_url, is_channel, cv_url, force_english=False): #
             print("video at [ {} ] — [ {} ] already exists in Notion.".format(vid_url, vid.title), end=cst.line)
             ## 3) check if its labels are the same as the playlists it belongs.
 
-
-    print("let's download all these cool vids now !", end=cst.star)
-    ## - for each video, download it if "downloaded" is unchecked on Notion —> then check it.
-    downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll)
+    if download_channel:
+        print("let's download all these cool vids now !", end=cst.star)
+        ## - for each video, download it if "downloaded" is unchecked on Notion —> then check it.
+        downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll)
 
     print(downloaded_videos, "videos have been downloaded.")
     print("CONGRATS !!! YOU LEECHED THE CHANNEL [", channel_url, "] !!!", end=cst.star)

@@ -12,7 +12,7 @@ locale.setlocale(locale.LC_TIME, "fr_FR")
 # lch.leechChannelFromUrl("scilabus", False, "https://www.notion.so/496b868a1a154927ae2ebdb1cc2dt1fdb?v=f0548ae1e0fa4414a0d88585bb208525")
 # lch.leechChannelFromUrl("Kurzgesagt", False, "https://www.notion.so/2f06110eb4f642acb44750581c667430?v=efdf0a31f4cc4a98bd177fe1fdec092c", True) ### to finish
 # lch.leechChannelFromUrl("UC7sXGI8p8PvKosLWagkK9wQ", True, "https://www.notion.so/2f06110eb4f642acb44750581c667430?v=efdf0a31f4cc4a98bd177fe1fdec092c") ### Heu?Reka
-lch.leechChannelFromUrl("UC8NJCimLOr_Uc4GhirgO7lg", True, "https://www.notion.so/9940558ed75f4fe5a732c43f22f4d9f8?v=77665db71fc74207ab3eb55dffdbd48d") ### OTB
+lch.leechChannelFromUrl("UC8NJCimLOr_Uc4GhirgO7lg", True, "https://www.notion.so/9940558ed75f4fe5a732c43f22f4d9f8?v=77665db71fc74207ab3eb55dffdbd48d", download_channel=False) ### OTB
 
 ################ DER MAIN END #####################
 

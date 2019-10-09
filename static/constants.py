@@ -17,3 +17,4 @@ notion_colors = [
     "pink",
     "red",
 ]
+label_description = "Description de la vidéo"
