@@ -4,11 +4,11 @@ from yt_dl import scroll_down as scrd
 
 
 ### channel_name must be written exactly like in its urls. Check the channel's url on the real yt if you're not sure
-def getVideosLinksFromChannelUrl(channel_name, is_channel):
+def getVideosLinksFromChannelUrl(channel_url, is_channel):
     if is_channel: channel_or_user = "channel"
-    else: channel_name = "user"
+    else: channel_or_user = "user"
     
-    url_all_videos = "/{}/".format(channel_or_user) + channel_name + "/videos"
+    url_all_videos = "/{}/".format(channel_or_user) + channel_url + "/videos"
     url_full = mth.reassembleUrl(cst.url_main, url_all_videos)
 
     vids = scrd.untilAllElementsLoaded(url_full, False, False)

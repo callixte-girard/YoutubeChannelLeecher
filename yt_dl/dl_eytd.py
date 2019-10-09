@@ -63,7 +63,6 @@ def downloadVideosFromLinks(vids_urls):
             # videos_downloading = dl_st.countUnfinishedDownloads(cst.path_downloads)
         # print("video [ {} ] finished downloading successfully.".format(video_filename))
         print("video {} / {} has finished downloading ! :)".format(video_counter, len(vids_urls)), end=cst.star)
-    var.driver.quit()
     return video_counter
 
 

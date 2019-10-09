@@ -9,7 +9,7 @@ from yt_plst.Playlist import Playlist
 
 def getPlaylistsLinksFromChannelUrl(channel_name, is_channel):
     if is_channel: channel_or_user = "channel"
-    else: channel_name = "user"
+    else: channel_or_user = "user"
 
     url_playlists = "/{}/".format(channel_or_user) + channel_name + "/playlists"
     url_full = mth.reassembleUrl(cst.url_main, url_playlists)
