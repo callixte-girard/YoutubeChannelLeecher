@@ -11,6 +11,3 @@ class Playlist:
         self.title = title
         # self.updated_on = updated_on
         self.vids_urls = vids_urls
-
-    def __call__(self, yt_url, title):
-        pass

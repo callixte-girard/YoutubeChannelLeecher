@@ -2,7 +2,7 @@ from static import constants as cst
 from static import variables as var
 from pytube import YouTube
 from pytube import exceptions as py_ex
-from notion_so import collections 
+from no import collections 
 
 
 def downloadVideosFromLinks(vids_urls, collection):

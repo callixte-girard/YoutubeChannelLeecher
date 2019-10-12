@@ -1,40 +1,14 @@
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
-from yt_vid import playlists
-from yt_vid import all_videos
-from yt_vid import scrape_infos
-# from yt_dl import dl_eytd
-from yt_dl import dl_pytube
-from notion_so import collections
+from no import collections
+from yt.scrape import infos
 from notion.block import HeaderBlock
 from notion.block import TextBlock
 from notion.block import DividerBlock
-from yt_plst import Playlist
 
 
- ### must add manually a channel collection in Notion first.
-def leechChannel(ch, download_videos=True):
-
-    ## - manually change yt language to "English (UK)"
-    if ch.force_english: pass ### TODO
-
-    ## - get all videos links
-    vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url, ch.is_channel)
-    print("total videos published by user/channel [ {} ] : {}".format(ch.yt_url, len(vids_urls)), end=cst.star)
-
-    ## - get all playlists links and builds playlists items from them
-    plsts_urls = playlists.getPlaylistsLinksFromChannelUrl(ch.yt_url, ch.is_channel)
-    print("total playlists published by user/channel [ {} ] : {}".format(ch.yt_url, len(plsts_urls)), end=cst.star)
-    plsts = []
-    for plst_url in plsts_urls:
-        plst = playlists.getPlaylistFromUrl(plst_url)
-        plsts.append(plst)
-        ### add playlist name to in_playlists options
-        try: collection.addNewValueToCollectionMultiSelect(ch.notion_url, "In Playlists", plst.title)
-        except: pass
-
-    ## - scrape all videos THEN download them
+def videoInfosInCollection(ch, vids_urls, plsts):
     channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
     vid_counter = 0
     for vid_url in vids_urls:
@@ -45,7 +19,7 @@ def leechChannel(ch, download_videos=True):
         if vid is None:
             print("video at [ {} ] doesn't exist in Notion yet. Let's scrape its infos.".format(vid_url))
             ## 2) ... create a Video with its url and the playlists it belongs. 
-            vid = scrape_infos.scrapeVideoInfosFromLink(vid_url)
+            vid = infos.scrapeVideoInfosFromLink(vid_url)
             # print("title: {} | published_on: {} —> scraped infos done :)".format(vid.title, vid.published_on), end=cst.line)
             row = channel_coll.add_row()
             ### basic video infos
@@ -59,20 +33,14 @@ def leechChannel(ch, download_videos=True):
             row.children.add_new(DividerBlock)
             row.children.add_new(TextBlock, title=vid.description)
             ### in which playlist am I ?
+            vid.in_playlists = []
             for plst in plsts:
                 # print(plst.yt_url, plst.title, len(plst.vids_urls))
                 if vid_url in plst.vids_urls: vid.in_playlists.append(plst.title)
             ### finally record tags
+            # print("vid.in_playlists:", vid.in_playlists)
             row.in_playlists = vid.in_playlists
             print("video at [ {} ] — [ {} ] successfully scraped infos and inserted into Notion :)".format(vid_url, vid.title), end=cst.line)
         else:
             print("video at [ {} ] — [ {} ] already exists in Notion.".format(vid_url, vid.title), end=cst.line)
             ## 3) check if its labels are the same as the playlists it belongs.
-
-    if download_videos:
-        print("let's download all these cool vids now !", end=cst.star)
-        ## - for each video, download it if "downloaded" is unchecked on Notion —> then check it.
-        downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll)
-        print(downloaded_videos, "videos have been downloaded.")
-    
-    print("CONGRATS !!! YOU LEECHED THE CHANNEL [", ch.yt_url, "] !!!", end=cst.star)

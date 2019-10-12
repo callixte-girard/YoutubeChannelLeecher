@@ -7,6 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from os import listdir
 
 
 ### to assemble item url part with main root url part
@@ -42,3 +43,19 @@ def initFirefoxConfiguredProperly():
     # driver_gecko.close()
     # driver_gecko.maximize_window()
     return driver_gecko
+
+
+def countUnfinishedDownloads(path):
+    counter = 0
+    files = listdir(path)
+    for file in files:
+        if ".part" in file: counter += 1
+    return counter
+
+
+def isDownloadFinished(path, filename):
+    files = listdir(path)
+    if filename + ".part" in files: 
+        return False
+    else: 
+        return True

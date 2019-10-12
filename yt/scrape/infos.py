@@ -1,7 +1,7 @@
 from static import constants as cst
 from static import methods as mth
 from static import variables as var
-from yt_vid.Video import Video 
+from yt.objects.Video import Video
 from bs4 import BeautifulSoup as bs
 import itertools
 from datetime import datetime

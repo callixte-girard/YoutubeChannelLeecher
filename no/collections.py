@@ -1,5 +1,6 @@
 from static import constants as cst
 from static import variables as var
+from static import methods as mth
 from uuid import uuid1
 from random import choice
 
