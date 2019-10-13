@@ -56,5 +56,5 @@ def untilAllElementsLoaded(url_full, for_plst, get_plst):
 
     elts = getEltsFromDriver(var.driver, for_plst, get_plst)
     loaded_now = len(elts)
-    print(loaded_now, "elements loaded at last ;-)", end=cst.star)
+    print(loaded_now, "elements loaded at last ;-)")
     return elts

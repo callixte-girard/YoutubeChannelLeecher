@@ -38,7 +38,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
                 # print(plst.yt_url, plst.title, len(plst.vids_urls))
                 if vid_url in plst.vids_urls: vid.in_playlists.append(plst.title)
             ### finally record tags
-            # print("vid.in_playlists:", vid.in_playlists)
+            print("here are the playlists in which this video appears :", vid.in_playlists)
             row.in_playlists = vid.in_playlists
             print("video at [ {} ] — [ {} ] successfully scraped infos and inserted into Notion :)".format(vid_url, vid.title), end=cst.line)
         else:
