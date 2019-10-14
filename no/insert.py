@@ -25,6 +25,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
             ### basic video infos
             row.url = vid_url
             row.title = vid.title
+            if vid.number is not None: row.number = vid.number
             row.published_on = vid.published_on
             row.downloaded = vid.downloaded
             # row.n = 

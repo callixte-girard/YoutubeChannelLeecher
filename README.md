@@ -20,10 +20,12 @@
 
 # PROGRESS
 ### To-do
-- make tests with slugifier to make `in_playlists` correspond to `In playlist(s)`
+- auto-detect which part of the raw title contains video number, if any
 - prevent video loading from stalling when window is not visible/active
 - force English with Selenium but only for channels spoken in English
 ### Done
+- try to split video raw title into title and video number 
+- make tests with slugifier to make `in_playlists` correspond to `In playlist(s)`
 - inspect all playlists and record matches in existing Notion rows
 - fix problem with dates somewhere (july truncated in jui like juin)
 - recode the handler looper by calling itself recursively

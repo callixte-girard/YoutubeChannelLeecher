@@ -32,6 +32,38 @@ def scrapeVideoInfosFromLink(vid_url):
     published_on = " ".join(date_spl)
     published_on = datetime.strptime(published_on, "%d %b %Y").date()
     ### truncate title to get episode title + episode number
-
-    vid = Video(vid_url, title, published_on, description)
+    spl = separateVideoTitleAndNumber(title)
+    if spl is not None: ### splitted has occured
+        title = spl[0]
+        number = spl[1]
+    else: number = None ### title stays itself : number should be None
+    vid = Video(vid_url, title, number, published_on, description)
     return vid
+
+
+def separateVideoTitleAndNumber(title_raw):
+    possible_separators = [
+        " - ",
+        " — ", ### special hyphen (`alt + -`)
+        ":",
+    ]
+    for sep in possible_separators:
+        if sep in title_raw:
+            spl = title_raw.split(sep)
+            # if len(spl) == 1: return spl
+            # else: ### must get last part and reassemble the others
+            reassembled_title= sep.join(spl[i] for i in range(0, len(spl)-1)).strip()
+            number_part = spl[len(spl)-1]
+            ### try to get number, else let it None
+            try:
+                number_parts = number_part.split("#")
+                if len(number_parts) == 1: number_parts = number_part.split(" ")
+                if len(number_parts) == 1: number_parts = number_part.split("°")
+                number = number_parts[len(number_parts)-1]
+                number = number.replace("-", ".").replace(" ", "").replace("/", ".") ### quick fix for formatting
+                number = float(number) ### conversion to number
+            except:
+                number = -1
+            spl = [ reassembled_title, number ]            
+            print("spl:", spl)
+            return spl
