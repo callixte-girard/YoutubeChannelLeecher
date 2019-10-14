@@ -31,7 +31,7 @@ def channel(ch_name, is_channel, cv_url, force_english=False, download_videos=Tr
         plsts.append(plst)
         ### add playlist name to in_playlists options if it doesn't already exist
         try: 
-            collections.addNewValueToCollectionMultiSelect(ch.notion_url, cst.tagName_plsts, plst.title)
+            collections.addNewValueToCollectionMultiSelect(ch.notion_url, cst.tagName_plsts, plst.title) ### slugifying included for prop
             print(plst.title, "has been added to the schema.", end=cst.line)
         except ValueError as already_exists: print(already_exists, end=cst.line)
 

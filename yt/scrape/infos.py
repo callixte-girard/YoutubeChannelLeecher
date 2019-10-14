@@ -31,6 +31,7 @@ def scrapeVideoInfosFromLink(vid_url):
     date_spl[1] = month[:3] 
     published_on = " ".join(date_spl)
     published_on = datetime.strptime(published_on, "%d %b %Y").date()
+    ### truncate title to get episode title + episode number
 
     vid = Video(vid_url, title, published_on, description)
     return vid

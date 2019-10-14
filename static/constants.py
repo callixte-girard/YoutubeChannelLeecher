@@ -18,4 +18,4 @@ notion_colors = [
     "red",
 ]
 label_description = "Description de la vidéo"
-tagName_plsts = "In playlists"
+tagName_plsts = "in playlists"

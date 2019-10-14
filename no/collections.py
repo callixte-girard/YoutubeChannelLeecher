@@ -21,7 +21,10 @@ def getCorrespondingRowFromVidUrl(collection, vid_url):
 
 
 def addNewValueToCollectionMultiSelect(cv_url, prop, value, color=None):
-    """`prop` is the name of the multi select property."""
+    ### `prop` is the name of the multi select property.
+    ### let's format it.
+    prop = slugify(prop).replace("-", " ")
+
     if color is None:
         color = choice(cst.notion_colors)
     
@@ -30,7 +33,7 @@ def addNewValueToCollectionMultiSelect(cv_url, prop, value, color=None):
     # print(collection_schema, end=cst.line)    
 
     prop_schema = next(
-        (v for k, v in collection_schema.items() if v["name"] == prop), None
+        (v for k, v in collection_schema.items() if slugify(v["name"]).replace("-", " ") == prop), None
     )
     # print(prop_schema, end=cst.line)
 
