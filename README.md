@@ -15,14 +15,17 @@
 ## Dependancies
 - `selenium` webdriver with `gecko` driver (firefox, not chrome)
 - `pytube` (pip package for downloading YouTube video from URL)
+
 ## Quick fices for common issues
 - If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`
 
 # PROGRESS
 ### To-do
+- manage direct videos : 'Diffusé en direct le 30 nov. 2017'
 - auto-detect which part of the raw title contains video number, if any
 - prevent video loading from stalling when window is not visible/active
 - force English with Selenium but only for channels spoken in English
+
 ### Done
 - try to split video raw title into title and video number 
 - make tests with slugifier to make `in_playlists` correspond to `In playlist(s)`
@@ -34,6 +37,7 @@
 - add bitrate and video format in debugger at each vid and, if necesary, and handling for video that don't have : `mime_type='video/mp4'` and `res='720p'`
 - fix error that makes playlist grabber get one less that actual number
 - make video download async and run by 3 or 4 vids
+
 ### Abandoned | Not useful anymore
 - find a BETTER WAY to check if download has really started —> get filename by deduction : check which file popped the most recently !
 - after downloading supposed to be finished, check if number files downloaded == len(vids_urls)
