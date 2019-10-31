@@ -22,7 +22,7 @@
 
 # PROGRESS
 ### To-do
-- fix problem with method `attemptStreamDownload()` / error with `vid.download(cst.path_downloads)`
+- fix problem with method `attemptStreamDownload()` / error with `vid.download(cst.path_downloads)` —> put priority order for bitrates —> if it still fails, it means that no mp4 format is available —> CRY.
 - download videos directly in a folder named like user/channel name
 - detect video length asap (ideally, in all videos section) —> possibility to ignore videos above a certain length
 - manage direct videos : 'Diffusé en direct le 30 nov. 2017'
