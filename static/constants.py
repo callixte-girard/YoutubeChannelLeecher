@@ -19,3 +19,4 @@ notion_colors = [
 ]
 label_description = "Description de la vidéo"
 tagName_plsts = "in playlists"
+max_retries = 5

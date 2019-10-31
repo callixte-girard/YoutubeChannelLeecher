@@ -10,6 +10,7 @@
 - I update by myself : if a new video is published, it will appear on all videos section, and thus be automatically added in Notion and downloaded.
 - I can continue where I stopped, but —> !!! Maybe you will have to manually delete the last video info that might have been only partially recorded !!!
 - For each playlist / all videos section, I scroll down until the playlist's end is reached so that all URLs are present.
+- When Firefox is launched with Selenium, AdGuard (or AdBlock, don't remember exactly) is automatically installed as an extension to avoid download errors with PyTube if there is an ad.
 
 # SETUP
 ## Dependancies
@@ -21,6 +22,9 @@
 
 # PROGRESS
 ### To-do
+- fix problem with method `attemptStreamDownload()` / error with `vid.download(cst.path_downloads)`
+- download videos directly in a folder named like user/channel name
+- detect video length asap (ideally, in all videos section) —> possibility to ignore videos above a certain length
 - manage direct videos : 'Diffusé en direct le 30 nov. 2017'
 - auto-detect which part of the raw title contains video number, if any
 - prevent video loading from stalling when window is not visible/active
@@ -28,7 +32,7 @@
 
 ### Done
 - try to split video raw title into title and video number 
-- make tests with slugifier to make `in_playlists` correspond to `In playlist(s)`
+- make tests with slugifier to make `in_playlists` correspond to `In playlists`
 - inspect all playlists and record matches in existing Notion rows
 - fix problem with dates somewhere (july truncated in jui like juin)
 - recode the handler looper by calling itself recursively

@@ -27,19 +27,17 @@ def addsParamsToUrl(url, params_names, params_values):
             if i < len(params_names)-1: url += "&"
     return url
 
-### to init gecko will cool addons
+### to init gecko will proper profile settings and cool addons
 def initFirefoxConfiguredProperly():
-    ### set preferences for file download
     profile = webdriver.FirefoxProfile()
-    profile.set_preference("var.driver.download.dir", cst.path_downloads)
-    profile.set_preference("var.driver.download.folderList", 2)
+    profile.set_preference("var.driver.download.dir", cst.path_downloads) ### by default, ~/Downloads
+    profile.set_preference("var.driver.download.folderList", 2) ### can be replaced by 1
     profile.set_preference("var.driver.download.manager.showWhenStarting", False)
     profile.set_preference("var.driver.helperApps.neverAsk.saveToDisk", "audio/mp4, video/mp4")
-    ### then launch driver with these prefs
+    profile.set_preference("pdfjs.disabled", True) ### mandatory to deactivate embedded PDF viewer
     driver_gecko = webdriver.Firefox(profile)
-    ### install necesary addons
     # driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True) ### eytd
-    # driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
+    driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
     # driver_gecko.close()
     # driver_gecko.maximize_window()
     return driver_gecko
