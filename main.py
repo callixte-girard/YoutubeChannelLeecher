@@ -13,18 +13,19 @@ def app():
 	### I)c) channels already downloaded
 	# leech.channel("UC7sXGI8p8PvKosLWagkK9wQ", True, "https://www.notion.so/62f774223ae14e9688c10977875170bb?v=89558962e1e0401493b3eb1967ac1eb8") ### Heu?Reka
 	# leech.channel("UCcueC-4NWGuPFQKzQWn5heA", True, "https://www.notion.so/03b597b7607c4728bcb570e814e02a99?v=2396f2f45e3c4c4e97da84321f486d5e") ### Victor Ferry
+	### I)d) channels already downloaded but with some mysterious errors somewhere
+	# leech.channel("UCLXDNUOO3EQ80VmD9nQBHPg", True, "https://www.notion.so/1a9d23934b244ca6be4c2085a5b7a231?v=5a0aa53c5ca640e4be2130b142447257") ### Fouloscopie
 	### II) channels that need the program to be adjusted to work correctly
-	# leech.channel("Micmaths", False, "https://www.notion.so/930c45af3d1a401b952b0a1da57fb02d?v=9afa56a8a17641e99b4db486e81e3f80")
+	leech.channel("Micmaths", False, "https://www.notion.so/930c45af3d1a401b952b0a1da57fb02d?v=9afa56a8a17641e99b4db486e81e3f80")
 	### III) channels remaining to download
-	leech.channel("UCLXDNUOO3EQ80VmD9nQBHPg", True, "https://www.notion.so/1a9d23934b244ca6be4c2085a5b7a231?v=5a0aa53c5ca640e4be2130b142447257") ### Fouloscopie
 
+app()
 # for i in itertools.count():
 # 	try:
 # 		app()
 # 	except:
 # 		if i > cst.max_retries: break
 # 		else: app()
-app()
 
 var.driver.quit()
 print("————— END OF PROGRAM —————")
