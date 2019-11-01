@@ -31,11 +31,11 @@ def addsParamsToUrl(url, params_names, params_values):
 def initFirefoxConfiguredProperly():
     profile = webdriver.FirefoxProfile()
     ### tells to download in a custom path and sets it
-    profile.set_preference("var.driver.download.dir", cst.path_downloads) 
-    profile.set_preference("var.driver.download.folderList", 2) 
+    profile.set_preference("var.driver.download.folderList", 2) ### custom path for download
+    profile.set_preference("var.driver.download.dir", cst.path_downloads + "pipou") ### not working SHIT
     driver_gecko = webdriver.Firefox(profile)
     # driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True) ### eytd
-    driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
+    # driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
     # driver_gecko.close()
     # driver_gecko.maximize_window()
     return driver_gecko

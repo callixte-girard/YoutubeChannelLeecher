@@ -32,11 +32,13 @@ def scrapeVideoInfosFromLink(vid_url):
     published_on = " ".join(date_spl)
     published_on = datetime.strptime(published_on, "%d %b %Y").date()
     ### truncate title to get episode title + episode number
-    spl = separateVideoTitleAndNumber(title)
-    if spl is not None: ### splitted has occured
-        title = spl[0]
-        number = spl[1]
-    else: number = None ### title stays itself : number should be None
+    # spl = separateVideoTitleAndNumber(title)
+    # if spl is not None: ### splitted has occured
+    #     title = spl[0]
+    #     number = spl[1]
+    # else: number = None ### title stays itself : number should be None
+    number = None ### default : don't analyse episode number.
+    ### now create Video element with gathered infos
     vid = Video(vid_url, title, number, published_on, description)
     return vid
 

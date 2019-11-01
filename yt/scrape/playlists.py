@@ -17,6 +17,7 @@ def getPlaylistsLinksFromChannelUrl(channel_name, is_channel):
     url_full = mth.addsParamsToUrl(url_full, ["view"], [1]) ### 0 = all playlists, 1 = only created by user
     
     plsts = scroll_down.untilAllElementsLoaded(url_full, True, True)
+
     plsts_urls = []
     for plst in plsts:
         # print(plst)
@@ -32,7 +33,6 @@ def getPlaylistsLinksFromChannelUrl(channel_name, is_channel):
 def getPlaylistFromUrl(plst_url):
     full_url = mth.reassembleUrl(cst.url_main, plst_url)
 
-    ### first scroll down
     vids = scroll_down.untilAllElementsLoaded(full_url, True, False)
 
     ### 1) get title

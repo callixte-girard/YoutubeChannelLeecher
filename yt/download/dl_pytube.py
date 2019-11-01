@@ -17,26 +17,33 @@ def downloadVideosFromLinks(vids_urls, collection):
         row = collections.getCorrespondingRowFromVidUrl(collection, vid_url)
         if not row.downloaded:
             print("video at [ {} ] — [ {} ] will be downloaded ...".format(vid_url, row.title))
-            attemptStreamDownload(full_url, row, 1) ### crashes program after attempt 2 failed
+            try: 
+                download_success = attemptStreamDownload(full_url, row) ### crashes program after all attempts failed
+            except: 
+                print("video at [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(vid_url), end=cst.line)
         else:
             print("video at [ {} ] — [ {} ] has already been downloaded.".format(vid_url, row.title), end=cst.line)
     return vid_counter
 
 
-def attemptStreamDownload(full_url, row, attempt):
+def attemptStreamDownload(full_url, row):
     try:
-        if attempt == 1: vid = YouTube(full_url).streams.filter(mime_type='video/mp4', res='720p').first()
-        elif attempt == 2: vid = YouTube(full_url).streams.filter(mime_type='video/mp4').first()
-        # elif attempt == 3: vid = YouTube(full_url).streams.first()
-        else: raise py_ex.VideoUnavailable
-        print(vid)
+        attempt = 0 
+        vid = None
+        while vid is None:
+            bitrate = cst.youtube_bitrates[attempt]
+            vid = YouTube(full_url).streams.filter(mime_type='video/mp4', res=bitrate).first()
+            print("stream obtained at attempt n°{} — [{}]".format(attempt, bitrate))
+            attempt += 1
         ### try to download video, if available
         vid.download(cst.path_downloads)
         ### mark video as downloaded in Notion
         row.downloaded = True
-        print("video has finished downloading at attempt n°{}".format(attempt), end=cst.line)
+        print("video has finished downloading at attempt n°{} — [{}]".format(attempt, bitrate), end=cst.line)
         return True
-    except py_ex.VideoUnavailable:
+    except IndexError:
         print("video could not be downloaded at attempt n°{}".format(attempt), end=cst.line)
-        # print(e)
-        return attemptStreamDownload(full_url, row, attempt + 1)
+        return False
+    except py_ex.VideoUnavailable:
+        print("video is unavailable", end=cst.line)
+        return False
