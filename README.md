@@ -22,16 +22,16 @@
 
 # PROGRESS
 ### To-do
-- fix problem with method `attemptStreamDownload()` / error with `vid.download(cst.path_downloads)` —> put priority order for bitrates —> if it still fails, it means that no mp4 format is available —> CRY.
-- launch Firefox in custom size : max height but half width, on the left of the screen
-- download videos directly in a folder named like user/channel name
-- detect video length asap (ideally, in all videos section) —> possibility to ignore videos above a certain length
+- prevent video loading from stalling when window is not visible/active —> is this really happening ?
 - manage direct videos : 'Diffusé en direct le 30 nov. 2017'
-- auto-detect which part of the raw title contains video number, if any
-- prevent video loading from stalling when window is not visible/active
+- download videos directly in a folder named like user/channel name
+- detect video length from all videos section —> possibility to ignore videos above a certain length
 - force English with Selenium but only for channels spoken in English
+- auto-detect which part of the raw title contains video number, if any
 
 ### Done
+- launch Firefox in custom size : max height but half width, on the left of the screen
+- fix problem with method `attemptStreamDownload()` / error with `vid.download(cst.path_downloads)` —> put priority order for bitrates —> if it still fails, it means that no mp4 format is available —> CRY.
 - try to split video raw title into title and video number 
 - make tests with slugifier to make `in_playlists` correspond to `In playlists`
 - inspect all playlists and record matches in existing Notion rows

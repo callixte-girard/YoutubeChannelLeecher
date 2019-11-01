@@ -1,12 +1,7 @@
 from static import constants as cst
 from static import variables as var
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.firefox.options import Options
 from os import listdir
 
 
@@ -27,27 +22,27 @@ def addsParamsToUrl(url, params_names, params_values):
             if i < len(params_names)-1: url += "&"
     return url
 
-### to init gecko will proper profile settings and cool addons
+### to init gecko with proper settings
 def initFirefoxConfiguredProperly():
-    profile = webdriver.FirefoxProfile()
     ### tells to download in a custom path and sets it
-    profile.set_preference("var.driver.download.folderList", 2) ### custom path for download
-    profile.set_preference("var.driver.download.dir", cst.path_downloads + "pipou") ### not working SHIT
-    driver_gecko = webdriver.Firefox(profile)
-    # driver_gecko.install_addon(cst.path_extensions + "{b9acf540-acba-11e1-8ccb-001fd0e08bd4}.xpi", True) ### eytd
-    # driver_gecko.install_addon(cst.path_extensions + "adguardadblocker@adguard.com.xpi", True)
-    # driver_gecko.close()
-    # driver_gecko.maximize_window()
-    return driver_gecko
+    profile = webdriver.FirefoxProfile()
+    profile.set_preference("browser.download.folderList", 0)
+    profile.set_preference("browser.download.manager.showWhenStarting", False)
+    profile.set_preference("browser.download.dir", cst.path_downloads + "pipou")
+    browser = webdriver.Firefox(firefox_profile=profile) 
+    ### set half-part size for window
+    browser.maximize_window()
+    browser.set_window_size(browser.get_window_size()["width"] / 2, browser.get_window_size()["height"])
+    browser.set_window_position(0, 0)
+    return browser
 
-
+### to count downloads
 def countUnfinishedDownloads(path):
     counter = 0
     files = listdir(path)
     for file in files:
         if ".part" in file: counter += 1
     return counter
-
 
 def isDownloadFinished(path, filename):
     files = listdir(path)
