@@ -13,14 +13,17 @@ def scrapeVideoInfosFromLink(vid_url):
     print("now scraping infos for the vid [ {} ] ...".format(vid_url))
 
     var.driver.get(url_full)
+
     while True:
-        all_html = bs(var.driver.page_source, "html.parser")
+        try:
+            all_html = bs(var.driver.page_source, "html.parser")
+            
+            title = all_html.find('h1', attrs={'class':'title style-scope ytd-video-primary-info-renderer'}).find("yt-formatted-string").get_text().strip()
+            published_on = all_html.find('div', attrs={'id':'date'}).find("yt-formatted-string").get_text()
+            description = all_html.find('div', attrs={'id':'description'}).find("yt-formatted-string").get_text()
 
-        title = all_html.find('h1', attrs={'class':'title style-scope ytd-video-primary-info-renderer'}).find("yt-formatted-string").get_text().strip()
-        published_on = all_html.find('div', attrs={'id':'date'}).find("yt-formatted-string").get_text()
-        description = all_html.find('div', attrs={'id':'description'}).find("yt-formatted-string").get_text()
-
-        if title != "" and published_on != "" and description != "" : break
+            if title != "" and published_on != "" and description != "" : break
+        except: pass ### wait for stuff to load
 
     ### lil date formatting
     date_spl = published_on.split(" ")

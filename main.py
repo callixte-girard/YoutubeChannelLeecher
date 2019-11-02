@@ -18,9 +18,9 @@ def app():
 	### II) channels that need the program to be adjusted to work correctly
 	# leech.channel("Micmaths", False, "https://www.notion.so/930c45af3d1a401b952b0a1da57fb02d?v=9afa56a8a17641e99b4db486e81e3f80")
 	### III) channels remaining to download
-	leech.channel("DeTerreNouvelle", False, "https://www.notion.so/f5d1cee7e5b744568c26230e447539fa?v=3936d54fd2c3425ab133051e53b66fad") ### Emmanuel et Sandrine
+	leech.channel("DeTerreNouvelle", False, "https://www.notion.so/c23d0f64380448319fcbdfa00eb4b54a?v=3fe996e9eb454e90ba072dadf24d0631") ### Emmanuel et Sandrine
 	leech.channel("UCBVb9MG9nXh0XMee6k44A3A", True, "https://www.notion.so/498f8a36458b4513a1c2c272ca4361af?v=409c3fb87d424221a97b9ddf3fa13ddc") ### Les philogynes
-	leech.channel("UCvlY7lI2l-kxr3SdvJuggpQ", True, "https://www.notion.so/c23d0f64380448319fcbdfa00eb4b54a?v=3fe996e9eb454e90ba072dadf24d0631") ### Sonny Court
+	leech.channel("UCvlY7lI2l-kxr3SdvJuggpQ", True, "https://www.notion.so/f5d1cee7e5b744568c26230e447539fa?v=3936d54fd2c3425ab133051e53b66fad") ### Sonny Court
 
 app()
 # for i in itertools.count():

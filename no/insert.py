@@ -18,7 +18,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
         vid = collections.getCorrespondingRowFromVidUrl(channel_coll, vid_url)
         if vid is None:
             print("video at [ {} ] doesn't exist in Notion yet. Let's scrape its infos.".format(vid_url))
-            ## 2) ... create a Video with its url and the playlists it belongs. 
+            ## 2) ... create a Video with its url and the playlists it belongs.
             vid = infos.scrapeVideoInfosFromLink(vid_url)
             # print("title: {} | published_on: {} —> scraped infos done :)".format(vid.title, vid.published_on), end=cst.line)
             row = channel_coll.add_row()
