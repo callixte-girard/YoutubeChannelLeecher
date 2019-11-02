@@ -7,5 +7,5 @@ import locale
 locale.setlocale(locale.LC_TIME, "fr_FR")
 
 ### init important variables for the prog
-driver = mth.initFirefoxConfiguredProperly()
+driver = mth.initChromiumConfiguredProperly()
 client = NotionClient(token_v2 = cst.notion_token)
