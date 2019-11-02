@@ -22,9 +22,8 @@ def getPlaylistsLinksFromChannelUrl(channel_name, is_channel):
     for plst in plsts:
         # print(plst)
 
-        ### get interesting info
+        ### get interesting infos
         plst_url = plst['href']
-        # print(plst_url, end=cst.line)
 
         plsts_urls.append(plst_url)
     return plsts_urls

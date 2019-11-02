@@ -26,11 +26,12 @@ def videoInfosInCollection(ch, vids_urls, plsts):
             row.url = vid_url
             row.title = vid.title
             if vid.number is not None: row.number = vid.number
+            row.duration = vid.duration
             row.published_on = vid.published_on
             row.downloaded = vid.downloaded
-            # row.n = 
+            # row.number = 
             ### video description
-            row.children.add_new(HeaderBlock, title=cst.label_description)
+            row.children.add_new(HeaderBlock, title=cst.youtube_label_description)
             row.children.add_new(DividerBlock)
             row.children.add_new(TextBlock, title=vid.description)
             ### in which playlist am I ?

@@ -17,6 +17,8 @@ notion_colors = [
     "pink",
     "red",
 ]
+notion_tag_name_playlists = "in playlists"
+
 youtube_bitrates = [
     # "1080p", ### too high : ignored
     "720p",
@@ -25,7 +27,11 @@ youtube_bitrates = [
     "240p",
     "144p", ### beeeeaaark
 ]
-label_description = "Description de la vidéo"
-tagName_plsts = "in playlists"
+youtube_liked_videos_playlists_names = [
+    "Liked videos",
+    "Vidéos \"J'aime\""
+]
+youtube_label_description = "Description de la vidéo"
+
 max_retries = 5
 attempt_get_vid_number = False

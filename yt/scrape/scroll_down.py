@@ -15,12 +15,10 @@ def getEltsFromDriver(driver, for_plst, get_plst): ### if !for_plst —> all_vid
     if for_plst:
         if not get_plst: ### get videos in playlist
             elts = all_html.find_all('a', attrs={'class':'yt-simple-endpoint style-scope ytd-playlist-video-renderer'})
-            elts.pop(0) ### only needed with firefox        
         else: ### get playlist 
             elts = all_html.find_all('a', attrs={'class':'yt-simple-endpoint style-scope yt-formatted-string'})
     else: ### get all videos
         elts = all_html.find_all('h3', attrs={'class':'style-scope ytd-grid-video-renderer'})
-        elts.pop(0) ### only needed with firefox
     # for vid in vids:
     #     print(vid, end=cst.line)
     return elts
@@ -50,7 +48,7 @@ def untilAllElementsLoaded(url_full, for_plst, get_plst):
             # print("turn:", turn, " | ", "spinner:", spinner)
             elts = getEltsFromDriver(var.driver, for_plst, get_plst)
             loaded_now = len(elts)
-            print(loaded_now, "elements loaded now ...")            
+            print(loaded_now, "elements loaded now ...")       
         except:
             break
 

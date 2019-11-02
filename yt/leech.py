@@ -15,6 +15,8 @@ def channel(ch_name, is_channel, cv_url, force_english=False, download_videos=Tr
     ## - first create Channel object
     ch = Channel(ch_name, is_channel, cv_url, force_english)
 
+    ## - insert this channel into Notion
+
     ## - manually change yt language to "English (UK)" ?
     if ch.force_english: pass ### TODO
 
@@ -29,11 +31,13 @@ def channel(ch_name, is_channel, cv_url, force_english=False, download_videos=Tr
     for plst_url in plsts_urls:
         plst = playlists.getPlaylistFromUrl(plst_url)
         plsts.append(plst)
-        ### add playlist name to in_playlists options if it doesn't already exist
-        try: 
-            collections.addNewValueToCollectionMultiSelect(ch.notion_url, cst.tagName_plsts, plst.title) ### slugifying included for prop
-            print(plst.title, "has been added to the schema.", end=cst.line)
-        except ValueError as already_exists: print(already_exists, end=cst.line)
+        if not plst.title in cst.youtube_liked_videos_playlists_names: ### exclude liked videos playlist
+            ### add playlist name to in_playlists options if it doesn't already exist
+            try: 
+                collections.addNewValueToCollectionMultiSelect(ch.notion_url, cst.notion_tag_name_playlists, plst.title) ### slugifying included for prop
+                print("\"{}\" has been added to the schema.".format(plst.title), end=cst.line)
+            except ValueError as already_exists: print(already_exists, end=cst.line)
+        else: print("Ignoring playlist \"{}\".".format(plst.title), end=cst.line)
 
     ## - scrape all videos and insert their infos in Notion
     insert.videoInfosInCollection(ch, vids_urls, plsts)
@@ -45,6 +49,8 @@ def channel(ch_name, is_channel, cv_url, force_english=False, download_videos=Tr
         channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
         downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll)
         print(downloaded_videos, "videos have been downloaded.")
-    
+
+    ## - mark channel as finished on Notion
+    ######
     print("CONGRATS !!! YOU LEECHED THE CHANNEL [", ch.yt_url, "] !!!", end=cst.star)
     return ch
