@@ -12,7 +12,7 @@ def app():
 	print("total : {} channels".format(len(all_channels)), end=cst.star)
 	for ch in all_channels:
 		print("{} | {} | {}".format(ch.name, ch.url[0:2] == "UC", ch.url))
-		######## scrape all unfinished channels now ;)
+		######## scrape all unfinished channels now ;)dzadza
 
 app()
 # for i in itertools.count():
