@@ -11,7 +11,7 @@ def downloadVideosFromLinks(vids_urls, collection):
     for vid_url in vids_urls:
         vid_counter += 1
         # print(vid_url)
-        full_url = cst.url_main + vid_url
+        full_url = cst.youtube_main_url + vid_url
         print("progress (downloading) : {} / {}".format(vid_counter, len(vids_urls)))
         ### check on Notion if video has already been downloaded or not
         row = collections.getCorrespondingRowFromVidUrl(collection, vid_url)
@@ -33,13 +33,13 @@ def attemptStreamDownload(full_url, row):
         while vid is None:
             bitrate = cst.youtube_bitrates[attempt]
             vid = YouTube(full_url).streams.filter(mime_type='video/mp4', res=bitrate).first()
-            print("stream obtained at attempt n°{} — [{}]".format(attempt, bitrate))
-            attempt += 1
+            attempt += 1 ### increment attempt AFTER getting bitrate from array
+            print("stream obtained at attempt n°{} — [ {} ]".format(attempt, bitrate))
         ### try to download video, if available
         vid.download(cst.path_downloads)
         ### mark video as downloaded in Notion
         row.downloaded = True
-        print("video has finished downloading at attempt n°{} — [{}]".format(attempt, bitrate), end=cst.line)
+        print("video has finished downloading at attempt n°{} — [ {} ]".format(attempt, bitrate), end=cst.line)
         return True
     except IndexError:
         print("video could not be downloaded at attempt n°{}".format(attempt), end=cst.line)

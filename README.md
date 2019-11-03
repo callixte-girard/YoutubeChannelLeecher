@@ -22,6 +22,7 @@
 
 # PROGRESS
 ### To-do
+- remove attribute `is_channel` in Channel objects —> if channel url starts with 'UC', it needs `/channel/` prefix. Else : `/user/`
 - download videos directly in a folder named like user/channel name
 - detect video length from all videos section —> possibility to ignore videos above a certain length
 - force English with Selenium but only for channels spoken in English

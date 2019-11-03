@@ -7,12 +7,12 @@ import requests
 from yt.objects.Playlist import Playlist
 
 
-def getPlaylistsLinksFromChannelUrl(channel_name, is_channel):
-    if is_channel: channel_or_user = "channel"
+def getPlaylistsLinksFromChannelUrl(channel_url):
+    if channel_url[0:2] == "UC": channel_or_user = "channel"
     else: channel_or_user = "user"
 
-    url_playlists = "/{}/".format(channel_or_user) + channel_name + "/playlists"
-    url_full = mth.reassembleUrl(cst.url_main, url_playlists)
+    url_playlists = "/{}/".format(channel_or_user) + channel_url + "/playlists"
+    url_full = mth.reassembleUrl(cst.youtube_main_url, url_playlists)
     ### !!! remove this in all other modes !!!
     url_full = mth.addsParamsToUrl(url_full, ["view"], [1]) ### 0 = all playlists, 1 = only created by user
     
@@ -30,7 +30,7 @@ def getPlaylistsLinksFromChannelUrl(channel_name, is_channel):
 
 
 def getPlaylistFromUrl(plst_url):
-    full_url = mth.reassembleUrl(cst.url_main, plst_url)
+    full_url = mth.reassembleUrl(cst.youtube_main_url, plst_url)
 
     vids = scroll_down.untilAllElementsLoaded(full_url, True, False)
 

@@ -31,7 +31,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
             row.downloaded = vid.downloaded
             # row.number = 
             ### video description
-            row.children.add_new(HeaderBlock, title=cst.youtube_label_description)
+            row.children.add_new(HeaderBlock, title=cst.notion_description_label)
             row.children.add_new(DividerBlock)
             row.children.add_new(TextBlock, title=vid.description)
             ### in which playlist am I ?
