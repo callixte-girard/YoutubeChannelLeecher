@@ -9,10 +9,10 @@ import itertools
 def app():
 	collection = collections.getCollectionFromViewUrl(cst.notion_collection_url)
 	all_channels = collection.get_rows()
-	print("total : {} channels".format(len(all_channels)))
+	print("total : {} channels".format(len(all_channels)), end=cst.star)
 	for ch in all_channels:
 		print("{} | {} | {}".format(ch.name, ch.url[0:2] == "UC", ch.url))
-
+		######## scrape all unfinished channels now ;)
 
 app()
 # for i in itertools.count():
