@@ -24,7 +24,7 @@ def addsParamsToUrl(url, params_names, params_values):
 
 ### to init browser with proper settings
 def initChromiumConfiguredProperly():
-    browser = webdriver.Chrome() 
+    browser = webdriver.Chrome()
     ### set half-part size for window
     browser.maximize_window()
     browser.set_window_size(browser.get_window_size()["width"] / 2, browser.get_window_size()["height"])

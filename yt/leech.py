@@ -11,22 +11,22 @@ from yt.objects.Channel import Channel
 
 
  ### must add manually a channel collection in Notion first.
-def channel(channel_url, cv_url, force_english=False, download_videos=True):
+def channel(channel_url, episodes_url, force_english=False, download_videos=True):
     ## first create Channel object
-    ch = Channel(channel_url, force_english)
+    ch = Channel(channel_url, episodes_url, force_english)
 
     if channel_url[0:2] == "UC": channel_or_user = "channel"
     else: channel_or_user = "user"
 
-    ## manually change yt language to "English (UK)" ?
+    ## manually change yt language to "English (US)" ?
     if ch.force_english: pass ### TODO
 
     ## get all videos links
-    vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url, ch.is_channel)
+    vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)
     print("total videos published by {} [ {} ] : {}".format(channel_or_user, ch.yt_url, len(vids_urls)), end=cst.star)
 
     ## get all playlists links and builds playlists items from them
-    plsts_urls = playlists.getPlaylistsLinksFromChannelUrl(ch.yt_url, ch.is_channel)
+    plsts_urls = playlists.getPlaylistsLinksFromChannelUrl(ch.yt_url)
     print("total playlists published by {} [ {} ] : {}".format(channel_or_user, ch.yt_url, len(plsts_urls)), end=cst.star)
     plsts = []
     for plst_url in plsts_urls:
@@ -51,7 +51,5 @@ def channel(channel_url, cv_url, force_english=False, download_videos=True):
         downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll)
         print(downloaded_videos, "videos have been downloaded.")
 
-    ## mark channel as finished on Notion
-    ######
     print("CONGRATS !!! YOU LEECHED THE CHANNEL [", ch.yt_url, "] !!!", end=cst.star)
     return ch

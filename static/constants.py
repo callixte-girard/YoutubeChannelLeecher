@@ -3,7 +3,7 @@ line = "\n———————————————————————�
 star = "\n*********************************************************************************\n"
 ### Notion.so paths
 notion_token = "aecb30784b091b5754d38501093f8230d4dbf60db6d7a727852a931fda4fc596c80126ece221c4b4f3910268a63425eeaf9b62c9b606d7437141d88b85d0e0a039061cdfb4d8ae172e7fef8dff75"
-notion_collection_url = "https://www.notion.so/5dffc26a8cd24181a192c3bbd54bba20?v=a22302faa8074b8d96e573777910f28e"
+notion_collection_url = "https://www.notion.so/5fa30b6001f3459a95a61946cee58e14?v=a1ea3de2e305490dafd42bf537688d81"
 notion_description_label = "Description"
 notion_tag_name_playlists = "in playlists"
 notion_colors = [
@@ -32,11 +32,11 @@ youtube_liked_videos_playlists_names = [
     "Liked videos",
     "Vidéos \"J'aime\""
 ]
-### other URLs
-url_y2mate = 'https://y2mate.com/fr'
 ### local paths
 path_downloads = '/Users/c/Downloads/'
 path_extensions = '/Users/c/Library/Application Support/Firefox/Profiles/4fanq78o.default/extensions/'
+### other URLs
+url_y2mate = 'https://y2mate.com/fr'
 ### program settings
 max_retries = 5
 attempt_get_vid_number = False

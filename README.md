@@ -14,15 +14,17 @@
 
 # SETUP
 ## Dependancies
-- `selenium` webdriver with Chrome driver (Firefox abandoned, because too buggy)
-- `pytube` (pip package for downloading YouTube video from URL)
+- `selenium` : webdriver with Chrome driver (Firefox abandoned, because too buggy)
+- `BeautifulSoup` : HTML parser to get infos when page loaded in Selenium 
+- `pytube` : download YouTube video from URL
 
 ## Quick fixes for common issues
 - If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`
 
 # PROGRESS
 ### To-do
-- remove attribute `is_channel` in Channel objects —> if channel url starts with 'UC', it needs `/channel/` prefix. Else : `/user/`
+- mysterious errors : maybe it's because of video title containing forbidden characters : `|` or `#` or `/` etc
+- create children from template in collection's rows
 - download videos directly in a folder named like user/channel name
 - detect video length from all videos section —> possibility to ignore videos above a certain length
 - force English with Selenium but only for channels spoken in English
@@ -30,6 +32,7 @@
 - auto-detect which part of the raw title contains video number, if any
 
 ### Done
+- remove attribute `is_channel` in Channel objects —> if channel url starts with 'UC', it needs `/channel/` prefix. Else : `/user/`
 - scrape and insert video duration properly (but Notion refuses dates alone)
 - manage direct videos : 'Diffusé en direct le 30 nov. 2017'
 - switch from Firefox to Chromium and NEVER USE FIREFOX AGAIN
