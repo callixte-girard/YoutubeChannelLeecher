@@ -18,7 +18,9 @@ def app():
 		# print("{} | {}".format(ch.name, ch.url))
 		ch = Channel(row.name, row.url, row.episodes_url, row.language == "English")
 		######## scrape all unfinished channels now ;)
-		if ch.yt_url != "" and ch.yt_url != "-":
+		if (ch.yt_url != "" 
+		and ch.yt_url != "-" 
+		and not row.ignore):
 			if row.download_status is not None and "Finished" in row.download_status :
 				leech.channel(ch, row, download_videos=False)
 			else:

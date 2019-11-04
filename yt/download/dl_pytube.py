@@ -6,7 +6,7 @@ from no import collections
 import itertools
 
 
-def downloadVideosFromLinks(vids_urls, collection):
+def downloadVideosFromLinks(vids_urls, channel_coll):
     vid_counter = 0
     for vid_url in vids_urls:
         vid_counter += 1
@@ -14,7 +14,9 @@ def downloadVideosFromLinks(vids_urls, collection):
         full_url = cst.youtube_main_url + vid_url
         print("progress (downloading) : {} / {}".format(vid_counter, len(vids_urls)))
         ### check on Notion if video has already been downloaded or not
-        row = collections.getCorrespondingRowFromVidUrl(collection, vid_url)
+        row = None
+        while row is None: ### c'est honteur de devoir faire une while aussi dégueulasse mais la nullité de cette API Notion m'y oblige.
+            row = collections.getCorrespondingRowFromVidUrl(channel_coll, vid_url)
         if not row.downloaded:
             print("video at [ {} ] — [ {} ] will be downloaded ...".format(vid_url, row.title))
             try: 
