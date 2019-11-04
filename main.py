@@ -24,7 +24,7 @@ def app():
 			else:
 				leech.channel(ch, row)
 				row.download_status = "Finished"
-			row.infos_status = "Finished" ### not very clean but more logical : done in leech.channel()
+			# row.infos_status = "Finished" ### not very clean but more logical : done in leech.channel()
 
 app()
 # for i in itertools.count():
