@@ -23,15 +23,15 @@
 
 # PROGRESS
 ### To-do
-- mysterious errors : maybe it's because of video title containing forbidden characters : `|` or `#` or `/` etc
-- create children from template in collection's rows
+- force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, use French as default.)
 - download videos directly in a folder named like user/channel name
-- detect video length from all videos section —> possibility to ignore videos above a certain length
-- force English with Selenium but only for channels spoken in English
+- maintain binding between OneDrive files and Notion entries by inspecting each video each time and validating or reporting (+downloading) present or missing ones each time program is launched.
 - prevent video loading from stalling when window is not visible/active with Chrome.
 - auto-detect which part of the raw title contains video number, if any
 
 ### Done
+- handle the case when video has NO DESCRIPTION at all
+- detect video length —> possibility to ignore videos above a certain length
 - remove attribute `is_channel` in Channel objects —> if channel url starts with 'UC', it needs `/channel/` prefix. Else : `/user/`
 - scrape and insert video duration properly (but Notion refuses dates alone)
 - manage direct videos : 'Diffusé en direct le 30 nov. 2017'
@@ -50,6 +50,8 @@
 - make video download async and run by 3 or 4 vids
 
 ### Abandoned | Not useful anymore
+- create children from template in collection's rows —> impossible due to Notion API limitations
+- mysterious errors : maybe it's because of video title containing forbidden characters : `|` or `#` or `/` etc —> no it's not.
 - ignore Liked videos playlist (not really necesary.)
 - find a BETTER WAY to check if download has really started —> get filename by deduction : check which file popped the most recently !
 - after downloading supposed to be finished, check if number files downloaded == len(vids_urls)

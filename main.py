@@ -4,6 +4,7 @@ from static import variables as var
 from yt import leech
 from no import collections
 import itertools
+from yt.objects.Channel import Channel
 
 
 ################ DER MAIN DEBUT #####################
@@ -11,20 +12,19 @@ def app():
 	collection = collections.getCollectionFromViewUrl(cst.notion_collection_url)
 	all_channels = collection.get_rows()
 	nb_channels = len(all_channels)
-	print("total : {} channels".format(nb_channels), end=cst.star)
-
-	for ch in all_channels:
-		print("{} | {}".format(ch.name, ch.url))
+	print("total channels : {}".format(nb_channels), end=cst.star)
+	
+	for row in all_channels:
+		# print("{} | {}".format(ch.name, ch.url))
+		ch = Channel(row.name, row.url, row.episodes_url, row.language == "English")
 		######## scrape all unfinished channels now ;)
-		# print(row.children.get_rows()) ### test : collection not seeable
-		if ch.url != "":
-			if ch.download_status is not None and "Finished" not in ch.download_status :
-				leech.channel(ch.url, ch.episodes_url, download_videos=False)
+		if ch.yt_url != "" and ch.yt_url != "-":
+			if row.download_status is not None and "Finished" in row.download_status :
+				leech.channel(ch, row, download_videos=False)
 			else:
-				leech.channel(ch.url, ch.episodes_url)
-				# row.download_status = "Finished"
-			ch.infos_status = "Finished"
-			print(end=cst.line)
+				leech.channel(ch, row)
+				row.download_status = "Finished"
+			row.infos_status = "Finished" ### not very clean but more logical : done in leech.channel()
 
 app()
 # for i in itertools.count():

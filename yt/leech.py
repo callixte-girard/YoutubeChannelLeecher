@@ -7,27 +7,23 @@ from yt.scrape import infos
 from yt.download import dl_pytube
 from no import insert
 from no import collections
-from yt.objects.Channel import Channel
+from yt.objects.Channel import getChannelUrlPrefix
 
 
  ### must add manually a channel collection in Notion first.
-def channel(channel_url, episodes_url, force_english=False, download_videos=True):
-    ## first create Channel object
-    ch = Channel(channel_url, episodes_url, force_english)
-
-    if channel_url[0:2] == "UC": channel_or_user = "channel"
-    else: channel_or_user = "user"
+def channel(ch, channel_row, download_videos=True):
+    channel_or_user = getChannelUrlPrefix(ch.yt_url)
 
     ## manually change yt language to "English (US)" ?
     if ch.force_english: pass ### TODO
 
     ## get all videos links
     vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)
-    print("total videos published by {} [ {} ] : {}".format(channel_or_user, ch.yt_url, len(vids_urls)), end=cst.star)
+    print("total videos published by {} [ {} ] : {}".format(channel_or_user, ch.name, len(vids_urls)), end=cst.star)
 
     ## get all playlists links and builds playlists items from them
     plsts_urls = playlists.getPlaylistsLinksFromChannelUrl(ch.yt_url)
-    print("total playlists published by {} [ {} ] : {}".format(channel_or_user, ch.yt_url, len(plsts_urls)), end=cst.star)
+    print("total playlists published by {} [ {} ] : {}".format(channel_or_user, ch.name, len(plsts_urls)), end=cst.star)
     plsts = []
     for plst_url in plsts_urls:
         plst = playlists.getPlaylistFromUrl(plst_url)
@@ -41,8 +37,9 @@ def channel(channel_url, episodes_url, force_english=False, download_videos=True
         else: print("Ignoring playlist \"{}\".".format(plst.title), end=cst.line)
 
     ## scrape all videos and insert their infos in Notion
-    insert.videoInfosInCollection(ch, vids_urls, plsts)
-    
+    insert.videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded = not download_videos)
+    channel_row.infos_status = "Finished"    
+
     ## download all videos
     if download_videos:
         print("let's download all these cool vids now !", end=cst.star)
@@ -51,5 +48,5 @@ def channel(channel_url, episodes_url, force_english=False, download_videos=True
         downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll)
         print(downloaded_videos, "videos have been downloaded.")
 
-    print("CONGRATS !!! YOU LEECHED THE CHANNEL [", ch.yt_url, "] !!!", end=cst.star)
+    print("CONGRATS !!! YOU LEECHED THE CHANNEL [ {} ] !!!".format(ch.name), end=cst.star)
     return ch

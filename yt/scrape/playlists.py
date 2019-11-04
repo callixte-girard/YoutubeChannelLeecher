@@ -5,11 +5,11 @@ from yt.scrape import scroll_down
 from bs4 import BeautifulSoup as bs
 import requests
 from yt.objects.Playlist import Playlist
+from yt.objects.Channel import getChannelUrlPrefix
 
 
 def getPlaylistsLinksFromChannelUrl(channel_url):
-    if channel_url[0:2] == "UC": channel_or_user = "channel"
-    else: channel_or_user = "user"
+    channel_or_user = getChannelUrlPrefix(channel_url)    
 
     url_playlists = "/{}/".format(channel_or_user) + channel_url + "/playlists"
     url_full = mth.reassembleUrl(cst.youtube_main_url, url_playlists)

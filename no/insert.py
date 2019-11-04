@@ -8,7 +8,7 @@ from notion.block import TextBlock
 from notion.block import DividerBlock
 
 
-def videoInfosInCollection(ch, vids_urls, plsts):
+def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
     channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
     vid_counter = 0
     for vid_url in vids_urls:
@@ -28,8 +28,10 @@ def videoInfosInCollection(ch, vids_urls, plsts):
             if vid.number is not None: row.number = vid.number
             row.duration = vid.duration
             row.published_on = vid.published_on
-            row.downloaded = vid.downloaded
-            # row.number = 
+            if mark_all_as_downloaded: 
+                row.downloaded = True
+            else: 
+                row.downloaded = vid.downloaded
             ### video description
             row.children.add_new(HeaderBlock, title=cst.notion_description_label)
             row.children.add_new(DividerBlock)
@@ -41,7 +43,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
                 if vid_url in plst.vids_urls: vid.in_playlists.append(plst.title)
             ### finally record tags
             print("here are the playlists in which this video appears :", vid.in_playlists)
-            row.in_playlists = vid.in_playlists
+            if vid.in_playlists != []: row.in_playlists = vid.in_playlists ### to manage channels that haven't any playlist
             print("video at [ {} ] — [ {} ] successfully scraped infos and inserted into Notion :)".format(vid_url, vid.title), end=cst.line)
         else:
             print("video at [ {} ] — [ {} ] already exists in Notion.".format(vid_url, vid.title), end=cst.line)

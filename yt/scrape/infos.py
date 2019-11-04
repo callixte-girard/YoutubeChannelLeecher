@@ -25,7 +25,7 @@ def scrapeVideoInfosFromLink(vid_url):
             description = all_html.find('div', attrs={'id':'description'}).find("yt-formatted-string").get_text()
             duration = all_html.find('span', attrs={'class':'ytp-time-duration'}).get_text()
 
-            if title != "" and published_on != "" and description != "" and duration != "" : break
+            if title != "" and published_on != "" and duration != "" : break ### yes, description can be blank.
         except: pass ### wait for stuff to load
 
     ### lil date formatting
