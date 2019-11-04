@@ -23,7 +23,7 @@ def channel(ch, channel_row, download_videos=True):
 
     ## if there is are new videos, scrape all videos and insert their infos in Notion
     channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
-    if len(vids_urls) > len(channel_coll.get_rows()) or "Finished" not in channel_row.infos_status:
+    if len(vids_urls) > len(channel_coll.get_rows()) or "Finished" not in str(channel_row.infos_status):
         ## get all playlists links and builds playlists items from them
         plsts_urls = playlists.getPlaylistsLinksFromChannelUrl(ch.yt_url)
         print("total playlists published by {} [ {} ] : {}".format(channel_or_user, ch.name, len(plsts_urls)), end=cst.star)
@@ -45,7 +45,7 @@ def channel(ch, channel_row, download_videos=True):
         print("infos are already scraped and don't need any update.")
 
     ## download all videos
-    if download_videos:
+    if download_videos and "error" not in str(channel_row.download_status):
         print("let's download all these cool vids now !", end=cst.star)
         ## for each video, download it if "downloaded" is unchecked on Notion —> then check it.
         channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)

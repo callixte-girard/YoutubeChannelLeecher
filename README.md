@@ -23,6 +23,7 @@
 
 # PROGRESS
 ### To-do
+- transform `Finished -n errors` into an attribute `Ignore` for video row in channel.
 - force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, force French as default.)
 - download videos directly in a folder named like user/channel name
 - maintain binding between OneDrive files and Notion entries by inspecting each video each time and validating or reporting (+downloading) present or missing ones each time program is launched.
