@@ -34,7 +34,8 @@ youtube_liked_videos_playlists_names = [
 ]
 ### local paths
 path_downloads = '/Users/c/Downloads/'
-path_extensions = '/Users/c/Library/Application Support/Firefox/Profiles/4fanq78o.default/extensions/'
+path_extensions = '/Users/c/Library/Application Support/BraveSoftware/Brave-Browser/Default/Extensions/'
+path_extension_adblock = path_extensions + 'cfhdojbkjhnklbpkdaibdccddilifddb/3.7_0/'
 ### other URLs
 url_y2mate = 'https://y2mate.com/fr'
 ### program settings

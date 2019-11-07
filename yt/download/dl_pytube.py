@@ -4,9 +4,10 @@ from pytube import YouTube
 from pytube import exceptions as py_ex
 from no import collections 
 import itertools
+import os
 
 
-def downloadVideosFromLinks(vids_urls, channel_coll):
+def downloadVideosFromLinks(vids_urls, channel_coll, channel_name):
     vid_counter = 0
     for vid_url in vids_urls:
         vid_counter += 1
@@ -17,10 +18,10 @@ def downloadVideosFromLinks(vids_urls, channel_coll):
         row = None
         while row is None: ### c'est honteur de devoir faire une while aussi dégueulasse mais la nullité de cette API Notion m'y oblige.
             row = collections.getCorrespondingRowFromVidUrl(channel_coll, vid_url)
-        if not row.downloaded:
+        if not row.downloaded and not row.ignore:
             print("video at [ {} ] — [ {} ] will be downloaded ...".format(vid_url, row.title))
             try: 
-                download_success = attemptStreamDownload(full_url, row) ### crashes program after all attempts failed
+                download_success = attemptStreamDownload(full_url, row, channel_name) ### crashes program after all attempts failed
             except: 
                 print("video at [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(vid_url), end=cst.line)
         else:
@@ -28,7 +29,7 @@ def downloadVideosFromLinks(vids_urls, channel_coll):
     return vid_counter
 
 
-def attemptStreamDownload(full_url, row):
+def attemptStreamDownload(full_url, row, channel_name):
     try:
         attempt = 0 
         vid = None
@@ -37,8 +38,12 @@ def attemptStreamDownload(full_url, row):
             vid = YouTube(full_url).streams.filter(mime_type='video/mp4', res=bitrate).first()
             attempt += 1 ### increment attempt AFTER getting bitrate from array
             print("stream obtained at attempt n°{} — [ {} ]".format(attempt, bitrate))
+        ### create folder named like channel if needed
+        try: open(cst.path_downloads + channel_name) ### will throw a IsADirectoryException if existing
+        except IsADirectoryError: pass ### okay
+        except FileNotFoundError: os.system("mkdir '{}'".format(cst.path_downloads + channel_name))
         ### try to download video, if available
-        vid.download(cst.path_downloads)
+        vid.download(cst.path_downloads + channel_name)
         ### mark video as downloaded in Notion
         row.downloaded = True
         print("video has finished downloading at attempt n°{} — [ {} ]".format(attempt, bitrate), end=cst.line)

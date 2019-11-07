@@ -12,6 +12,8 @@ from yt.objects.Channel import getChannelUrlPrefix
 
  ### must add manually a channel collection in Notion first.
 def channel(ch, channel_row, download_videos=True):
+    print("WILL NOW LEECH THE CHANNEL [ {} ] ...".format(ch.name), end=cst.star)
+
     channel_or_user = getChannelUrlPrefix(ch.yt_url)
 
     ## manually change yt language to "English (US)" ?
@@ -42,17 +44,17 @@ def channel(ch, channel_row, download_videos=True):
         insert.videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded = not download_videos)
         channel_row.infos_status = "Finished" 
     else: 
-        print("infos are already scraped and don't need any update.")
+        print("all infos are already scraped and don't need any update.")
 
     ## download all videos
-    if download_videos and "error" not in str(channel_row.download_status):
+    # if download_videos and "error" not in str(channel_row.download_status):
+    if True:
         print("let's download all these cool vids now !", end=cst.star)
         ## for each video, download it if "downloaded" is unchecked on Notion —> then check it.
-        channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
-        downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll)
+        downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll, ch.name)
         print(downloaded_videos, "videos have been downloaded.")
     else:
-        print("videos are already downloaded.")
+        print("all videos are already downloaded.")
 
     print("CONGRATS !!! YOU LEECHED THE CHANNEL [ {} ] !!!".format(ch.name), end=cst.star)
     return ch

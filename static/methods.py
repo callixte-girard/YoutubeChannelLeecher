@@ -1,6 +1,7 @@
 from static import constants as cst
 from static import variables as var
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from os import listdir
 
 
@@ -24,11 +25,26 @@ def addsParamsToUrl(url, params_names, params_values):
 
 ### to init browser with proper settings
 def initChromiumConfiguredProperly():
-    browser = webdriver.Chrome()
+    ### install addons (adblock plus)
+    options = Options()
+    options.add_argument("--load-extension={}".format(cst.path_extension_adblock))
+    ### sets custom download path
+    # prefs = {'download.default_directory' : cst.path_downloads + "pipou/"}
+    # options.add_experimental_option('prefs', prefs)
+    ### try headless
+    # options.set_headless(True)
+    print("running headless : {}".format(options.headless))
+    ### launch chromium with options
+    browser = webdriver.Chrome(options=options)
     ### set half-part size for window
     browser.maximize_window()
-    browser.set_window_size(browser.get_window_size()["width"] / 2, browser.get_window_size()["height"])
+    browser.set_window_size(browser.get_window_size()["width"]/2, browser.get_window_size()["height"])
     browser.set_window_position(0, 0)
+    ### close last tab mentioning that extension is installed
+    if (len(browser.window_handles)) == 2:
+        browser.switch_to.window(browser.window_handles[1])
+        browser.close()
+        browser.switch_to.window(browser.window_handles[0])
     return browser
 
 

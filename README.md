@@ -7,6 +7,7 @@
 5) Scrape all videos infos from their URLs obtained in 2) : title + basic infos + description + inspects in which playlist(s) the video appears.
 6) At this point, all videos infos are written in Notion. Checkbox "downloaded" is off for every video.
 7) Downloads all videos one by one and mark them as downloaded in Notion when completed. 
+## Notes :
 - I update by myself : if a new video is published, it will appear on all videos section, and thus be automatically added in Notion and downloaded.
 - I can continue where I stopped, but —> !!! Maybe you will have to manually delete the last video info that might have been only partially recorded !!!
 - For each playlist / all videos section, I scroll down until the playlist's end is reached so that all URLs are present.
@@ -23,14 +24,16 @@
 
 # PROGRESS
 ### To-do
-- transform `Finished -n errors` into an attribute `Ignore` for video row in channel.
+- maintain binding between OneDrive files and Notion entries by inspecting each video each time and validating or reporting (+downloading) present or missing ones each time program is launched. —> download only files that are not present and mark them the same way in Notion.
 - force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, force French as default.)
-- download videos directly in a folder named like user/channel name
-- maintain binding between OneDrive files and Notion entries by inspecting each video each time and validating or reporting (+downloading) present or missing ones each time program is launched.
-- prevent video loading from stalling when window is not visible/active with Chrome.
 - auto-detect which part of the raw title contains video number, if any
 
 ### Done
+- download videos directly in a folder named like user/channel name (after creating folder if needed)
+- transform `Finished -n errors` into an attribute `Ignore` for video row in channel. —> added attribute in videos template
+- close last window (adblock plus) —> seems to work correctly.
+- install addon to ignore ads so as to fix length errors in some videos :( installed successfully, now test it —> working fine :) but not working with headless option.
+- test headless option —> working but makes bugs, like in videos durations :'(
 - handle the case when video has NO DESCRIPTION at all
 - detect video length —> possibility to ignore videos above a certain length
 - remove attribute `is_channel` in Channel objects —> if channel url starts with 'UC', it needs `/channel/` prefix. Else : `/user/`
@@ -51,6 +54,7 @@
 - make video download async and run by 3 or 4 vids
 
 ### Abandoned | Not useful anymore
+- prevent video loading from stalling when window is not visible/active with Chrome. —> seems impossible, except with headless options, but it's a bit buggy with other functionalities
 - create children from template in collection's rows —> impossible due to Notion API limitations
 - mysterious errors : maybe it's because of video title containing forbidden characters : `|` or `#` or `/` etc —> no it's not.
 - ignore Liked videos playlist (not really necesary.)

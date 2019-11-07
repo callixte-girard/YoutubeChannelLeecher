@@ -9,6 +9,7 @@ from yt.objects.Channel import Channel
 
 ################ DER MAIN DEBUT #####################
 def app():
+	print("getting channels from Notion collection ... please wait")
 	collection = collections.getCollectionFromViewUrl(cst.notion_collection_url)
 	all_channels = collection.get_rows()
 	nb_channels = len(all_channels)
@@ -17,7 +18,6 @@ def app():
 	for row in all_channels:
 		# print("{} | {}".format(ch.name, ch.url))
 		ch = Channel(row.name, row.url, row.episodes_url, row.language == "English")
-		######## scrape all unfinished channels now ;)
 		if (ch.yt_url != "" 
 		and ch.yt_url != "-" 
 		and not row.ignore):
