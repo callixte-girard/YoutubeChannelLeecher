@@ -8,28 +8,33 @@ from yt.objects.Channel import Channel
 
 
 ################ DER MAIN DEBUT #####################
-test = True
+test = False
 def app():
 	print("starting YouTube ...")
 	var.driver.get(cst.youtube_main_url)
-	print("getting channels from Notion collection ... please wait")
-	collection = collections.getCollectionFromViewUrl(cst.notion_collection_url)
-	all_channels = collection.get_rows()
-	nb_channels = len(all_channels)
-	print("total channels : {}".format(nb_channels), end=cst.star)
+	
+	if test:
+		### test for manual language change
+		leech.channel(Channel("test", "url", "url", "Français"), 0)
+	else:
+		print("getting channels from Notion collection ... please wait")
+		collection = collections.getCollectionFromViewUrl(cst.notion_collection_url)
+		all_channels = collection.get_rows()
+		nb_channels = len(all_channels)
+		print("total channels : {}".format(nb_channels), end=cst.star)
 
-	for row in all_channels:
-		# print("{} | {}".format(ch.name, ch.url))
-		ch = Channel(row.name, row.url, row.episodes_url, row.language)
-		if (ch.yt_url != "" 
-		and ch.yt_url != "-" 
-		and not row.ignore):
-			if row.download_status is not None and "Finished" in row.download_status :
-				leech.channel(ch, row, download_videos=False)
-			else:
-				leech.channel(ch, row)
-				row.download_status = "Finished"
-			# row.infos_status = "Finished" ### not very clean but more logical : done in leech.channel()
+		for row in all_channels:
+			# print("{} | {}".format(ch.name, ch.url))
+			ch = Channel(row.name, row.url, row.episodes_url, row.language)
+			if (ch.yt_url != "" 
+			and ch.yt_url != "-" 
+			and not row.ignore):
+				if row.download_status is not None and "Finished" in row.download_status :
+					leech.channel(ch, row, download_videos=False)
+				else:
+					leech.channel(ch, row)
+					row.download_status = "Finished"
+				# row.infos_status = "Finished" ### not very clean but more logical : done in leech.channel()
 
 app()
 # for i in itertools.count():

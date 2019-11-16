@@ -21,31 +21,28 @@ def channel(ch, channel_row, download_videos=True):
     settings_button = next(btn for btn in btns if "Settings" in str(btn.get_attribute("aria-label")))
     settings_button.click()
     ### click change language
-    change_language = None
-    while change_language is None:
-        change_language = var.driver.find_element_by_xpath('//*[@id="settings"]/ytd-account-settings/paper-item[1]')
+    change_language = var.driver.find_element_by_xpath('//*[@id="language"]')
     change_language.click()
-    time.sleep(2)
     ### get available languages
-    # available_languages = None
-    # while available_languages is None:
-        # available_languages = var.driver.find_elements_by_xpath('//*[@id="settings"]/ytd-account-settings/div/div[2]/paper-item')
-    ### click desired language
-    lang_index = 0
-    stop = False
-    while not stop:
-        try: 
-            lang = var.driver.find_element_by_xpath('//*[@id="settings"]/ytd-account-settings/div/div[2]/paper-item[{}]/p'.format(lang_index))
-            print("current language : {}".format(lang.text))
-            if ch.language in lang.text: 
-                desired_language = lang
-                stop = True
-            else: lang_index += 1
+    available_languages = None
+    while available_languages is None:
+        try: available_languages = var.driver.find_element_by_xpath(cst.youtube_xpath_languages)
         except: pass
-            # var.driver.execute_script('window.scrollBy(0, 5)')
-    print("desired language selected : {}".format(desired_language))
+    # print("available : {}".format(available_languages))
+    ### click desired language
+    lang_index = 0 ### LANGUAGES INDEXES START AT 1 !!!!!
+    while True:
+        try:
+            lang_index += 1
+            lang = var.driver.find_element_by_xpath(cst.youtube_xpath_languages + cst.youtube_xpath_lang_from_index.format(lang_index))
+            print("lang n°{} : {}".format(lang_index, lang.text))
+            if len(ch.language) > 0 and ch.language in lang.text: 
+                desired_language = lang
+                break
+        except:
+            print("!!! THE LANGUAGE FOR THIS CHANNEL DOES NOT SEEM TO EXIST ON YOUTUBE — PLEASE DOUBLE CHECK !!!")
+            raise
     desired_language.click()
-    print("youtube language has successfully been changed to [ {} ]".format(desired_language))
 
     ## get all videos links
     vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)

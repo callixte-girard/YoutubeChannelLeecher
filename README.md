@@ -32,11 +32,11 @@
 # PROGRESS
 
 ## To-do
-- force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, raise en exception !)
 - maintain binding between OneDrive files and Notion entries by inspecting each video each time and validating or reporting (+downloading) present or missing ones each time program is launched. —> download only files that are not present and mark them the same way in Notion.
 - auto-detect which part of the raw title contains video number, if any
 
 ## Done
+- force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, raise en exception !)
 - download videos directly in a folder named like user/channel name (after creating folder if needed)
 - transform `Finished -n errors` into an attribute `Ignore` for video row in channel. —> added attribute in videos template
 - close last window (adblock plus) —> seems to work correctly.
