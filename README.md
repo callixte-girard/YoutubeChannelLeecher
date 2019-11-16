@@ -1,4 +1,5 @@
 # FUNCTIONALITIES
+
 ## How may I help you, lazy developer friend ?
 1) Go to the main videos page in user/channel you provided.
 2) Get all videos' URLs. 
@@ -7,28 +8,35 @@
 5) Scrape all videos infos from their URLs obtained in 2) : title + basic infos + description + inspects in which playlist(s) the video appears.
 6) At this point, all videos infos are written in Notion. Checkbox "downloaded" is off for every video.
 7) Downloads all videos one by one and mark them as downloaded in Notion when completed. 
+
 ## Notes :
 - I update by myself : if a new video is published, it will appear on all videos section, and thus be automatically added in Notion and downloaded.
 - I can continue where I stopped, but —> !!! Maybe you will have to manually delete the last video info that might have been only partially recorded !!!
 - For each playlist / all videos section, I scroll down until the playlist's end is reached so that all URLs are present.
 - When Firefox is launched with Selenium, AdGuard (or AdBlock, don't remember exactly) is automatically installed as an extension to avoid download errors with PyTube if there is an ad.
 
+<br>
+
 # SETUP
-## Dependancies
+
+## Dependancies (install them with `pip install xxx`)
 - `selenium` : webdriver with Chrome driver (Firefox abandoned, because too buggy)
-- `BeautifulSoup` : HTML parser to get infos when page loaded in Selenium 
+- `bs4` (BeautifulSoup) : HTML parser to get infos when page loaded in Selenium 
 - `pytube` : download YouTube video from URL
 
 ## Quick fixes for common issues
 - If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`
 
+<br>
+
 # PROGRESS
-### To-do
+
+## To-do
+- force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, raise en exception !)
 - maintain binding between OneDrive files and Notion entries by inspecting each video each time and validating or reporting (+downloading) present or missing ones each time program is launched. —> download only files that are not present and mark them the same way in Notion.
-- force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, force French as default.)
 - auto-detect which part of the raw title contains video number, if any
 
-### Done
+## Done
 - download videos directly in a folder named like user/channel name (after creating folder if needed)
 - transform `Finished -n errors` into an attribute `Ignore` for video row in channel. —> added attribute in videos template
 - close last window (adblock plus) —> seems to work correctly.
@@ -53,7 +61,7 @@
 - fix error that makes playlist grabber get one less that actual number
 - make video download async and run by 3 or 4 vids
 
-### Abandoned | Not useful anymore
+## Abandoned | Not useful anymore
 - prevent video loading from stalling when window is not visible/active with Chrome. —> seems impossible, except with headless options, but it's a bit buggy with other functionalities
 - create children from template in collection's rows —> impossible due to Notion API limitations
 - mysterious errors : maybe it's because of video title containing forbidden characters : `|` or `#` or `/` etc —> no it's not.

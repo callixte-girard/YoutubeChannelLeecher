@@ -2,14 +2,14 @@ class Channel:
     name = ""
     yt_url = ""
     notion_url = ""
-    force_english = False
+    language = ""
     videos = []
 
-    def __init__(self, name, yt_url, notion_url, force_english):
+    def __init__(self, name, yt_url, notion_url, language):
         self.name = name
         self.yt_url = str(yt_url)
         self.notion_url = str(notion_url)
-        self.force_english = force_english
+        self.language = str(language)
 
 
 ### is user or channel ?

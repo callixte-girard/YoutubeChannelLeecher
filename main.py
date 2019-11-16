@@ -8,16 +8,19 @@ from yt.objects.Channel import Channel
 
 
 ################ DER MAIN DEBUT #####################
+test = True
 def app():
+	print("starting YouTube ...")
+	var.driver.get(cst.youtube_main_url)
 	print("getting channels from Notion collection ... please wait")
 	collection = collections.getCollectionFromViewUrl(cst.notion_collection_url)
 	all_channels = collection.get_rows()
 	nb_channels = len(all_channels)
 	print("total channels : {}".format(nb_channels), end=cst.star)
-	
+
 	for row in all_channels:
 		# print("{} | {}".format(ch.name, ch.url))
-		ch = Channel(row.name, row.url, row.episodes_url, row.language == "English")
+		ch = Channel(row.name, row.url, row.episodes_url, row.language)
 		if (ch.yt_url != "" 
 		and ch.yt_url != "-" 
 		and not row.ignore):

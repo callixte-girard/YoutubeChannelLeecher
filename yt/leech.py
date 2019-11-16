@@ -8,27 +8,55 @@ from yt.download import dl_pytube
 from no import insert
 from no import collections
 from yt.objects.Channel import getChannelUrlPrefix
+import time
 
 
  ### must add manually a channel collection in Notion first.
 def channel(ch, channel_row, download_videos=True):
     print("WILL NOW LEECH THE CHANNEL [ {} ] ...".format(ch.name), end=cst.star)
 
-    channel_or_user = getChannelUrlPrefix(ch.yt_url)
-
-    ## manually change yt language to "English (US)" ?
-    if ch.force_english: pass ### TODO
+    ## first change yt language to the desired one
+    ### click yt settings button
+    btns = var.driver.find_elements_by_id("button")
+    settings_button = next(btn for btn in btns if "Settings" in str(btn.get_attribute("aria-label")))
+    settings_button.click()
+    ### click change language
+    change_language = None
+    while change_language is None:
+        change_language = var.driver.find_element_by_xpath('//*[@id="settings"]/ytd-account-settings/paper-item[1]')
+    change_language.click()
+    time.sleep(2)
+    ### get available languages
+    # available_languages = None
+    # while available_languages is None:
+        # available_languages = var.driver.find_elements_by_xpath('//*[@id="settings"]/ytd-account-settings/div/div[2]/paper-item')
+    ### click desired language
+    lang_index = 0
+    stop = False
+    while not stop:
+        try: 
+            lang = var.driver.find_element_by_xpath('//*[@id="settings"]/ytd-account-settings/div/div[2]/paper-item[{}]/p'.format(lang_index))
+            print("current language : {}".format(lang.text))
+            if ch.language in lang.text: 
+                desired_language = lang
+                stop = True
+            else: lang_index += 1
+        except: pass
+            # var.driver.execute_script('window.scrollBy(0, 5)')
+    print("desired language selected : {}".format(desired_language))
+    desired_language.click()
+    print("youtube language has successfully been changed to [ {} ]".format(desired_language))
 
     ## get all videos links
     vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)
-    print("total videos published by {} [ {} ] : {}".format(channel_or_user, ch.name, len(vids_urls)), end=cst.star)
+    print("total videos published by {} [ {} ] : {}".format(getChannelUrlPrefix(ch.yt_url), ch.name, len(vids_urls)), end=cst.star)
 
     ## if there is are new videos, scrape all videos and insert their infos in Notion
     channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
     if len(vids_urls) > len(channel_coll.get_rows()) or "Finished" not in str(channel_row.infos_status):
         ## get all playlists links and builds playlists items from them
         plsts_urls = playlists.getPlaylistsLinksFromChannelUrl(ch.yt_url)
-        print("total playlists published by {} [ {} ] : {}".format(channel_or_user, ch.name, len(plsts_urls)), end=cst.star)
+        print("total playlists published by {} [ {} ] : {}".format(getChannelUrlPrefix(ch.yt_url), ch.name, len(plsts_urls)), end=cst.star)
         plsts = []
         for plst_url in plsts_urls:
             plst = playlists.getPlaylistFromUrl(plst_url)
