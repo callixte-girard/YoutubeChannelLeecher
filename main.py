@@ -10,9 +10,6 @@ from yt.objects.Channel import Channel
 ################ DER MAIN DEBUT #####################
 test = False
 def app():
-	print("starting YouTube ...")
-	var.driver.get(cst.youtube_main_url)
-	
 	if test:
 		### test for manual language change
 		leech.channel(Channel("test", "url", "url", "Français"), 0)
@@ -29,12 +26,18 @@ def app():
 			if (ch.yt_url != "" 
 			and ch.yt_url != "-" 
 			and not row.ignore):
-				if row.download_status is not None and "Finished" in row.download_status :
+				if is_already_downloaded(row):
 					leech.channel(ch, row, download_videos=False)
 				else:
 					leech.channel(ch, row)
-					row.download_status = "Finished"
-				# row.infos_status = "Finished" ### not very clean but more logical : done in leech.channel()
+				row.infos_status = "Finished" ### not very clean but more logical : done in leech.channel()
+
+def is_already_downloaded(row):
+	already_downloaded = row.download_status is not None and "Finished" in row.download_status ### V1 : download_status column
+	# already_downloaded =  ### V2 : all videos either downloaded (OneDrive) or ignored
+	return already_downloaded
+
+
 
 app()
 # for i in itertools.count():

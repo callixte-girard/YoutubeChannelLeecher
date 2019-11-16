@@ -13,7 +13,8 @@
 - I update by myself : if a new video is published, it will appear on all videos section, and thus be automatically added in Notion and downloaded.
 - I can continue where I stopped, but —> !!! Maybe you will have to manually delete the last video info that might have been only partially recorded !!!
 - For each playlist / all videos section, I scroll down until the playlist's end is reached so that all URLs are present.
-- When Firefox is launched with Selenium, AdGuard (or AdBlock, don't remember exactly) is automatically installed as an extension to avoid download errors with PyTube if there is an ad.
+- When Selenium browser is launched, AdGuard (or AdBlock, don't remember exactly) is automatically installed as an extension to avoid download errors with video scraping if there is an ad (in video length notably).
+- Puts YouTube in proper language (the one you indicated in Notion) before scraping each channel to make sure the infos will be in proper language.
 
 <br>
 

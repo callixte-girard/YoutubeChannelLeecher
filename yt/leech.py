@@ -14,6 +14,8 @@ import time
  ### must add manually a channel collection in Notion first.
 def channel(ch, channel_row, download_videos=True):
     print("WILL NOW LEECH THE CHANNEL [ {} ] ...".format(ch.name), end=cst.star)
+    print("starting YouTube ...")
+    var.driver.get(cst.youtube_main_url)
 
     ## first change yt language to the desired one
     ### click yt settings button
@@ -35,14 +37,16 @@ def channel(ch, channel_row, download_videos=True):
         try:
             lang_index += 1
             lang = var.driver.find_element_by_xpath(cst.youtube_xpath_languages + cst.youtube_xpath_lang_from_index.format(lang_index))
-            print("lang n°{} : {}".format(lang_index, lang.text))
+            # print("lang n°{} : {}".format(lang_index, lang.text))
             if len(ch.language) > 0 and ch.language in lang.text: 
                 desired_language = lang
                 break
         except:
-            print("!!! THE LANGUAGE FOR THIS CHANNEL DOES NOT SEEM TO EXIST ON YOUTUBE — PLEASE DOUBLE CHECK !!!")
+            print("!!! THE LANGUAGE FOR THIS CHANNEL DOES NOT SEEM TO EXIST ON YOUTUBE — PLEASE DOUBLE CHECK !!!", end=cst.line)
             raise
     desired_language.click()
+    time.sleep(3) ### wait for language to change successfully
+    print("language successfully set to [ {} ]".format(ch.language), end=cst.line)
 
     ## get all videos links
     vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)
@@ -77,6 +81,7 @@ def channel(ch, channel_row, download_videos=True):
         print("let's download all these cool vids now !", end=cst.star)
         ## for each video, download it if "downloaded" is unchecked on Notion —> then check it.
         downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll, ch.name)
+        channel_row.download_status = "Finished" ### V1
         print(downloaded_videos, "videos have been downloaded.")
     else:
         print("all videos are already downloaded.")
