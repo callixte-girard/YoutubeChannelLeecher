@@ -21,21 +21,21 @@ def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
             ## 2) ... create a Video with its url and the playlists it belongs.
             vid = infos.scrapeVideoInfosFromLink(vid_url)
             # print("title: {} | published_on: {} —> scraped infos done :)".format(vid.title, vid.published_on), end=cst.line)
-            row = channel_coll.add_row()
+            row_vid = channel_coll.add_row()
             ### basic video infos
-            row.url = vid_url
-            row.title = vid.title
-            if vid.number is not None: row.number = vid.number
-            row.duration = vid.duration
-            row.published_on = vid.published_on
+            row_vid.url = vid_url
+            row_vid.title = vid.title
+            if vid.number is not None: row_vid.number = vid.number
+            row_vid.duration = vid.duration
+            row_vid.published_on = vid.published_on
             if mark_all_as_downloaded: 
-                row.downloaded = True
+                row_vid.downloaded = True
             else: 
-                row.downloaded = vid.downloaded
+                row_vid.downloaded = vid.downloaded
             ### video description
-            row.children.add_new(HeaderBlock, title=cst.notion_description_label)
-            row.children.add_new(DividerBlock)
-            row.children.add_new(TextBlock, title=vid.description)
+            row_vid.children.add_new(HeaderBlock, title=cst.notion_description_label)
+            row_vid.children.add_new(DividerBlock)
+            row_vid.children.add_new(TextBlock, title=vid.description)
             ### in which playlist am I ?
             vid.in_playlists = []
             for plst in plsts:
@@ -43,7 +43,7 @@ def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
                 if vid_url in plst.vids_urls: vid.in_playlists.append(plst.title)
             ### finally record tags
             print("here are the playlists in which this video appears :", vid.in_playlists)
-            if vid.in_playlists != []: row.in_playlists = vid.in_playlists ### to manage channels that haven't any playlist
+            if vid.in_playlists != []: row_vid.in_playlists = vid.in_playlists ### to manage channels that haven't any playlist
             print("video at [ {} ] — [ {} ] successfully scraped infos and inserted into Notion :)".format(vid_url, vid.title), end=cst.line)
         else:
             print("video at [ {} ] — [ {} ] already exists in Notion.".format(vid_url, vid.title), end=cst.line)

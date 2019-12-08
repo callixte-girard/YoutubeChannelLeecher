@@ -14,10 +14,10 @@ def getCollectionFromViewUrl(cv_url):
 
 def getCorrespondingRowFromVidUrl(collection, vid_url):
     rows = collection.get_rows()
-    for row in rows:
-        if row.url == vid_url: 
-            # print("row url is : {}".format(row.url))
-            return row
+    for row_vid in rows:
+        if row_vid.url == vid_url: 
+            # print("row url is : {}".format(row_vid.url))
+            return row_vid
     return None
 
 

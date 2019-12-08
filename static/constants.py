@@ -46,5 +46,5 @@ path_extension_adblock = path_extensions + 'cfhdojbkjhnklbpkdaibdccddilifddb/3.7
 url_y2mate = 'https://y2mate.com/fr'
 
 ### program settings
-max_retries = 5
+videos_number_limit = 100 ### number of videos above which channel should be ignored
 attempt_get_vid_number = False

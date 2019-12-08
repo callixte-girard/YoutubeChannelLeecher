@@ -1,6 +1,7 @@
 from static import constants as cst
 print(">>> welcome to YoutubePlaylistLeecher.", end=cst.star)
 from static import variables as var
+from static import methods as mth
 from yt import leech
 from no import collections
 import itertools
@@ -20,34 +21,21 @@ def app():
 		nb_channels = len(all_channels)
 		print("total channels : {}".format(nb_channels), end=cst.star)
 
-		for row in all_channels:
+		for row_ch in all_channels:
 			# print("{} | {}".format(ch.name, ch.url))
-			ch = Channel(row.name, row.url, row.episodes_url, row.language)
-			if (ch.yt_url != "" 
+			ch = Channel(row_ch.name, row_ch.url, row_ch.episodes_url, row_ch.language)
+			if (ch.yt_url != ""
 			and ch.yt_url != "-" 
-			and not row.ignore):
-				if is_already_downloaded(row):
-					leech.channel(ch, row, download_videos=False)
-				else:
-					leech.channel(ch, row)
-				row.infos_status = "Finished" ### not very clean but more logical : done in leech.channel()
-
-def is_already_downloaded(row):
-	already_downloaded = row.download_status is not None and "Finished" in row.download_status ### V1 : download_status column
-	# already_downloaded =  ### V2 : all videos either downloaded (OneDrive) or ignored
-	return already_downloaded
-
+			and not (row_ch.language == "Music" or row_ch.language == "Musique") 
+			and not row_ch.published_videos > cst.videos_number_limit
+			and not row_ch.ignore
+			and not row_ch.complete):
+				leech.channel(ch, row_ch, download_videos=not mth.allVidsDownloaded(row_ch))
+		
+		# var.driver.quit()
 
 
 app()
-# for i in itertools.count():
-# 	try:
-# 		app()
-# 	except:
-# 		if i > cst.max_retries: break
-# 		else: app()
 
-# var.driver.quit()
 print("————— END OF PROGRAM —————")
-
 ################# DER MAIN END ######################

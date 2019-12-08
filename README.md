@@ -33,10 +33,17 @@
 # PROGRESS
 
 ## To-do
-- maintain binding between OneDrive files and Notion entries by inspecting each video each time and validating or reporting (+downloading) present or missing ones each time program is launched. —> download only files that are not present and mark them the same way in Notion.
+- calculate number of vids in channels collection intelligently (just count number of links in `All Videos`)
+- auto-detect failed videos and mark them as so before continuing
+- maintain binding between OneDrive files and Notion entries :
+    - inspect each video each time and validate or report (+ download) present or missing ones each time program is launched. 
+    — download only files that are not present and mark them the same way in Notion.
+    - add the link to the OneDrive video in Notion (add a URL attribute)
 - auto-detect which part of the raw title contains video number, if any
 
 ## Done
+- programmatically check that every video in channel is either `Downloaded` or `Ignored` and thus remove column to manually ignore column `Download status`
+- change logic from `Ignore` to `Complete`
 - force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, raise en exception !)
 - download videos directly in a folder named like user/channel name (after creating folder if needed)
 - transform `Finished -n errors` into an attribute `Ignore` for video row in channel. —> added attribute in videos template

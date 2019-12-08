@@ -15,21 +15,21 @@ def downloadVideosFromLinks(vids_urls, channel_coll, channel_name):
         full_url = cst.youtube_main_url + vid_url
         print("progress (downloading) : {} / {}".format(vid_counter, len(vids_urls)))
         ### check on Notion if video has already been downloaded or not
-        row = None
-        while row is None: ### c'est honteur de devoir faire une while aussi dégueulasse mais la nullité de cette API Notion m'y oblige.
-            row = collections.getCorrespondingRowFromVidUrl(channel_coll, vid_url)
-        if not row.downloaded and not row.ignore:
-            print("video at [ {} ] — [ {} ] will be downloaded ...".format(vid_url, row.title))
+        row_vid = None
+        while row_vid is None: ### c'est honteur de devoir faire une while aussi dégueulasse mais la nullité de cette API Notion m'y oblige.
+            row_vid = collections.getCorrespondingRowFromVidUrl(channel_coll, vid_url)
+        if not row_vid.downloaded and not row_vid.ignore:
+            print("video at [ {} ] — [ {} ] will be downloaded ...".format(vid_url, row_vid.title))
             try: 
-                download_success = attemptStreamDownload(full_url, row, channel_name) ### crashes program after all attempts failed
+                download_success = attemptStreamDownload(full_url, row_vid, channel_name) ### crashes program after all attempts failed
             except: 
                 print("video at [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(vid_url), end=cst.line)
         else:
-            print("video at [ {} ] — [ {} ] has already been downloaded.".format(vid_url, row.title), end=cst.line)
+            print("video at [ {} ] — [ {} ] has already been downloaded.".format(vid_url, row_vid.title), end=cst.line)
     return vid_counter
 
 
-def attemptStreamDownload(full_url, row, channel_name):
+def attemptStreamDownload(full_url, row_vid, channel_name):
     try:
         attempt = 0 
         vid = None
@@ -45,7 +45,7 @@ def attemptStreamDownload(full_url, row, channel_name):
         ### try to download video, if available
         vid.download(cst.path_downloads + channel_name)
         ### mark video as downloaded in Notion
-        row.downloaded = True
+        row_vid.downloaded = True
         print("video has finished downloading at attempt n°{} — [ {} ]".format(attempt, bitrate), end=cst.line)
         return True
     except IndexError:
