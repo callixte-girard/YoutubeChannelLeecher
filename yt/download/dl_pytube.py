@@ -26,12 +26,14 @@ def downloadVideosFromLinks(vids_urls, channel_coll, channel_name):
                 print("video at [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(vid_url), end=cst.line)
         else:
             print("video at [ {} ] — [ {} ] has already been downloaded.".format(vid_url, row_vid.title), end=cst.line)
-    return vid_counter
+    print(vid_counter, "videos have been downloaded.")
+    # return vid_counter
 
 
-def attemptStreamDownload(full_url, row_vid, channel_name):
+def attemptStreamDownload(full_url, row_vid, channel_name, ignore_higher_bitrate=True):
     try:
-        attempt = 0 
+        attempt = 0
+        if ignore_higher_bitrate: attempt = 1 ### set at 1 if not otherwise specified to skip 1080p
         vid = None
         while vid is None:
             bitrate = cst.youtube_bitrates[attempt]
@@ -45,12 +47,12 @@ def attemptStreamDownload(full_url, row_vid, channel_name):
         ### try to download video, if available
         vid.download(cst.path_downloads + channel_name)
         ### mark video as downloaded in Notion
-        row_vid.downloaded = True
-        print("video has finished downloading at attempt n°{} — [ {} ]".format(attempt, bitrate), end=cst.line)
+        if row_vid is not None: row_vid.downloaded = True
+        print("video at [{}] has finished downloading at attempt n°{} — [ {} ]".format(full_url, attempt, bitrate), end=cst.line)
         return True
     except IndexError:
-        print("video could not be downloaded at attempt n°{}".format(attempt), end=cst.line)
+        print("video at [{}] could not be downloaded at attempt n°{}".format(full_url, attempt), end=cst.line)
         return False
     except py_ex.VideoUnavailable:
-        print("video is unavailable", end=cst.line)
+        print("video at [{}] is unavailable".format(full_url), end=cst.line)
         return False

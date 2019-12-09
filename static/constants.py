@@ -23,7 +23,7 @@ notion_colors = [
 ### YouTube constants
 youtube_main_url = "https://www.youtube.com"
 youtube_bitrates = [
-    # "1080p", ### too high : ignored
+    "1080p", ### too high : ignored else explicitly specified (for music notably)
     "720p",
     "480p",
     "360p",

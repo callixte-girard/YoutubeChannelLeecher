@@ -6,14 +6,19 @@ from yt import leech
 from no import collections
 import itertools
 from yt.objects.Channel import Channel
+from yt.objects.Playlist import Playlist
+### these are specifically for testing playlist-only
+from yt.scrape import playlists
+
 
 
 ################ DER MAIN DEBUT #####################
-test = False
+test = True
 def app():
 	if test:
-		### test for manual language change
-		leech.channel(Channel("test", "url", "url", "Français"), 0)
+		plst_url = "/playlist?list=PLVQpIsq9oH7QIS14bfZ6DBAz1gHth9lml"
+		leech.musical_playlist(plst_url)
+
 	else:
 		print("getting channels from Notion collection ... please wait")
 		collection = collections.getCollectionFromViewUrl(cst.notion_collection_url)

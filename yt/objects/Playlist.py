@@ -11,3 +11,10 @@ class Playlist:
         self.title = title
         # self.updated_on = updated_on
         self.vids_urls = vids_urls
+
+    def __str__(self):
+        l = self.title + ' @ ' + self.yt_url + " : " + "\n"
+        for vid_url in self.vids_urls:
+            l += vid_url + "\n"
+        return l
+

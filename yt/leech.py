@@ -11,7 +11,15 @@ from yt.objects.Channel import getChannelUrlPrefix
 import time
 
 
- ### must add manually a channel collection in Notion first.
+### downloading only 1 specific playlist without grabbing infos (ideal for music-only playlists)
+def musical_playlist(plst_url):
+    music_plst = playlists.getPlaylistFromUrl(plst_url)
+    # print(music_plst)
+    for vid_url in music_plst.vids_urls:
+        dl_pytube.attemptStreamDownload(vid_url, None, music_plst.title, ignore_higher_bitrate=False)
+
+
+### must add manually a channel collection in Notion first.
 def channel(ch, row_ch, download_videos=True):
     print("WILL NOW LEECH THE CHANNEL [ {} ] ...".format(ch.name), end=cst.star)
     print("starting YouTube ...")
@@ -83,8 +91,7 @@ def channel(ch, row_ch, download_videos=True):
     if download_videos:
         print("let's download all these cool vids now !", end=cst.star)
         ## for each video, download it if "downloaded" is unchecked on Notion —> then check it.
-        downloaded_videos = dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll, ch.name)
-        print(downloaded_videos, "videos have been downloaded.")
+        dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll, ch.name)
         ### V1 : obsolete now
         # row_ch.download_status = "Finished"
         ### V2 : only if all videos are downloaded
