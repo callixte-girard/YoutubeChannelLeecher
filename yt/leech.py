@@ -15,9 +15,8 @@ import time
 def musical_playlist(plst_url):
     music_plst = playlists.getPlaylistFromUrl(plst_url)
     # print(music_plst)
-    for vid_url in music_plst.vids_urls:
-        dl_pytube.attemptStreamDownload(vid_url, None, music_plst.title, ignore_higher_bitrate=False)
-
+    dl_pytube.downloadVideosFromLinks(music_plst.vids_urls, None, music_plst.title, audio_only=True)
+    
 
 ### must add manually a channel collection in Notion first.
 def channel(ch, row_ch, download_videos=True):
