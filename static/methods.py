@@ -37,7 +37,7 @@ def addsParamsToUrl(url, params_names, params_values):
 def initChromiumConfiguredProperly():
     ### install addons (adblock plus)
     options = Options()
-    # options.add_argument("--load-extension={}".format(cst.path_extension_adblock))
+    options.add_argument("--load-extension={}".format(cst.path_extension_adblock))
     ### sets custom download path
     # prefs = {'download.default_directory' : cst.path_downloads + "pipou/"}
     # options.add_experimental_option('prefs', prefs)

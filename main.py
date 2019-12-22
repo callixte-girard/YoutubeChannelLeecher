@@ -41,7 +41,7 @@ def app(mode=0):
 
 			elif mode==2:
 				plst = Playlist(row.title, row.url, row.episodes_url, None)
-				leech.channel_or_playlist(plst, row, download_videos=not mth.allVidsDownloaded(row), my_playlists=True)
+				leech.channel_or_playlist(plst, row, my_playlists=True)
 
 	# var.driver.quit()
 
