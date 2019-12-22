@@ -58,5 +58,5 @@ def getPlaylistFromUrl(plst_url):
         
         vids_urls.append(vid_url)
     
-    plst = Playlist(plst_url, plst_title, vids_urls)
+    plst = Playlist(plst_title, plst_url, None, vids_urls)
     return plst

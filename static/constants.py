@@ -4,7 +4,8 @@ star = "\n**********************************************************************
 
 ### Notion.so paths
 notion_token = "aecb30784b091b5754d38501093f8230d4dbf60db6d7a727852a931fda4fc596c80126ece221c4b4f3910268a63425eeaf9b62c9b606d7437141d88b85d0e0a039061cdfb4d8ae172e7fef8dff75"
-notion_collection_url = "https://www.notion.so/5fa30b6001f3459a95a61946cee58e14?v=a1ea3de2e305490dafd42bf537688d81"
+notion_all_channels = "https://www.notion.so/5fa30b6001f3459a95a61946cee58e14?v=a1ea3de2e305490dafd42bf537688d81"
+notion_my_playlists = "https://www.notion.so/cabda9baa7e54c2cb985b562054122b3?v=dadb592a1eca40c7a2ab2254d2c4f497"
 notion_description_label = "Description"
 notion_tag_name_playlists = "in playlists"
 notion_colors = [

@@ -1,12 +1,12 @@
 class Channel:
-    name = ""
+    title = ""
     yt_url = ""
     notion_url = ""
     language = ""
     videos = []
 
-    def __init__(self, name, yt_url, notion_url, language):
-        self.name = name
+    def __init__(self, title, yt_url, notion_url, language):
+        self.title = title
         self.yt_url = str(yt_url)
         self.notion_url = str(notion_url)
         self.language = str(language)

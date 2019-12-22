@@ -8,9 +8,7 @@ from os import listdir
 
 ### specific to Notion
 def allVidsDownloaded(row_ch):
-	### V1 : download_status column
-	# return row_ch.download_status is not None and "Finished" in row_ch.download_status 
-	### V2 : inspect if all videos are either downloaded (OneDrive) or to be ignored
+	### inspect if all videos are either downloaded (OneDrive) or to be ignored
     ch_videos = collections.getCollectionFromViewUrl(row_ch.episodes_url)
     vids = ch_videos.get_rows()
     all_vids_downloaded = all(vid.downloaded or vid.ignore for vid in vids)

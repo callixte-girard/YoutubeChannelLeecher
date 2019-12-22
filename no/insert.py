@@ -36,11 +36,12 @@ def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
             row_vid.children.add_new(HeaderBlock, title=cst.notion_description_label)
             row_vid.children.add_new(DividerBlock)
             row_vid.children.add_new(TextBlock, title=vid.description)
-            ### in which playlist am I ?
-            vid.in_playlists = []
-            for plst in plsts:
-                # print(plst.yt_url, plst.title, len(plst.vids_urls))
-                if vid_url in plst.vids_urls: vid.in_playlists.append(plst.title)
+            if plsts is not None:
+                ### in which playlist am I ?
+                vid.in_playlists = []
+                for plst in plsts:
+                    # print(plst.yt_url, plst.title, len(plst.vids_urls))
+                    if vid_url in plst.vids_urls: vid.in_playlists.append(plst.title)
             ### finally record tags
             print("here are the playlists in which this video appears :", vid.in_playlists)
             if vid.in_playlists != []: row_vid.in_playlists = vid.in_playlists ### to manage channels that haven't any playlist
