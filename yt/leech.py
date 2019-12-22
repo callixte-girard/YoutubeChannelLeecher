@@ -63,12 +63,17 @@ def channel_or_playlist(ch, row_ch, download_videos=True, my_playlists=False):
         print("language successfully set to [ {} ]".format(ch.language), end=cst.line)
 
     ## get all videos links
-    vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)
+    if my_playlists:
+        plst = playlists.getPlaylistFromUrl(ch.yt_url, absolute_url=True)
+        vids_urls = plst.vids_urls
+    else:
+        vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)
     print("total videos published in [ {} ] : {}".format(ch.title, len(vids_urls)), end=cst.star)
 
     ## if there is are new videos, scrape all videos and insert their infos in Notion
     channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
     if len(vids_urls) > len(channel_coll.get_rows()) or "Finished" not in str(row_ch.infos_status):
+        ### 1) playlists
         if my_playlists:
             plsts = None
         else:
@@ -86,7 +91,7 @@ def channel_or_playlist(ch, row_ch, download_videos=True, my_playlists=False):
                     print("\"{}\" has been added to the schema.".format(plst.title), end=cst.line)
                 except ValueError as already_exists: print(already_exists, end=cst.line)
                 # else: print("Ignoring playlist \"{}\".".format(plst.title), end=cst.line)
-
+        ### 2) video infos
         insert.videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded = not download_videos)
         row_ch.infos_status = "Finished" 
     else: 

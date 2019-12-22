@@ -15,13 +15,14 @@ def getCollectionFromViewUrl(cv_url):
 def getCorrespondingRowFromVidUrl(collection, vid_url):
     rows = collection.get_rows()
     ### V1 : works but not very pythonic
-    # for row_vid in rows:
-    #     if row_vid.url == vid_url: 
-    #         # print("row url is : {}".format(row_vid.url))
-    #         return row_vid
-    # return None
+    for row_vid in rows:
+        if row_vid.url == vid_url: 
+            # print("row url is : {}".format(row_vid.url))
+            return row_vid
+    return None
     ### V2 : same but simpler and condensed
-    return (row_vid for row_vid in rows if row_vid.url == vid_url)
+    # try: return next(row_vid for row_vid in rows if row_vid.url == vid_url)
+    # except StopIteration: return None
 
 
 def addNewValueToCollectionMultiSelect(cv_url, prop, value, color=None):

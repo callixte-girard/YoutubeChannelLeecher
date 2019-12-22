@@ -10,7 +10,7 @@ def getVideosLinksFromChannelUrl(channel_url):
     channel_or_user = getChannelUrlPrefix(channel_url)
     
     url_all_videos = "/{}/".format(channel_or_user) + channel_url + "/videos"
-    url_full = mth.reassembleUrl(cst.youtube_main_url, url_all_videos)
+    url_full = cst.youtube_main_url + url_all_videos
 
     vids = scroll_down.untilAllElementsLoaded(url_full, False, False)
 

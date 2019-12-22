@@ -12,7 +12,7 @@ def getPlaylistsLinksFromChannelUrl(channel_url):
     channel_or_user = getChannelUrlPrefix(channel_url)    
 
     url_playlists = "/{}/".format(channel_or_user) + channel_url + "/playlists"
-    url_full = mth.reassembleUrl(cst.youtube_main_url, url_playlists)
+    url_full = cst.youtube_main_url + url_playlists
     ### !!! remove this in all other modes !!!
     url_full = mth.addsParamsToUrl(url_full, ["view"], [1]) ### 0 = all playlists, 1 = only created by user
     
@@ -29,8 +29,9 @@ def getPlaylistsLinksFromChannelUrl(channel_url):
     return plsts_urls
 
 
-def getPlaylistFromUrl(plst_url):
-    full_url = mth.reassembleUrl(cst.youtube_main_url, plst_url)
+def getPlaylistFromUrl(plst_url, absolute_url=False):
+    if absolute_url: full_url = cst.youtube_main_url + "/playlist?list=" + plst_url ### seems to work only with public playlists
+    else: full_url = cst.youtube_main_url + plst_url
 
     vids = scroll_down.untilAllElementsLoaded(full_url, True, False)
 

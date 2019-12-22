@@ -16,6 +16,7 @@ def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
         print("progress (scraping infos) : {} / {}".format(vid_counter, len(vids_urls)))
         ## 1) check if it is already present in channel's Notion collection (from URL). If not...
         vid = collections.getCorrespondingRowFromVidUrl(channel_coll, vid_url)
+        # print(vid)
         if vid is None:
             print("video at [ {} ] doesn't exist in Notion yet. Let's scrape its infos.".format(vid_url))
             ## 2) ... create a Video with its url and the playlists it belongs.
@@ -47,5 +48,5 @@ def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
             if vid.in_playlists != []: row_vid.in_playlists = vid.in_playlists ### to manage channels that haven't any playlist
             print("video at [ {} ] — [ {} ] successfully scraped infos and inserted into Notion :)".format(vid_url, vid.title), end=cst.line)
         else:
-            print("video at [ {} ] — [ {} ] already exists in Notion.".format(vid_url, vid.title), end=cst.line)
+            print("video at [ {} ] already exists in Notion.".format(vid_url), end=cst.line) ### cannot show title at this moment because not scraped yet
             ## 3) check if its labels are the same as the playlists it belongs.
