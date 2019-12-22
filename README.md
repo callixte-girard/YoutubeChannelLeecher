@@ -20,7 +20,7 @@
 
 # SETUP
 
-## Dependancies (install them with `pip install xxx`)
+## Dependancies (install them with `pip install dependancy_name`)
 - `selenium` : webdriver with Chrome driver (Firefox abandoned, because too buggy)
 - `bs4` (BeautifulSoup) : HTML parser to get infos when page loaded in Selenium 
 - `pytube` : download YouTube video from URL
@@ -33,6 +33,7 @@
 # PROGRESS
 
 ## To-do
+- grab publisher of each video too (when not scraping a whole channel but just a playlist)
 - calculate number of vids in channels collection intelligently (just count number of links in `All Videos`)
 - auto-detect failed videos and mark them as so before continuing
 - maintain binding between OneDrive files and Notion entries :
@@ -42,6 +43,7 @@
 - auto-detect which part of the raw title contains video number, if any
 
 ## Done
+- grab a playlist similarly to a channel, which means, with saving video infos and downloading them.
 - programmatically check that every video in channel is either `Downloaded` or `Ignored` and thus remove column to manually ignore column `Download status`
 - change logic from `Ignore` to `Complete`
 - force English/French with Selenium for channels spoken in English/French (follow language indicated in Notion, if blank, raise en exception !)

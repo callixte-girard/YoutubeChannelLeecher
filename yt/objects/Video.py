@@ -1,5 +1,5 @@
 class Video:
-    channel = ""
+    publisher_url = ""
     yt_url = ""
     title = ""
     number = None
@@ -10,7 +10,6 @@ class Video:
     downloaded = False
 
     def __init__(self, yt_url, title, number, published_on, description, duration):
-        # self.channel = channel
         self.yt_url = yt_url
         self.title = title
         if number is not None and number > -1: self.number = number
