@@ -20,10 +20,11 @@
 
 # SETUP
 
-## Dependancies (install them with `pip install dependancy_name`)
+## Dependancies. Install them with : `pip install dependancy_name` ; you might replace `pip` with `pip3` if python3 is used (recommended)
 - `selenium` : webdriver with Chrome driver (Firefox abandoned, because too buggy)
-- `bs4` (BeautifulSoup) : HTML parser to get infos when page loaded in Selenium 
+- `bs4` (BeautifulSoup) : HTML parser to get infos when page loaded in Selenium
 - `pytube` : download YouTube video from URL
+- `slugify` : transform resource into a URI (unique resource identifier)
 
 ## Quick fixes for common issues
 - If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`

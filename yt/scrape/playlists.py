@@ -3,7 +3,6 @@ from static import variables as var
 from static import methods as mth
 from yt.scrape import scroll_down
 from bs4 import BeautifulSoup as bs
-import requests
 from yt.objects.Playlist import Playlist
 from yt.objects.Channel import getChannelUrlPrefix
 
