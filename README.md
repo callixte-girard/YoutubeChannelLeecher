@@ -23,6 +23,7 @@
 ## Dependancies. Install them with : `pip install dependancy_name` ; you might replace `pip` with `pip3` if python3 is used (recommended)
 - `selenium` : webdriver with Chrome driver (Firefox abandoned, because too buggy)
 - `bs4` (BeautifulSoup) : HTML parser to get infos when page loaded in Selenium
+- `notion` : Notion.so wrapper for Python (thanks to jamalex for its wrapper : https://github.com/jamalex/notion_py)
 - `pytube` : download YouTube video from URL
 - `slugify` : transform resource into a URI (unique resource identifier)
 
