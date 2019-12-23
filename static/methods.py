@@ -51,10 +51,11 @@ def initChromiumConfiguredProperly():
     browser.set_window_size(browser.get_window_size()["width"]/2, browser.get_window_size()["height"])
     browser.set_window_position(0, 0)
     ### close last tab mentioning that extension is installed
-    if (len(browser.window_handles)) == 2:
-        browser.switch_to.window(browser.window_handles[1])
-        browser.close()
-        browser.switch_to.window(browser.window_handles[0])
+    while (len(browser.window_handles)) != 2:
+        pass
+    browser.switch_to.window(browser.window_handles[1])
+    browser.close()
+    browser.switch_to.window(browser.window_handles[0])
     return browser
 
 
