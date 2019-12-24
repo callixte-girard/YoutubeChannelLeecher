@@ -29,10 +29,11 @@ def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
             if vid.number is not None: row_vid.number = vid.number
             row_vid.duration = vid.duration
             row_vid.published_on = vid.published_on
-            if mark_all_as_downloaded: 
-                row_vid.downloaded = True
-            else: 
-                row_vid.downloaded = vid.downloaded
+            ### publisher name and url
+            if not ch.title in vid.publisher_url: row_vid.publisher_url = vid.publisher_url
+            ### are all videos already downloaded ?
+            if mark_all_as_downloaded: row_vid.downloaded = True
+            else: row_vid.downloaded = vid.downloaded
             ### video description
             row_vid.children.add_new(HeaderBlock, title=cst.notion_description_label)
             row_vid.children.add_new(DividerBlock)

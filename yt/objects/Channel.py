@@ -17,3 +17,6 @@ def getChannelUrlPrefix(channel_url):
     if channel_url[0:2] == "UC": channel_or_user = "channel"
     else: channel_or_user = "user"
     return channel_or_user
+
+def removeChannelUrlPrefix(channel_url):
+    return channel_url.replace("channel", "").replace("user", "").replace("/", "")

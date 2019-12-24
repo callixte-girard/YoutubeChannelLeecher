@@ -2,6 +2,7 @@ from static import constants as cst
 from static import methods as mth
 from static import variables as var
 from yt.objects.Video import Video
+from yt.objects.Channel import removeChannelUrlPrefix
 from bs4 import BeautifulSoup as bs
 import itertools
 from datetime import datetime
@@ -21,11 +22,15 @@ def scrapeVideoInfosFromLink(vid_url):
             all_html = bs(var.driver.page_source, "html.parser")
             
             title = all_html.find('h1', attrs={'class':'title style-scope ytd-video-primary-info-renderer'}).find("yt-formatted-string").get_text().strip()
-            published_on = all_html.find('div', attrs={'id':'date'}).find("yt-formatted-string").get_text()
-            description = all_html.find('div', attrs={'id':'description'}).find("yt-formatted-string").get_text()
-            duration = all_html.find('span', attrs={'class':'ytp-time-duration'}).get_text()
+            description = all_html.find('div', attrs={'id':'description'}).find("yt-formatted-string").get_text().strip()
+            duration = all_html.find('span', attrs={'class':'ytp-time-duration'}).get_text().strip()
+            published_on = all_html.find('div', attrs={'id':'date'}).find("yt-formatted-string").get_text().strip()
+            publisher = all_html.find('a', attrs={'class':'yt-simple-endpoint style-scope yt-formatted-string'})
+            ### publisher infos
+            publisher_url = removeChannelUrlPrefix(publisher['href'].strip()) ### cleans it customly too
+            # publisher_name = publisher.get_text().strip()
 
-            if title != "" and published_on != "" and duration != "" : break ### yes, description can be blank.
+            if title != "" and published_on != "" and publisher_url != "" and duration != "" : break ### yes, description can be blank.
         except: pass ### wait for stuff to load
 
     ### lil date formatting
@@ -58,7 +63,7 @@ def scrapeVideoInfosFromLink(vid_url):
     duration = str(duration)
 
     ### now create Video element with gathered infos
-    vid = Video(vid_url, title, number, published_on, description, duration)
+    vid = Video(vid_url, title, number, publisher_url, published_on, description, duration)
     return vid
 
 
