@@ -23,12 +23,18 @@ def channel_or_playlist(ch, row_ch, download_videos=True, my_playlists=False):
 
     if my_playlists:
         print("WILL NOW LEECH Playlist [ {} ] ...".format(ch.title), end=cst.star)
-
     else:
         print("WILL NOW LEECH Channel [ {} ] ...".format(ch.title), end=cst.star)
-        ## first change yt language to the desired one
-        print("starting YouTube ...")
-        var.driver.get(cst.youtube_main_url)
+
+    ## first change yt language to the desired one
+    print("starting YouTube ...")
+    var.driver.get(cst.youtube_main_url)
+
+    # if my_playlists:
+        # wait_for = 20
+        # print("waiting {}s for user to log in!".format(wait_for))
+        # time.sleep(wait_for) ### trying to wait for user to log in
+    if not my_playlists:
         ### click yt settings button
         btns = var.driver.find_elements_by_id("button")
         try: 

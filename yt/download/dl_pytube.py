@@ -28,10 +28,12 @@ def downloadVideosFromLinks(vids_urls, channel_coll, channel_name, audio_only=Fa
             elif audio_only  : print("audio at [ {} ] will be downloaded ...".format(vid_url))
             try:
                 attemptStreamDownload(full_url, row_vid, channel_name, audio_only=audio_only) ### crashes program after all attempts failed
+                if not audio_only: print("video at [ {} ] — [ {} ] has been downloaded successfully.".format(vid_url, row_vid.title), end=cst.line)
+                elif audio_only  : print("audio at [ {} ] has been downloaded successfully.".format(vid_url), end=cst.line)
             except Exception as e:
                 print(e)
-                if not audio_only: print("video at [ {} ] — [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(vid_url, row_vid.title), end=cst.line)
-                elif audio_only  : print("audio at [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(vid_url), end=cst.line)
+                if not audio_only: print("video at [ {} ] — [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(full_url, row_vid.title), end=cst.line)
+                elif audio_only  : print("audio at [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(full_url), end=cst.line)
         else:
             if not audio_only: print("video at [ {} ] — [ {} ] has already been downloaded.".format(vid_url, row_vid.title), end=cst.line)
             elif audio_only  : print("audio at [ {} ] has already been downloaded.".format(vid_url), end=cst.line)
@@ -42,7 +44,7 @@ def downloadVideosFromLinks(vids_urls, channel_coll, channel_name, audio_only=Fa
 
 
 def attemptStreamDownload(full_url, row_vid, channel_name, ignore_higher_bitrate=True, audio_only=False):
-    try:
+    # try:
         if ignore_higher_bitrate: attempt = 1 ### set at 1 if not otherwise specified to skip 1080p
         else: attempt = 0
         ### video
@@ -50,7 +52,7 @@ def attemptStreamDownload(full_url, row_vid, channel_name, ignore_higher_bitrate
             vid = None
             while vid is None:
                 bitrate = cst.youtube_bitrates[attempt]
-                vid = YouTube(full_url).streams.filter(mime_type='video/mp4', res=bitrate).first()
+                vid = YouTube(full_url).streams.filter(mime_type="video/mp4", res=bitrate).first()
                 attempt += 1 ### increment attempt AFTER getting bitrate from array
                 print("video stream obtained at attempt n°{} — [ {} ]".format(attempt, bitrate))
         ### audio
@@ -66,12 +68,15 @@ def attemptStreamDownload(full_url, row_vid, channel_name, ignore_higher_bitrate
         ### mark video as downloaded in Notion
         if row_vid is not None: row_vid.downloaded = True
         if not audio_only:
-            print("video at [{}] has finished downloading at attempt n°{} — [ {} ]".format(full_url, attempt, bitrate), end=cst.line)
+            print("video at [{}] has finished downloading at attempt n°{} — [ {} ]".format(full_url, attempt, bitrate))
         else:
-            print("audio at [{}] has finished downloading.".format(full_url), end=cst.line)
+            print("audio at [{}] has finished downloading.".format(full_url))
     # except IndexError:
     #     print("video at [{}] could not be downloaded at attempt n°{}".format(full_url, attempt), end=cst.line)
     # except py_ex.VideoUnavailable:
     #     print("video at [{}] is unavailable".format(full_url), end=cst.line)
-    except:
-        pass
+    # except Exception as e:
+        # raise e
+        # if not audio_only: print("video at [ {} ] — [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(full_url, row_vid.title), end=cst.line)
+        # elif audio_only: print("audio at [ {} ] could not be downloaded for an unknown reason :( going to next one...".format(full_url), end=cst.line)
+        # print(e)

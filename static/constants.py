@@ -23,6 +23,7 @@ notion_colors = [
     "pink",
     "red",
 ]
+notion_title_error = "—— Error while trying to leech video"
 
 ### YouTube constants
 youtube_main_url = "https://www.youtube.com"
@@ -37,6 +38,11 @@ youtube_bitrates = [
 youtube_liked_videos_playlists_names = [
     "Liked videos",
     "Vidéos \"J'aime\""
+]
+youtube_errors = [
+    "Your browser does not currently recognise any of the video formats available.", ### this one's a little bastard, he's different
+    "Video unavailable",
+    "Private video"
 ]
 youtube_xpath_languages = '//*[@id="settings"]/ytd-account-settings/div/div[2]'
 youtube_xpath_lang_from_index = '/paper-item[{}]/p'

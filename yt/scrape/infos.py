@@ -4,7 +4,6 @@ from static import variables as var
 from yt.objects.Video import Video
 from yt.objects.Channel import removeChannelUrlPrefix
 from bs4 import BeautifulSoup as bs
-import itertools
 from datetime import datetime
 import locale
 
@@ -18,20 +17,26 @@ def scrapeVideoInfosFromLink(vid_url):
 
     ### wait for main elements to appear and get them
     while True:
+        all_html = bs(var.driver.page_source, "html.parser")
+
         try:
-            all_html = bs(var.driver.page_source, "html.parser")
-            
             title = all_html.find('h1', attrs={'class':'title style-scope ytd-video-primary-info-renderer'}).find("yt-formatted-string").get_text().strip()
             description = all_html.find('div', attrs={'id':'description'}).find("yt-formatted-string").get_text().strip()
             duration = all_html.find('span', attrs={'class':'ytp-time-duration'}).get_text().strip()
             published_on = all_html.find('div', attrs={'id':'date'}).find("yt-formatted-string").get_text().strip()
-            publisher = all_html.find('a', attrs={'class':'yt-simple-endpoint style-scope yt-formatted-string'})
+            # publisher = all_html.find('a', attrs={'class':'yt-simple-endpoint style-scope yt-formatted-string'})
+            publisher = all_html.find('div', attrs={'id':'text-container', 'class':'style-scope ytd-channel-name'}).find("yt-formatted-string").find("a")
             ### publisher infos
             publisher_url = removeChannelUrlPrefix(publisher['href'].strip()) ### cleans it customly too
             publisher_name = publisher.get_text().strip()
-
             if title != "" and published_on != "" and publisher_name != "" and duration != "" : break ### yes, description can be blank.
-        except: pass ### wait for stuff to load
+
+        except: ### wait for stuff to load , skip if content unavailable
+            try: 
+                # error_banner_1 = all_html.find('div', attrs={'class':'ytp-error-content-wrap'}).get_text().strip()
+                error_banner_2 = all_html.find('div', attrs={'class':'style-scope yt-player-error-message-renderer'}).get_text().strip()
+                if(any(yt_err in error_banner_2 for yt_err in cst.youtube_errors)): return
+            except: pass
 
     ### lil date formatting
     date_spl = published_on.split(" ")
