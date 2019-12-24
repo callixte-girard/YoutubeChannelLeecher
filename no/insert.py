@@ -30,7 +30,8 @@ def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
             row_vid.duration = vid.duration
             row_vid.published_on = vid.published_on
             ### publisher name and url
-            if not ch.title in vid.publisher_url: row_vid.publisher_url = vid.publisher_url
+            if not ch.title in vid.publisher_name: row_vid.publisher = vid.publisher_name
+            # if not ch.title in vid.publisher_url: row_vid.publisher_url = vid.publisher_url
             ### are all videos already downloaded ?
             if mark_all_as_downloaded: row_vid.downloaded = True
             else: row_vid.downloaded = vid.downloaded

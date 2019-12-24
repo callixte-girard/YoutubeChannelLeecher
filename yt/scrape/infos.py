@@ -28,9 +28,9 @@ def scrapeVideoInfosFromLink(vid_url):
             publisher = all_html.find('a', attrs={'class':'yt-simple-endpoint style-scope yt-formatted-string'})
             ### publisher infos
             publisher_url = removeChannelUrlPrefix(publisher['href'].strip()) ### cleans it customly too
-            # publisher_name = publisher.get_text().strip()
+            publisher_name = publisher.get_text().strip()
 
-            if title != "" and published_on != "" and publisher_url != "" and duration != "" : break ### yes, description can be blank.
+            if title != "" and published_on != "" and publisher_name != "" and duration != "" : break ### yes, description can be blank.
         except: pass ### wait for stuff to load
 
     ### lil date formatting
@@ -63,7 +63,7 @@ def scrapeVideoInfosFromLink(vid_url):
     duration = str(duration)
 
     ### now create Video element with gathered infos
-    vid = Video(vid_url, title, number, publisher_url, published_on, description, duration)
+    vid = Video(vid_url, title, number, publisher_name, published_on, description, duration)
     return vid
 
 
