@@ -15,12 +15,6 @@ def allVidsDownloaded(row_ch):
     return all_vids_downloaded
 
 
-### to assemble item url part with main root url part
-def reassembleUrl(url_prefix, url_partial):    ### must reassemble url first
-    # print("url before:", url_partial)
-    url_full = url_prefix + url_partial
-    # print("url after:", url_full, end=cst.star)
-    return url_full
     
 def addsParamsToUrl(url, params_names, params_values):
     if len(params_names) == len(params_values):

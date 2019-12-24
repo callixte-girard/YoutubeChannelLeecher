@@ -5,6 +5,7 @@ from yt.scrape import playlists
 from yt.scrape import all_videos
 from yt.scrape import infos
 from yt.download import dl_pytube
+from yt.objects import Video
 from no import insert
 from no import collections
 from yt.objects.Channel import getChannelUrlPrefix
@@ -13,7 +14,7 @@ import time
 
 ### downloading only 1 specific playlist without grabbing infos (ideal for music-only playlists)
 def playlist_audio_only(plst_url):
-    plst = playlists.getPlaylistFromUrl(plst_url)
+    plst = playlists.getPlaylistFromUrl(plst_url, True)
     # print(music_plst)
     dl_pytube.downloadVideosFromLinks(plst.vids_urls, None, plst.title, audio_only=True)
 
@@ -69,11 +70,7 @@ def channel_or_playlist(ch, row_ch, download_videos=True, my_playlists=False):
         print("language successfully set to [ {} ]".format(ch.language), end=cst.line)
 
     ## get all videos links
-    if my_playlists:
-        plst = playlists.getPlaylistFromUrl(ch.yt_url, absolute_url=True)
-        vids_urls = plst.vids_urls
-    else:
-        vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)
+    vids_urls = Video.getLinks(ch.yt_url, my_playlists)
     print("total videos published in [ {} ] : {}".format(ch.title, len(vids_urls)), end=cst.star)
 
     ## if there is are new videos, scrape all videos and insert their infos in Notion
@@ -115,3 +112,5 @@ def channel_or_playlist(ch, row_ch, download_videos=True, my_playlists=False):
 
     print("CONGRATS !!! YOU LEECHED THE CHANNEL [ {} ] !!!".format(ch.title), end=cst.star)
     return ch
+
+
