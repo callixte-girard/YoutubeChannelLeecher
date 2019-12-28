@@ -7,6 +7,7 @@ from no import collections
 import itertools
 from yt.objects.Channel import Channel
 from yt.objects.Playlist import Playlist
+from yt.objects.Url import Url
 ### these are specifically for testing playlist-only
 from yt.scrape import playlists
 
@@ -14,8 +15,7 @@ from yt.scrape import playlists
 ##################################################################
 def app(mode=0):
 	if mode==0:
-		plst_url = "/playlist?list=PLVQpIsq9oH7QIS14bfZ6DBAz1gHth9lml" ### test : dicey dungeons ost
-		plst = Playlist("Dicey")
+		plst_url = Url("playlist", {"list": "PLVQpIsq9oH7QIS14bfZ6DBAz1gHth9lml"}) ### test : dicey dungeons ost
 		leech.playlist_audio_only(plst_url)
 	else:
 		if mode==1:
@@ -43,8 +43,8 @@ def app(mode=0):
 					leech.channel_or_playlist(plst, row, my_playlists=True)
 				elif mode==3:
 					leech.playlist_audio_only(plst.yt_url)
-
-	# var.driver.quit()
+	### close driver afterwards ?
+	var.driver.quit()
 
 ##################################################################
 ### Different values for mode :
@@ -52,7 +52,7 @@ def app(mode=0):
 ## 1 : all channels
 ## 2 : my playlists (video + audio)
 ## 3 : my playlists (only audio)
-app(mode=2)
+app(mode=0)
 
 print("————— END OF PROGRAM —————")
 ##################################################################
