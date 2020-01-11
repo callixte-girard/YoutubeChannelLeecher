@@ -8,7 +8,7 @@ from notion.block import TextBlock
 from notion.block import DividerBlock
 
 
-def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
+def videoInfosInCollection(ch, vids_urls, plsts):
     channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
     vid_counter = 0
     for vid_url in vids_urls:
@@ -33,9 +33,6 @@ def videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded=False):
                 ### publisher name and url
                 if not ch.title in vid.publisher_name: row_vid.publisher = vid.publisher_name
                 # if not ch.title in vid.publisher_url: row_vid.publisher_url = vid.publisher_url
-                ### are all videos already downloaded ?
-                if mark_all_as_downloaded: row_vid.downloaded = True
-                else: row_vid.downloaded = vid.downloaded
                 ### video description
                 row_vid.children.add_new(HeaderBlock, title=cst.notion_description_label)
                 row_vid.children.add_new(DividerBlock)

@@ -13,7 +13,7 @@ def getPlaylistsLinksFromChannelUrl(channel_url):
     url_playlists = "/{}/".format(channel_or_user) + channel_url + "/playlists"
     url_full = cst.youtube_main_url + url_playlists
     ### !!! remove this in all other modes !!!
-    url_full = mth.addsParamsToUrl(url_full, ["view"], [1]) ### 0 = all playlists, 1 = only created by user
+    url_full = mth.addParamsToUrl(url_full, ["view"], [1]) ### 0 = all playlists, 1 = only created by user
     
     plsts = scroll_down.untilAllElementsLoaded(url_full, True, True)
 

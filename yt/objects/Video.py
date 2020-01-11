@@ -8,7 +8,6 @@ class Video:
     description = ""
     duration = 0
     in_playlists = []
-    downloaded = False
 
     def __init__(self, yt_url, title, number, publisher_name, published_on, description, duration):
         self.yt_url = yt_url

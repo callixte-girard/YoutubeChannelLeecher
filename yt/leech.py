@@ -4,22 +4,14 @@ from static import methods as mth
 from yt.scrape import playlists
 from yt.scrape import all_videos
 from yt.scrape import infos
-from yt.download import dl_pytube
 from no import insert
 from no import collections
 from yt.objects.Channel import getChannelUrlPrefix
 import time
 
 
-### downloading only 1 specific playlist without grabbing infos (ideal for music-only playlists)
-def playlist_audio_only(plst_url):
-    plst = playlists.getPlaylistFromUrl(plst_url)
-    # print(music_plst)
-    dl_pytube.downloadVideosFromLinks(plst.vids_urls, None, plst.title, audio_only=True)
-
-
 ### must add manually a channel collection in Notion first.
-def channel_or_playlist(ch, row_ch, download_videos=True, my_playlists=False):
+def channel_or_playlist(ch, row_ch, my_playlists=False):
 
     if my_playlists:
         print("WILL NOW LEECH Playlist [ {} ] ...".format(ch.title), end=cst.star)
@@ -98,20 +90,10 @@ def channel_or_playlist(ch, row_ch, download_videos=True, my_playlists=False):
                 except ValueError as already_exists: print(already_exists, end=cst.line)
                 # else: print("Ignoring playlist \"{}\".".format(plst.title), end=cst.line)
         ### 2) video infos
-        insert.videoInfosInCollection(ch, vids_urls, plsts, mark_all_as_downloaded = not download_videos)
+        insert.videoInfosInCollection(ch, vids_urls, plsts)
         row_ch.infos_status = "Finished" 
     else: 
         print("all infos are already scraped and don't need any update.")
-
-    ## download all videos
-    if download_videos:
-        print("let's download all these cool vids now !", end=cst.star)
-        ## for each video, download it if "downloaded" is unchecked on Notion —> then check it.
-        dl_pytube.downloadVideosFromLinks(vids_urls, channel_coll, ch.title)
-        ### if all videos are downloaded, mark as complete
-        row_ch.complete = mth.allVidsDownloaded(row_ch)
-    else:
-        print("all videos are already downloaded.")
 
     print("CONGRATS !!! YOU LEECHED THE CHANNEL [ {} ] !!!".format(ch.title), end=cst.star)
     return ch

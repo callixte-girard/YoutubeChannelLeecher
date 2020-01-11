@@ -48,7 +48,6 @@ youtube_xpath_languages = '//*[@id="settings"]/ytd-account-settings/div/div[2]'
 youtube_xpath_lang_from_index = '/paper-item[{}]/p'
 
 ### local paths
-path_downloads = '/Users/c/Downloads/'
 path_extensions = '/Users/c/Library/Application Support/BraveSoftware/Brave-Browser/Default/Extensions/'
 path_extension_adblock = path_extensions + 'cfhdojbkjhnklbpkdaibdccddilifddb/3.7_0/'
 
@@ -56,5 +55,5 @@ path_extension_adblock = path_extensions + 'cfhdojbkjhnklbpkdaibdccddilifddb/3.7
 url_y2mate = 'https://y2mate.com/fr'
 
 ### program settings
-videos_number_limit = 100 ### number of videos above which channel should be ignored
+videos_number_limit = 500 ### number of videos above which channel should be ignored
 attempt_get_vid_number = False

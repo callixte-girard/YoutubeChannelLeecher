@@ -21,16 +21,12 @@
 # SETUP
 
 ## Python Dependancies. Install them with : `pip install dependancy_name` ; you might replace `pip` with `pip3` if python3 is used (recommended)
-- `selenium` : webdriver with Chrome driver (Firefox abandoned, because too buggy)
+- `Google Chrome` or `Chromium` : to browse YouTube and scrape wanted infos. `Google Chrome` seems to be more stable than `Chromium`.
+- `selenium` : webdriver with `Chrome` driver (`Firefox` abandoned, because it was too buggy)
 - `bs4` (BeautifulSoup) : HTML parser to get infos when page loaded in Selenium
 - `notion` : Notion.so wrapper for Python (thanks to jamalex for its wrapper : https://github.com/jamalex/notion_py)
-- `pytube` : download YouTube video from URL
+- `evernote` : Evernote wrapper for Python
 - `slugify` : transform resource into a URI (unique resource identifier)
-## Other dependancies. 
-- You must use latest version of Chromium. 78 was buggy, I updates to version 79 and it worked great : https://chromium.woolyss.com/
-
-## Quick fixes for common issues
-- If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`
 
 <br>
 
@@ -39,16 +35,16 @@
 ## To-do
 - add a way to recognise videos that come from already known channels / users.
 - maybe differentiate `/channel/` and `/user/` cases ?
-- grab publisher of each video too (when not scraping a whole channel but just a playlist)
-- calculate number of vids in channels collection intelligently (just count number of links in `All Videos`)
-- auto-detect failed videos and mark them as so before continuing
 - maintain binding between OneDrive files and Notion entries :
+- calculate number of vids in channels collection intelligently (just count number of links in All Videos or in Playlist)
     - inspect each video each time and validate or report (+ download) present or missing ones each time program is launched. 
     — download only files that are not present and mark them the same way in Notion.
     - add the link to the OneDrive video in Notion (add a URL attribute)
 - auto-detect which part of the raw title contains video number, if any
 
 ## Done
+- grab publisher of each video too (when not scraping a whole channel but just a playlist)
+- auto-detect failed videos and mark them as so before continuing
 - grab a playlist similarly to a channel, which means, with saving video infos and downloading them.
 - programmatically check that every video in channel is either `Downloaded` or `Ignored` and thus remove column to manually ignore column `Download status`
 - change logic from `Ignore` to `Complete`
@@ -78,6 +74,7 @@
 - make video download async and run by 3 or 4 vids
 
 ## Abandoned | Not useful anymore
+- download functionality (2020-01-11), now done through separate software : 4K Video Downloader
 - prevent video loading from stalling when window is not visible/active with Chrome. —> seems impossible, except with headless options, but it's a bit buggy with other functionalities
 - create children from template in collection's rows —> impossible due to Notion API limitations
 - mysterious errors : maybe it's because of video title containing forbidden characters : `|` or `#` or `/` etc —> no it's not.
