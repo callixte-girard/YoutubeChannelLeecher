@@ -27,12 +27,25 @@
 - `notion` : Notion.so wrapper for Python (thanks to jamalex for its wrapper : https://github.com/jamalex/notion_py)
 - `evernote` : Evernote wrapper for Python
 - `slugify` : transform resource into a URI (unique resource identifier)
+<<<<<<< HEAD
+=======
+## Other dependancies. 
+- You must use latest version of Chromium. 78 was buggy, I updated to version 79 and it worked great : https://chromium.woolyss.com/
+- If Chromium gets some bugs sometimes, use latest official Chrome version.
+
+## Quick fixes for common issues
+- If `pytube` gets you a `SSL Certificate` error, and you're on macOS, launch `Install Certificates.command` in `Applications/Python3.x/`
+>>>>>>> f204c455fb473ab3e5b83d9d0bcfb39dbbe0e677
 
 <br>
 
 # PROGRESS
 
 ## To-do
+- create a `URL` object class that can be in 3 states :
+    - minimal (odijzaoidza)
+    - partial (/playlist?list=odijzaoidza)
+    - absolute (https://www.youtube.com/playlist?list=odijzaoidza)
 - add a way to recognise videos that come from already known channels / users.
 - maybe differentiate `/channel/` and `/user/` cases ?
 - maintain binding between OneDrive files and Notion entries :

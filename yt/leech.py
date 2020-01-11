@@ -5,7 +5,7 @@ from yt.scrape import playlists
 from yt.scrape import all_videos
 from yt.scrape import infos
 from no import insert
-from no import collections
+from static.my_notion_classes import collections
 from yt.objects.Channel import getChannelUrlPrefix
 import time
 
@@ -61,11 +61,7 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
         print("language successfully set to [ {} ]".format(ch.language), end=cst.line)
 
     ## get all videos links
-    if my_playlists:
-        plst = playlists.getPlaylistFromUrl(ch.yt_url, absolute_url=True)
-        vids_urls = plst.vids_urls
-    else:
-        vids_urls = all_videos.getVideosLinksFromChannelUrl(ch.yt_url)
+    vids_urls = Video.getLinks(ch.yt_url, my_playlists)
     print("total videos published in [ {} ] : {}".format(ch.title, len(vids_urls)), end=cst.star)
 
     ## if there is are new videos, scrape all videos and insert their infos in Notion
@@ -97,3 +93,5 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
 
     print("CONGRATS !!! YOU LEECHED THE CHANNEL [ {} ] !!!".format(ch.title), end=cst.star)
     return ch
+
+

@@ -1,3 +1,7 @@
+from yt.scrape import playlists
+from yt.scrape import all_videos
+
+
 class Video:
     publisher_name = ""
     publisher_url = ""
@@ -19,3 +23,11 @@ class Video:
         self.description = description
         self.duration = duration
         self.in_playlists = []
+
+
+def getLinks(url, my_playlists):
+    if my_playlists:
+        plst = playlists.getPlaylistFromUrl(url, absolute_url=True)
+        vids_urls = plst.vids_urls
+    else:
+        vids_urls = all_videos.getVideosLinksFromChannelUrl(url)
