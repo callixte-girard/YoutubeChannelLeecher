@@ -1,6 +1,6 @@
 from static import constants as cst
 from static import variables as var
-from no import collections
+from insert.in_notion import collections
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from os import listdir

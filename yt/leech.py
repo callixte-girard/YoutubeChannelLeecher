@@ -4,7 +4,7 @@ from static import methods as mth
 from yt.scrape import playlists
 from yt.scrape import all_videos
 from yt.scrape import infos
-from no import insert
+from insert.in_notion import insert
 from static.my_notion_classes import collections
 from yt.objects.Channel import getChannelUrlPrefix
 import time

@@ -1,7 +1,7 @@
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
-from no import collections
+from insert.in_notion import collections
 from yt.scrape import infos
 from notion.block import HeaderBlock
 from notion.block import TextBlock

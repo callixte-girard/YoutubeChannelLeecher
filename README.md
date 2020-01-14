@@ -20,8 +20,12 @@
 
 # SETUP
 
-## Python Dependancies. Install them with : `pip install dependancy_name` ; you might replace `pip` with `pip3` if python3 is used (recommended)
-- `Google Chrome` or `Chromium` : to browse YouTube and scrape wanted infos. `Google Chrome` seems to be more stable than `Chromium`.
+## General dependancies
+- `Google Chrome` or `Chromium` : to browse YouTube and scrape wanted infos. `Google Chrome` seems to be more stable than `Chromium`.  
+
+## Python dependancies
+> Install them with : `pip install dependancy_name` ; you might replace `pip` with `pip3` if python3 is used (recommended)
+
 - `selenium` : webdriver with `Chrome` driver (`Firefox` abandoned, because it was too buggy)
 - `bs4` (BeautifulSoup) : HTML parser to get infos when page loaded in Selenium
 - `notion` : Notion.so wrapper for Python (thanks to jamalex for its wrapper : https://github.com/jamalex/notion_py)
