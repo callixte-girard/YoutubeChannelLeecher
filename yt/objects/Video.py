@@ -31,3 +31,4 @@ def getLinks(url, my_playlists):
         vids_urls = plst.vids_urls
     else:
         vids_urls = all_videos.getVideosLinksFromChannelUrl(url)
+    return vids_urls

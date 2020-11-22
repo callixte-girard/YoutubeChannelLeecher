@@ -30,7 +30,7 @@ def getPlaylistsLinksFromChannelUrl(channel_url):
 
 def getPlaylistFromUrl(plst_url, absolute_url):
     if absolute_url: full_url = cst.youtube_main_url + plst_url
-    else: full_url = mth.addsParamsToUrl(cst.youtube_main_url + "/playlist", ["list"], [plst_url])
+    else: full_url = mth.addParamsToUrl(cst.youtube_main_url + "/playlist", ["list"], [plst_url])
 
     vids = scroll_down.untilAllElementsLoaded(full_url, True, False)
 

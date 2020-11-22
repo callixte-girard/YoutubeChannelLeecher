@@ -1,10 +1,11 @@
 from static import constants as cst
 print(">>> welcome to YoutubePlaylistLeecher.", end=cst.star)
 from static import variables as var
-from static import methods as mth
 from yt import leech
-from insert.in_notion import collections
+from insert.in_notion import videoInfosInCollection
+from static.my_notion_classes import collections
 import itertools
+import os
 from yt.objects.Channel import Channel
 from yt.objects.Playlist import Playlist
 from yt.objects.Url import Url
@@ -13,6 +14,12 @@ from yt.scrape import playlists
 
 
 ##################################################################
+# Making sure that the working directory is the directory of the script
+script_dir = os.path.dirname(os.path.realpath(__file__))
+os.chdir(script_dir)
+os.environ["PATH"] += os.pathsep + script_dir
+
+
 def app(mode=1):
 
 	if mode==1:
@@ -27,13 +34,13 @@ def app(mode=1):
 
 	for row in rows:
 		if mode==1:
-			ch = Channel(row.title, row.url, row.episodes_url, row.language)
+			ch = Channel(row.title, str(row.uri), row.episodes_url, row.language)
 			if (ch.yt_url != ""
 			and ch.yt_url != "-"
-			and not (row.language == "Music" or row.language == "Musique") 
+			#and not (row.language == "Music" or row.language == "Musique")
 			and not row.published_videos > cst.videos_number_limit
 			# and not row.complete
-			and not row.ignore):
+			and not row.indexed):
 				leech.channel_or_playlist(ch, row)
 
 		elif mode==2:

@@ -1,7 +1,7 @@
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
-from insert.in_notion import collections
+from static.my_notion_classes import collections
 from yt.scrape import infos
 from notion.block import HeaderBlock
 from notion.block import TextBlock
@@ -31,7 +31,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
                 row_vid.duration = vid.duration
                 row_vid.published_on = vid.published_on
                 ### publisher name and url
-                if not ch.title in vid.publisher_name: row_vid.publisher = vid.publisher_name
+                #if not ch.title in vid.publisher_name: row_vid.publisher = vid.publisher_name
                 # if not ch.title in vid.publisher_url: row_vid.publisher_url = vid.publisher_url
                 ### video description
                 row_vid.children.add_new(HeaderBlock, title=cst.notion_description_label)
@@ -49,7 +49,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
                 print("video at [ {} ] — [ {} ] successfully scraped infos and inserted into Notion :)".format(vid_url, vid.title), end=cst.line)
             else:
                 row_vid.title = cst.notion_title_error
-                row_vid.ignore = True
+                row_vid.indexed = True
                 print("video at [ {} ] encountered a problem. Recording URL in Notion and going to next.".format(vid_url), end=cst.line)
         else:
             print("video at [ {} ] already exists in Notion.".format(vid_url), end=cst.line) ### cannot show title at this moment because not scraped yet

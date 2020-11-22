@@ -1,5 +1,5 @@
-from static import methods as mth 
 from static import constants as cst
+from static import methods as mth
 from notion.client import NotionClient
 
 
