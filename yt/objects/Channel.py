@@ -11,6 +11,8 @@ class Channel:
         self.notion_url = str(notion_url)
         self.language = str(language)
 
+def getPublishedVideos(self):
+    return len(self.videos)
 
 ### is user or channel ?
 def getChannelUrlPrefix(channel_url):

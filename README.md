@@ -37,6 +37,7 @@
 # PROGRESS
 
 ## To-do
+- MUTE YOUTUBE AT EACH TURN (with a keystroke in Selenium for example)
 - create a `URL` object class that can be in 3 states :
     - minimal (odijzaoidza)
     - partial (/playlist?list=odijzaoidza)

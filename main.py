@@ -38,9 +38,8 @@ def app(mode=1):
 			if (ch.yt_url != ""
 			and ch.yt_url != "-"
 			#and not (row.language == "Music" or row.language == "Musique")
-			and not row.published_videos > cst.videos_number_limit
-			# and not row.complete
-			and not row.indexed):
+			and row.published_videos < cst.videos_number_limit
+			and row.to_index):
 				leech.channel_or_playlist(ch, row)
 
 		elif mode==2:
