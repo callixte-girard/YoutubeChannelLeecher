@@ -3,7 +3,7 @@ line = "\n———————————————————————�
 star = "\n*********************************************************************************\n"
 
 ### Notion.so paths
-notion_token = "f391879c9ea98ebaf5d5fb4e732f66c970a55e0a17f2c1000537e8aa64c9072d2042946c9303bb81bc26b97cb69378306886cb68d1d6b871494421f372c2848643e6519957c520b409e1ec4b9709"
+notion_token = "a6ed6fe70ca4b44c588c640618b27bac91cc7a0b94847f2d2f3cb0aac19992447a4a4b459027605b8e5dd9c325d8b9b515b6056485e11ad51a39e6e30b1d0582e62aca0b1575330e15e75d74ae95"
 
 notion_all_channels = "https://www.notion.so/5fa30b6001f3459a95a61946cee58e14?v=c6d5f6cd006748fa868a1e16eadb0875"
 notion_my_playlists = "https://www.notion.so/cabda9baa7e54c2cb985b562054122b3?v=dadb592a1eca40c7a2ab2254d2c4f497"

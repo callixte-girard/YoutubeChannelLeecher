@@ -28,7 +28,9 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
     ## if there is are new videos, scrape all videos and insert their infos in Notion
     channel_coll = collections.getCollectionFromViewUrl(ch.notion_url)
     #if len(vids_urls) > len(channel_coll.get_rows()) or "Finished" not in str(row_ch.infos_status):
-    if len(vids_urls) > len(channel_coll.get_rows()) or not row_ch.indexed:
+    # if len(vids_urls) > len(channel_coll.get_rows()) or not row_ch.indexed:
+    if not row_ch.indexed:
+        if len(vids_urls) > len(channel_coll.get_rows()): row_ch.need_dl = True
         ### 1) playlists
         if my_playlists:
             plsts = None
