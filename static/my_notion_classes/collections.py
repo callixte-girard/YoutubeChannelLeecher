@@ -59,7 +59,7 @@ def addNewValueToCollectionMultiSelect(cv_url, prop, value, color=None):
     )
 
     if dupe:
-        raise ValueError(f'"{value}" already exists in the schema!')
+        raise ValueError(f'"{value}" already exists in the playlist schema!')
     else:
         prop_schema["options"].append(
             {"id": str(uuid1()), "value": value, "color": color}

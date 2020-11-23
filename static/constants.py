@@ -24,6 +24,10 @@ notion_colors = [
 ]
 notion_title_error = "—— Error while trying to leech video"
 
+### date
+date_format_fr = "%d %b %Y"
+date_format_en = "%b %d, %Y"
+
 ### YouTube constants
 youtube_main_url = "https://www.youtube.com"
 youtube_bitrates = [

@@ -49,10 +49,10 @@ def scrapeVideoInfosFromLink(vid_url):
     published_on = " ".join(date_spl)
     try: ### 3)a) attempt 1 : if date is in French (with 3|4 letters then dot)
         locale.setlocale(locale.LC_TIME, "fr_FR")
-        published_on = datetime.strptime(published_on, "%d %b %Y").date()
+        published_on = datetime.strptime(published_on, cst.date_format_fr).date()
     except: ### 3)b) attempt 2 : if date is in English (3 letters without dot)
         locale.setlocale(locale.LC_TIME, "en_US")
-        published_on = datetime.strptime(published_on, "%d %b %Y").date()
+        published_on = datetime.strptime(published_on, cst.date_format_en).date()
 
     ### truncate title to get episode title + episode number
     # spl = separateVideoTitleAndNumber(title)
