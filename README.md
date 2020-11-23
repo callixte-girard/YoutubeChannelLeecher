@@ -37,6 +37,7 @@
 # PROGRESS
 
 ## To-do
+- date from "x hours ago"
 - MUTE YOUTUBE AT EACH TURN (with a keystroke in Selenium for example)
 - create a `URL` object class that can be in 3 states :
     - minimal (odijzaoidza)
@@ -52,6 +53,7 @@
 - auto-detect which part of the raw title contains video number, if any
 
 ## Done
+- handle two different date formats : d/m/y and y/m/d
 - grab publisher of each video too (when not scraping a whole channel but just a playlist)
 - auto-detect private / deleted / unavailable videos and mark them as so before continuing
 - grab a playlist similarly to a channel, which means, with saving video infos and downloading them.

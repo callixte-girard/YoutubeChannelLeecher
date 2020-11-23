@@ -4,7 +4,7 @@ from static import variables as var
 from yt.objects.Video import Video
 from yt.objects.Channel import removeChannelUrlPrefix
 from bs4 import BeautifulSoup as bs
-from datetime import datetime
+from datetime import datetime, timedelta
 import locale
 
 
@@ -40,19 +40,35 @@ def scrapeVideoInfosFromLink(vid_url):
 
     ### lil date formatting
     date_spl = published_on.split(" ")
-    ### 1) get only three last parts (for example, if there is a prefix before date)
-    date_spl = date_spl[len(date_spl)-3:]
-    ### 2) horrible fix for juin = jui (normal) | juil = jul (july)
-    month = date_spl[len(date_spl)-2]
-    if "juil" in month: month = "july"
-    date_spl[1] = month[:3] ### truncate month and insert it back into array
-    published_on = " ".join(date_spl)
-    try: ### 3)a) attempt 1 : if date is in French (with 3|4 letters then dot)
-        locale.setlocale(locale.LC_TIME, "fr_FR")
-        published_on = datetime.strptime(published_on, cst.date_format_fr).date()
-    except: ### 3)b) attempt 2 : if date is in English (3 letters without dot)
-        locale.setlocale(locale.LC_TIME, "en_US")
-        published_on = datetime.strptime(published_on, cst.date_format_en).date()
+    ### 0) special case : "x hours ago"
+    if "ago" in published_on or "il y a" in published_on:
+        for i in range(len(date_spl-1)):
+            try:
+                time_ago = int(date_spl[i])
+                unit_ago = date_spl[i+1]
+                if "h" in unit_ago:
+                    published_on = datetime.now() - timedelta(hours=time_ago)
+                elif "min" in unit_ago:
+                    published_on = datetime.now() - timedelta(minutes=time_ago)
+                elif "sec" in unit_ago:
+                    published_on = datetime.now() - timedelta(seconds=time_ago)
+                break
+            except:
+                pass
+    else:
+        ### 1) get only three last parts (for example, if there is a prefix before date)
+        date_spl = date_spl[len(date_spl)-3:]
+        ### 2) horrible fix for juin = jui (normal) | juil = jul (july)
+        month = date_spl[len(date_spl)-2]
+        if "juil" in month: month = "july"
+        date_spl[1] = month[:3] ### truncate month and insert it back into array
+        published_on = " ".join(date_spl)
+        try: ### 3)a) attempt 1 : if date is in French (with 3|4 letters then dot)
+            locale.setlocale(locale.LC_TIME, "fr_FR")
+            published_on = datetime.strptime(published_on, cst.date_format_fr).date()
+        except: ### 3)b) attempt 2 : if date is in English (3 letters without dot)
+            locale.setlocale(locale.LC_TIME, "en_US")
+            published_on = datetime.strptime(published_on, cst.date_format_en).date()
 
     ### truncate title to get episode title + episode number
     # spl = separateVideoTitleAndNumber(title)
