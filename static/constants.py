@@ -24,9 +24,6 @@ notion_colors = [
 ]
 notion_title_error = "—— Error while trying to leech video"
 
-### date
-date_format_fr = "%d %b %Y"
-date_format_en = "%b %d, %Y"
 
 ### YouTube constants
 youtube_main_url = "https://www.youtube.com"
@@ -38,6 +35,12 @@ youtube_bitrates = [
     "240p",
     "144p", ### beeeeaaark
 ]
+youtube_date_formats = [
+    "%d %b %Y", #date_format_fr,
+    "%d %b, %Y", #date_format_fr_comma,
+    "%b %d %Y", #date_format_en,
+    "%b %d, %Y", #date_format_en_comma
+]
 youtube_liked_videos_playlists_names = [
     "Liked videos",
     "Vidéos \"J'aime\""
@@ -47,6 +50,7 @@ youtube_errors = [
     "Video unavailable",
     "Private video"
 ]
+### html elements
 youtube_xpath_languages = '//*[@id="settings"]/ytd-account-settings/div/div[2]'
 youtube_xpath_lang_from_index = '/paper-item[{}]/p'
 

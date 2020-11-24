@@ -19,7 +19,7 @@ def addParamsToUrl(url, params_names, params_values):
 def initChromiumConfiguredProperly():
     ### install addons (adblock plus)
     options = Options()
-    options.add_argument("--headless")
+    # options.add_argument("--headless")
     #options.add_argument("--load-extension={}".format(cst.path_extension_adblock))
     ### launch chromium with options
     browser = webdriver.Chrome(options=options, executable_path=cst.path_executable)

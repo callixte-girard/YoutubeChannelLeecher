@@ -18,8 +18,9 @@ def getPlaylistsLinksFromChannelUrl(channel_url):
     plsts = scroll_down.untilAllElementsLoaded(url_full, True, True)
 
     plsts_urls = []
-    for plst in plsts:
+    for index, plst in enumerate(plsts):
         # print(plst)
+        print("")
 
         ### get interesting infos
         plst_url = plst['href']

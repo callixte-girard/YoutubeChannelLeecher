@@ -37,8 +37,10 @@
 # PROGRESS
 
 ## To-do
-- date from "x hours ago"
-- MUTE YOUTUBE AT EACH TURN (with a keystroke in Selenium for example)
+- handle scroll for 100+ elts for playlists also
+- catch this exception and restart :
+`raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://www.notion.so/api/v3/submitTransaction`
 - create a `URL` object class that can be in 3 states :
     - minimal (odijzaoidza)
     - partial (/playlist?list=odijzaoidza)
@@ -53,6 +55,7 @@
 - auto-detect which part of the raw title contains video number, if any
 
 ## Done
+- date from "x hours ago"
 - handle two different date formats : d/m/y and y/m/d
 - grab publisher of each video too (when not scraping a whole channel but just a playlist)
 - auto-detect private / deleted / unavailable videos and mark them as so before continuing
@@ -85,6 +88,7 @@
 - make video download async and run by 3 or 4 vids
 
 ## Abandoned | Not useful anymore
+- MUTE YOUTUBE AT EACH TURN (with a keystroke in Selenium for example) (2020-11-23), irrelevant now that software can be launched headless flawlessly
 - download functionality (2020-01-11), now done through separate software : 4K Video Downloader
 - prevent video loading from stalling when window is not visible/active with Chrome. —> seems impossible, except with headless options, but it's a bit buggy with other functionalities
 - create children from template in collection's rows —> impossible due to Notion API limitations

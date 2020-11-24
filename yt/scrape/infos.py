@@ -63,12 +63,16 @@ def scrapeVideoInfosFromLink(vid_url):
         if "juil" in month: month = "july"
         date_spl[1] = month[:3] ### truncate month and insert it back into array
         published_on = " ".join(date_spl)
-        try: ### 3)a) attempt 1 : if date is in French (with 3|4 letters then dot)
-            locale.setlocale(locale.LC_TIME, "fr_FR")
-            published_on = datetime.strptime(published_on, cst.date_format_fr).date()
-        except: ### 3)b) attempt 2 : if date is in English (3 letters without dot)
+        ### first try parse in French
+        date_temp = published_on
+        locale.setlocale(locale.LC_TIME, "fr_FR")
+        date_temp = __tryToParseDateWithLocale(published_on, 0)
+        if date_temp is not None: published_on = date_temp
+        else:
             locale.setlocale(locale.LC_TIME, "en_US")
-            published_on = datetime.strptime(published_on, cst.date_format_en).date()
+            date_temp = __tryToParseDateWithLocale(published_on, 0)
+            if date_temp is not None: published_on = date_temp
+            else: raise ValueError(">>> bon y a un pb là...")
 
     ### truncate title to get episode title + episode number
     # spl = separateVideoTitleAndNumber(title)
@@ -86,6 +90,16 @@ def scrapeVideoInfosFromLink(vid_url):
     ### now create Video element with gathered infos
     vid = Video(vid_url, title, number, publisher_name, published_on, description, duration)
     return vid
+
+
+def __tryToParseDateWithLocale(date_str, index):
+    if index < len(cst.youtube_date_formats):
+        date_format = cst.youtube_date_formats[index]
+        try:
+            return datetime.strptime(date_str, date_format).date()
+        except ValueError:
+            return __tryToParseDateWithLocale(date_str, index+1)
+    else: return None
 
 
 def separateVideoTitleAndNumber(title_raw):

@@ -7,8 +7,8 @@ class Channel:
 
     def __init__(self, title, yt_url, notion_url, language):
         self.title = title
-        self.yt_url = str(yt_url)
-        self.notion_url = str(notion_url)
+        self.yt_url = yt_url
+        self.notion_url = notion_url
         self.language = str(language)
 
 def getPublishedVideos(self):

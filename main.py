@@ -36,8 +36,9 @@ def app(mode=1):
 		if mode==1:
 			ch = Channel(row.title, str(row.uri), row.episodes_url, row.language)
 			if (ch.yt_url != ""
-			and ch.yt_url != "-"
-			#and not (row.language == "Music" or row.language == "Musique")
+			# and ch.yt_url != "-"
+			and row.uri != "—"
+			and "Music" not in row.language and "Musique" not in row.language
 			and row.published_videos < cst.videos_number_limit
 			and row.to_index):
 				leech.channel_or_playlist(ch, row)
