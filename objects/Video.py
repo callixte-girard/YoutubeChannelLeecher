@@ -1,5 +1,5 @@
-from yt.scrape import playlists
-from yt.scrape import all_videos
+from scrape import playlists
+from scrape import all_videos
 
 
 class Video:

@@ -1,14 +1,14 @@
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
-from yt.scrape import playlists
-from yt.scrape import all_videos
-from yt.scrape import infos
-from insert.in_notion import videoInfosInCollection
-from static.my_notion_classes import collections
-from yt.objects.Channel import getChannelUrlPrefix
-from yt.objects.Video import Video
-from yt.objects.Video import getLinks
+from scrape import playlists
+from scrape import all_videos
+from scrape import infos
+from scrape.insert import videoInfosInCollection
+from static import collections
+from objects.Channel import getChannelUrlPrefix
+from objects.Video import Video
+from objects.Video import getLinks
 import time
 from datetime import datetime
 
@@ -29,7 +29,7 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
 
     ### compares old videos number with new number of videos found
     if len(vids_urls) > (row_ch.published_videos): 
-        row_ch.need_dl = True
+        row_ch.more_vids = True
         row_ch.published_videos = len(vids_urls)
     ### records time of last inspection and update
     row_ch.updated_on = datetime.now()

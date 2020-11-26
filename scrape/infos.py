@@ -1,8 +1,8 @@
 from static import constants as cst
 from static import methods as mth
 from static import variables as var
-from yt.objects.Video import Video
-from yt.objects.Channel import removeChannelUrlPrefix
+from objects.Video import Video
+from objects.Channel import removeChannelUrlPrefix
 from bs4 import BeautifulSoup as bs
 from datetime import datetime, timedelta
 import locale

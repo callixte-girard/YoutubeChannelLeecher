@@ -1,10 +1,10 @@
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
-from yt.scrape import scroll_down
+from scrape import scroll_down
 from bs4 import BeautifulSoup as bs
-from yt.objects.Playlist import Playlist
-from yt.objects.Channel import getChannelUrlPrefix
+from objects.Playlist import Playlist
+from objects.Channel import getChannelUrlPrefix
 
 
 def getPlaylistsLinksFromChannelUrl(channel_url):
@@ -20,7 +20,8 @@ def getPlaylistsLinksFromChannelUrl(channel_url):
     plsts_urls = []
     for index, plst in enumerate(plsts):
         # print(plst)
-        print("")
+        ### useless here
+        # print("progress (parsing playlists) : ", index+1, "/", len(plsts))
 
         ### get interesting infos
         plst_url = plst['href']

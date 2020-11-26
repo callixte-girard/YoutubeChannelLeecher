@@ -1,16 +1,16 @@
 from static import constants as cst
 print(">>> welcome to YoutubePlaylistLeecher.", end=cst.star)
 from static import variables as var
-from yt import leech
-from insert.in_notion import videoInfosInCollection
-from static.my_notion_classes import collections
+from scrape import leech
+from scrape.insert import videoInfosInCollection
+from static import collections
 import itertools
 import os
-from yt.objects.Channel import Channel
-from yt.objects.Playlist import Playlist
-from yt.objects.Url import Url
+from objects.Channel import Channel
+from objects.Playlist import Playlist
+from objects.Url import Url
 ### these are specifically for testing playlist-only
-from yt.scrape import playlists
+from scrape import playlists
 
 
 ##################################################################
@@ -35,19 +35,14 @@ def app(mode=1):
 	for row in rows:
 		if mode==1:
 			ch = Channel(row.title, str(row.uri), row.episodes_url, row.language)
-			if (ch.yt_url != ""
-			# and ch.yt_url != "-"
-			and row.uri != "—"
-			and "Music" not in row.language and "Musique" not in row.language
-			and row.published_videos < cst.videos_number_limit
-			and row.to_index):
+			if (ch.yt_url != "" and row.uri != "—" and row.published_videos < cst.videos_number_limit and row.to_index):
 				leech.channel_or_playlist(ch, row)
 
 		elif mode==2:
 			plst = Playlist(row.title, row.url, row.episodes_url, None)
 			leech.channel_or_playlist(plst, row, my_playlists=True)
 
-	# var.driver.quit()
+	var.driver.quit() ### empty process in RAM at each KeyboardInterrupt
 
 ##################################################################
 ### Different values for mode :

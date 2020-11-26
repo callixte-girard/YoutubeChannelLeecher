@@ -1,8 +1,8 @@
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
-from static.my_notion_classes import collections
-from yt.scrape import infos
+from static import collections
+from scrape import infos
 from notion.block import HeaderBlock
 from notion.block import TextBlock
 from notion.block import DividerBlock

@@ -1,8 +1,8 @@
 from static import constants as cst
 from static import variables as var
 from static import methods as mth
-from yt.scrape import scroll_down
-from yt.objects.Channel import getChannelUrlPrefix
+from scrape import scroll_down
+from objects.Channel import getChannelUrlPrefix
 
 
 ### channel_name must be written exactly like in its urls. Check the channel's url on the real yt if you're not sure

@@ -24,7 +24,7 @@
 - `Google Chrome` or `Chromium` : to browse YouTube and scrape wanted infos. `Google Chrome` seems to be more stable than `Chromium`.  
 
 ## Python dependancies
-> Install them with : `pip install dependancy_name` ; you might replace `pip` with `pip3` if python3 is used (recommended)
+> Install them with : `pip install dependancy_name`. You can also get them directly from the files `requirements.txt`.
 
 - `selenium` : webdriver with `Chrome` driver (`Firefox` abandoned, because it was too buggy)
 - `bs4` (BeautifulSoup) : HTML parser to get infos when page loaded in Selenium
@@ -37,7 +37,8 @@
 # PROGRESS
 
 ## To-do
-- handle scroll for 100+ elts for playlists also
+- avoid browsing playlists if there is at least one children video
+- avoid browsing videos if it is already present in Notion
 - catch this exception and restart :
 `raise HTTPError(http_error_msg, response=self)
 requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://www.notion.so/api/v3/submitTransaction`
@@ -55,6 +56,7 @@ requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https
 - auto-detect which part of the raw title contains video number, if any
 
 ## Done
+- still no headless 100% working but audio muted !
 - date from "x hours ago"
 - handle two different date formats : d/m/y and y/m/d
 - grab publisher of each video too (when not scraping a whole channel but just a playlist)
