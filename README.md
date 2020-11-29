@@ -37,24 +37,14 @@
 # PROGRESS
 
 ## To-do
-- avoid browsing playlists if there is at least one children video
-- catch this exception and restart :
-`raise HTTPError(http_error_msg, response=self)
-requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://www.notion.so/api/v3/submitTransaction`
-- create a `URL` object class that can be in 3 states :
-    - minimal (odijzaoidza)
-    - partial (/playlist?list=odijzaoidza)
-    - absolute (https://www.youtube.com/playlist?list=odijzaoidza)
-- add a way to recognise videos that come from already known channels / users.
-- maybe differentiate `/channel/` and `/user/` cases ?
-- maintain binding between OneDrive files and Notion entries :
-- calculate number of vids in channels collection intelligently (just count number of links in All Videos or in Playlist)
-    - inspect each video each time and validate or report (+ download) present or missing ones each time program is launched. 
-    — download only files that are not present and mark them the same way in Notion.
-    - add the link to the OneDrive video in Notion (add a URL attribute)
-- auto-detect which part of the raw title contains video number, if any
+- get where this exception comes from, catch it and restart when it occurs :
+`raise HTTPError(http_error_msg, response=self)`
+`requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://www.notion.so/api/v3/submitTransaction`
+- add a way to recognise videos that come from already known channels / users (just look at the publisher when scraping video details)
 
 ## Done
+- fix problem with scroll not working in headless mode —> new arguments added SEEM to have fixed the problem
+- handles videos with a blank title (yes, it's very rare and stupid but exists.) It puts a warning instead of the blank title (see in `constants.py`)
 - avoid browsing videos if it is already present in Notion (keeps the collection rows in memory when fetched for the first time)
 - still no headless 100% working but audio muted !
 - date from "x hours ago"
@@ -77,7 +67,7 @@ requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https
 - manage direct videos : 'Diffusé en direct le 30 nov. 2017'
 - switch from Firefox to Chromium and NEVER USE FIREFOX AGAIN
 - launch Firefox in custom size : max height but half width, on the left of the screen
-- fix problem with method `attemptStreamDownload()` / error with `vid.download(cst.path_downloads)` —> put priority order for bitrates —> if it still fails, it means that no mp4 format is available —> CRY.
+- fix problem with method `attemptStreamDownload()` / error with `vid.download(cst.path_downloads)` —> put priority order for bitrates —> if it still fails, it means that no mp4 format is available —> CRY.
 - try to split video raw title into title and video number 
 - make tests with slugifier to make `in_playlists` correspond to `In playlists`
 - inspect all playlists and record matches in existing Notion rows
@@ -90,7 +80,18 @@ requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https
 - make video download async and run by 3 or 4 vids
 
 ## Abandoned | Not useful anymore
-- MUTE YOUTUBE AT EACH TURN (with a keystroke in Selenium for example) (2020-11-23), irrelevant now that software can be launched headless flawlessly
+- auto-detect which part of the raw title contains video number, if any —> trop chiant et pas utile (en général classable facilement car toutes vidéos d'une même série sont nommées pareil)
+- calculate number of vids in channels collection intelligently (just count number of links in All Videos or in Playlist) —> now obsolete because `pytube` is not used anymore, so there is no possible link between the downloaded video file and its metadata scraped by this program anymore.
+- maintain binding between OneDrive files and Notion entries :
+    - inspect each video each time and validate or report (+ download) present or missing ones each time program is launched.  
+    — download only files that are not present and mark them the same way in Notion.  
+    - add the link to the OneDrive video in Notion (add a URL attribute)
+- create a `URL` object class that can be in 3 states : (—> not really useful now because URL building from URI is now done dynamically in Notion)
+    - minimal (odijzaoidza)
+    - partial (/playlist?list=odijzaoidza)
+    - absolute (https://www.youtube.com/playlist?list=odijzaoidza)
+- maybe differentiate `/channel/` and `/user/` cases ? -> there is no difference at all in the processing of videos.
+- MUTE YOUTUBE AT EACH TURN (with a keystroke in Selenium for example) (2020-11-23), irrelevant now that software can be launched headless flawlessly -> 2020-11-29 en fait non, ça marche toujours pas correctement.
 - download functionality (2020-01-11), now done through separate software : 4K Video Downloader
 - prevent video loading from stalling when window is not visible/active with Chrome. —> seems impossible, except with headless options, but it's a bit buggy with other functionalities
 - create children from template in collection's rows —> impossible due to Notion API limitations

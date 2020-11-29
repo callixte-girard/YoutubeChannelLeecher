@@ -23,6 +23,7 @@ notion_colors = [
     "red",
 ]
 notion_title_error = "—— Error while trying to leech video"
+notion_title_blank = "!!! The title of this video was blank on YouTube !!!"
 
 
 ### YouTube constants

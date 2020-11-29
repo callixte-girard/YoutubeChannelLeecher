@@ -29,7 +29,8 @@ def scrapeVideoInfosFromLink(vid_url):
             ### publisher infos
             publisher_url = removeChannelUrlPrefix(publisher['href'].strip()) ### cleans it customly too
             publisher_name = publisher.get_text().strip()
-            if title != "" and published_on != "" and publisher_name != "" and duration != "" : break ### yes, description can be blank.
+            if title == "": title = cst.notion_title_blank ### 2020-11-29 quick fix
+            if published_on != "" and publisher_name != "" and duration != "" : break ### 2020-11-29 now title can be blank too
 
         except: ### wait for stuff to load , skip if content unavailable
             try: 

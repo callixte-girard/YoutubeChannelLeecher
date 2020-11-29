@@ -57,7 +57,7 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
                         ### add playlist name to in_playlists options if it doesn't already exist
                     try: 
                         collections.addNewValueToCollectionMultiSelect(ch.notion_url, cst.notion_tag_name_playlists, plst.title) ### slugifying included for prop
-                        print("\"{}\" has been added to the playlists schema.".format(plst.title), end=cst.line)
+                        print("[ {} ] has been added to the playlists schema.".format(plst.title), end=cst.line)
                     except ValueError as already_exists: print(already_exists, end=cst.line)
                     # else: print("Ignoring playlist \"{}\".".format(plst.title), end=cst.line)
             ### 2) video infos
