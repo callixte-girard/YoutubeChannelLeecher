@@ -38,7 +38,6 @@
 
 ## To-do
 - avoid browsing playlists if there is at least one children video
-- avoid browsing videos if it is already present in Notion
 - catch this exception and restart :
 `raise HTTPError(http_error_msg, response=self)
 requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://www.notion.so/api/v3/submitTransaction`
@@ -56,6 +55,7 @@ requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https
 - auto-detect which part of the raw title contains video number, if any
 
 ## Done
+- avoid browsing videos if it is already present in Notion (keeps the collection rows in memory when fetched for the first time)
 - still no headless 100% working but audio muted !
 - date from "x hours ago"
 - handle two different date formats : d/m/y and y/m/d

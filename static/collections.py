@@ -12,17 +12,22 @@ def getCollectionFromViewUrl(cv_url):
     return collection
 
 
+collections_dict = {}
 def getCorrespondingRowFromVidUrl(collection, vid_url):
-    rows = collection.get_rows()
+    # print(str(collection), collection.id)
+    ### first fetch and store collection in memory if not existing yet
+    if not collection.id in collections_dict.keys(): collections_dict[collection.id] = collection.get_rows()
+    ### then get rows for inspection
+    rows = collections_dict[collection.id]
     ### V1 : works but not very pythonic
-    for row_vid in rows:
-        if row_vid.url == vid_url: 
-            # print("row url is : {}".format(row_vid.url))
-            return row_vid
-    return None
+    # for row_vid in rows:
+    #     if row_vid.url == vid_url: 
+    #         # print("row url is : {}".format(row_vid.url))
+    #         return row_vid
+    # return None
     ### V2 : same but simpler and condensed
-    # try: return next(row_vid for row_vid in rows if row_vid.url == vid_url)
-    # except StopIteration: return None
+    try: return next(row_vid for row_vid in rows if row_vid.url == vid_url)
+    except StopIteration: return None
 
 
 def addNewValueToCollectionMultiSelect(cv_url, prop, value, color=None):
