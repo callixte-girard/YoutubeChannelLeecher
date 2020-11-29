@@ -10,7 +10,7 @@ notion_my_playlists = "https://www.notion.so/cabda9baa7e54c2cb985b562054122b3?v=
 
 notion_description_label = "Description"
 notion_tag_name_playlists = "in playlists"
-notion_colors = [
+notion_colors = [ ### you can comment the ones you don't want to be elected during random color selection
     "default",
     "gray",
     "brown",
