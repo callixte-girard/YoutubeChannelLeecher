@@ -68,6 +68,6 @@ url_y2mate = 'https://y2mate.com/fr'
 
 ### program settings
 wait_for_adblock = False
-videos_number_limit = 500 ### number of videos above which channel should be ignored
+videos_number_limit = 3000 ### number of videos above which channel should be ignored
 attempt_get_vid_number = False
 change_language = False
