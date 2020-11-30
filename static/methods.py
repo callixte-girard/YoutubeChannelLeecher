@@ -19,13 +19,13 @@ def addParamsToUrl(url, params_names, params_values):
 def initChromiumConfiguredProperly():
     ### install addons (adblock plus)
     options = Options()
-    # options.add_argument("--mute-audio")
     options.add_argument("--headless")
+    options.add_argument("--mute-audio")
     options.add_argument("start-maximized")
-    # options.add_argument("window-size=1920,1080")
+    options.add_argument("window-size=720,900")
     options.add_argument("disable-infobars")
     options.add_argument("--disable-extensions")
-    #options.add_argument("--load-extension={}".format(cst.path_extension_adblock))
+    # options.add_argument("--load-extension={}".format(cst.path_extension_adblock))
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     ### launch chromium with options
@@ -33,7 +33,7 @@ def initChromiumConfiguredProperly():
     # browser = webdriver.Chrome(executable_path=cst.path_executable)
     ### set half-part size for window
     browser.maximize_window()
-    browser.set_window_size(browser.get_window_size()["width"]/2, browser.get_window_size()["height"])
+    # browser.set_window_size(browser.get_window_size()["width"]/2, browser.get_window_size()["height"])
     browser.set_window_position(0, 0)
     ### close last tab mentioning that extension is installed
     if cst.wait_for_adblock:

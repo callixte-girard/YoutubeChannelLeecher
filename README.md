@@ -37,6 +37,7 @@
 # PROGRESS
 
 ## To-do
+- maybe install an adblocker again in the beginning ? in order to get real videos durations. Else simply delete the column for videos length
 - get where this exception comes from, catch it and restart when it occurs :
 `raise HTTPError(http_error_msg, response=self)`
 `requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://www.notion.so/api/v3/submitTransaction`

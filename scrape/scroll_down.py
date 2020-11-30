@@ -34,10 +34,9 @@ def untilAllElementsLoaded(url_full, for_plst, get_plst):
     loaded_now = loaded_init
 
     for turn in itertools.count(): ### turn is used in debug
-        ### V1 scroll (validated, even in headless mode with new options)
-        scroll_command = 'window.scrollBy(0, 100000)'
-        ### V2 scroll (doesn't seem to work, at least in headless mode)
-        # scroll_command = 'window.scrollTo(0, document.body.scrollHeight);'
+        scroll_command = 'window.scrollBy(0, 10000);' ### V1 scroll (only this one works, but some problems with playlist in headless mode)
+        # scroll_command = 'window.scrollBy(0, document.body.innerHeight);' ### V2 scroll (not working as expected)
+        # scroll_command = 'window.scrollTo(0, document.body.scrollHeight);' ### V3 scroll (not working as expected)
         var.driver.execute_script(scroll_command)
         spinners = var.driver.find_elements_by_id('spinnerContainer')
         try:

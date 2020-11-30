@@ -30,29 +30,31 @@ def app(mode=1):
 		print("getting playlists from Notion — My Playlists ... please wait")
 		collection = collections.getCollectionFromViewUrl(cst.notion_my_playlists)
 
-	rows = collection.get_rows()
-	print("total nb of items in collection : {}".format(len(rows)), end=cst.star)
+	try:
+		rows = collection.get_rows()
+		print("total nb of items in collection : {}".format(len(rows)), end=cst.star)
 
-	for row in rows:
-		if mode==1:
-			ch = Channel(row.title, str(row.uri), row.episodes_url, row.language)
-			if (ch.yt_url != "" and row.uri != "—" and row.published_videos < cst.videos_number_limit and row.to_index):
-				try:
+		for row in rows:
+			if mode==1:
+				ch = Channel(row.title, str(row.uri), row.episodes_url, row.language)
+				if (ch.yt_url != "" and row.uri != "—" and row.published_videos < cst.videos_number_limit and row.to_index):
 					leech.channel_or_playlist(ch, row)
-				# except requests.exceptions.HTTPError as httpError:
-				except Exception as exc:
-					print("!!! The following error has occured :", exc)
-					print(">>> Will now restart software...")
-					restart = True
-				finally:
-					var.driver.quit() ### empty process in RAM at each KeyboardInterrupt
 
-		elif mode==2:
-			plst = Playlist(row.title, row.url, row.episodes_url, None)
-			leech.channel_or_playlist(plst, row, my_playlists=True)
+			elif mode==2:
+				plst = Playlist(row.title, row.url, row.episodes_url, None)
+				leech.channel_or_playlist(plst, row, my_playlists=True)
+				
+	# except requests.exceptions.HTTPError as httpError:
+	except Exception as exc:
+		print("!!! The following error has occured :", exc, end=cst.line)
+		# restart = True
+	finally:
+		var.driver.quit() ### empty process in RAM at each KeyboardInterrupt
 
 	# Check if it should restart or no (yes if there has been a network / hasardous error, no if everything was successful)
-	if restart: app(mode)
+	if restart: 
+		print(">>> Will now restart software...", end=cst.star)
+		app(mode)
 
 ##################################################################
 ### Different values for mode :
