@@ -39,8 +39,9 @@ def app(mode=1):
 			if (ch.yt_url != "" and row.uri != "—" and row.published_videos < cst.videos_number_limit and row.to_index):
 				try:
 					leech.channel_or_playlist(ch, row)
-				except requests.exceptions.HTTPError as httpError:
-					print("!!! The following error has occured :", httpError)
+				# except requests.exceptions.HTTPError as httpError:
+				except Exception as exc:
+					print("!!! The following error has occured :", exc)
 					print(">>> Will now restart software...")
 					restart = True
 				finally:
