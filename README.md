@@ -37,10 +37,12 @@
 # PROGRESS
 
 ## To-do
+- add multithreading support (with promises etc)
 - maybe install an adblocker again in the beginning ? in order to get real videos durations. Else simply delete the column for videos length
-- get where this exception comes from, catch it and restart when it occurs :
-`raise HTTPError(http_error_msg, response=self)`
-`requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://www.notion.so/api/v3/submitTransaction`
+- handle the following exceptions (and restart program if needed) :
+
+	- `requests.exceptions.HTTPError: 504 Server Error: Gateway Time-out for url: https://www.notion.so/api/v3/submitTransaction`
+
 - add a way to recognise videos that come from already known channels / users (just look at the publisher when scraping video details)
 
 ## Done

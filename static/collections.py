@@ -43,15 +43,15 @@ def addNewValueToCollectionMultiSelect(cv_url, prop, value, color=None):
 
     # Handles possible errors
     if not prop_schema:
-        raise ValueError(f'Property [ {prop} ] does not exist on the collection!')
+        raise ValueError(f'property [ {prop} ] does not exist on the collection!')
     if prop_schema["type"] != "multi_select" and prop_schema["type"] != "select":
-        raise ValueError(f'Property [ {prop} ] is neither a single nor a multi select property!')
+        raise ValueError(f'property [ {prop} ] is neither a single nor a multi select property!')
     if "options" not in prop_schema: 
         prop_schema["options"] = []
 
     dupe = next( (o for o in prop_schema["options"] if o["value"] == value), None )
     if dupe:
-        raise ValueError(f'Property [ {value} ] already exists in the playlist schema!')
+        raise ValueError(f'property [ {value} ] already exists in the playlist schema!')
     else:
         prop_schema["options"].append( {"id": str(uuid1()), "value": value, "color": color} )
         collection.set("schema", collection_schema)

@@ -6,6 +6,7 @@ from scrape.insert import videoInfosInCollection
 from static import collections
 import itertools
 import os
+import time
 import requests
 from objects.Channel import Channel
 from objects.Playlist import Playlist
@@ -20,8 +21,9 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 os.chdir(script_dir)
 os.environ["PATH"] += os.pathsep + script_dir
 
-restart = False # By default. If a network error occurs somewhere, this will turn True and restart automatically
+
 def app(mode=1):
+	restart = False # By default. If a network error occurs somewhere, this will turn True and restart automatically
 
 	if mode==1:
 		print("getting channels from Notion — All YouTube Channels ... please wait")
@@ -47,6 +49,11 @@ def app(mode=1):
 	# except requests.exceptions.HTTPError as httpError:
 	except Exception as exc:
 		print("!!! The following error has occured :", exc, end=cst.line)
+		# make a sound to alert user
+		
+		for i in range(cst.beeps_number_crash): 
+			os.system("osascript -e 'beep'")
+			time.sleep(0.5)
 		# restart = True
 	finally:
 		var.driver.quit() ### empty process in RAM at each KeyboardInterrupt
@@ -55,6 +62,13 @@ def app(mode=1):
 	if restart: 
 		print(">>> Will now restart software...", end=cst.star)
 		app(mode)
+		return
+
+	# After everything :
+	for i in range(cst.beeps_number_finish): 
+		os.system("osascript -e 'beep'")
+		time.sleep(0.5)
+
 
 ##################################################################
 ### Different values for mode :

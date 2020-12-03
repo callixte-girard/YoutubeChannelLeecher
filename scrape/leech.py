@@ -42,6 +42,7 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
         #if len(vids_urls) > len(channel_coll.get_rows()) or "Finished" not in str(row_ch.infos_status):
         # if len(vids_urls) > len(channel_coll.get_rows()) or not row_ch.indexed:
         if not row_ch.indexed:
+
             ### 1) playlists
             if my_playlists:
                 plsts = None
@@ -57,13 +58,16 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
                         ### add playlist name to in_playlists options if it doesn't already exist
                     try: 
                         collections.addNewValueToCollectionMultiSelect(ch.notion_url, cst.notion_tag_name_playlists, plst.title) ### slugifying included for prop
-                        print("Property [ {} ] has been added to the playlists schema.".format(plst.title), end=cst.line)
+                        print("property [ {} ] has been added to the playlists schema.".format(plst.title), end=cst.line)
                     except ValueError as already_exists: print(already_exists, end=cst.line)
                     # else: print("Ignoring playlist \"{}\".".format(plst.title), end=cst.line)
+            print(cst.star.replace("\n",""))
+
             ### 2) video infos
             videoInfosInCollection(ch, vids_urls, plsts)
             #row_ch.infos_status = "Finished" 
             row_ch.indexed = True
+
         else: 
             print("all infos are already scraped and don't need any update.")
 
