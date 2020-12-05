@@ -13,10 +13,14 @@ def getCollectionFromViewUrl(cv_url):
 
 
 collections_dict = {}
+def __preloadCollectionsDict(collection):
+    print(">>> loading collection rows into dict...", end=cst.star)
+    collections_dict[collection.id] = collection.get_rows()
+
 def getCorrespondingRowFromVidUrl(collection, vid_url):
     # print(str(collection), collection.id)
     ### first fetch and store collection in memory if not existing yet
-    if not collection.id in collections_dict.keys(): collections_dict[collection.id] = collection.get_rows()
+    if not collection.id in collections_dict.keys(): __preloadCollectionsDict(collection)
     ### then get rows for inspection
     rows = collections_dict[collection.id]
     

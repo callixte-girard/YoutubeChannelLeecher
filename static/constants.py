@@ -25,6 +25,11 @@ notion_colors = [ ### you can comment the ones you don't want to be elected duri
 notion_title_error = "—— Error while trying to leech video"
 notion_title_blank = "!!! The title of this video was blank on YouTube !!!"
 
+### URLs to skip (problematic videos)
+skip_urls = [
+    ### enter partials urls
+    "/watch?v=NLhHZdre6ZA",
+]
 
 ### YouTube constants
 youtube_main_url = "https://www.youtube.com"

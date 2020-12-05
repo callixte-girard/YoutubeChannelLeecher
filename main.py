@@ -63,11 +63,11 @@ def app(mode=1):
 		print(">>> Will now restart software...", end=cst.star)
 		app(mode)
 		return
-
-	# After everything :
-	for i in range(cst.beeps_number_finish): 
-		os.system("osascript -e 'beep'")
-		time.sleep(0.5)
+	else:
+		# After everything :
+		for i in range(cst.beeps_number_finish): 
+			os.system("osascript -e 'beep'")
+			time.sleep(0.3)
 
 
 ##################################################################

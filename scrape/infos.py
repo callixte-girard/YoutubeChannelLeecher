@@ -42,9 +42,12 @@ def scrapeVideoInfosFromLink(vid_url):
     ### lil date formatting
     date_spl = published_on.split(" ")
     ### 0) special case : "x hours ago"
-    if "ago" in published_on or "il y a" in published_on:
+    if (
+        # 0.1) very close in terms of time : en, fr
+        "ago" in published_on
+        or "il y a" in published_on
+    ):
         for i in range(len(date_spl)-1):
-            # TODO: handle stuff like "Streamed live 15 hours ago"
             try:
                 time_ago = int(date_spl[i])
                 unit_ago = date_spl[i+1]
@@ -57,6 +60,12 @@ def scrapeVideoInfosFromLink(vid_url):
                 break
             except:
                 pass
+    elif (
+        # 0.2) to be released soon : en, fr
+        "premiere" in published_on.lower() 
+        or "première" in published_on.lower()
+    ):
+        pp.pprint(">>> première:", date_spl)
     else:
         ### 1) get only three last parts (for example, if there is a prefix before date)
         date_spl = date_spl[len(date_spl)-3:]
