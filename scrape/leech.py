@@ -4,7 +4,7 @@ from static import methods as mth
 from scrape import playlists
 from scrape import all_videos
 from scrape import infos
-from scrape.insert import videoInfosInCollection
+from scrape import insert
 from static import collections
 from objects.Channel import getChannelUrlPrefix
 from objects.Video import Video
@@ -14,13 +14,12 @@ from datetime import datetime
 
 
 ### must add manually a channel collection in Notion first.
-### TODO: add somewhere assignation of videos (and consequently published_videos) of channel before updating it in Notion
 def channel_or_playlist(ch, row_ch, my_playlists=False):
 
     if my_playlists:
-        print("WILL NOW LEECH Playlist [ {} ] ...".format(ch.title), end=cst.star)
+        print("WILL NOW LEECH Playlist [ {} ] — {} ...".format(ch.title, ch.yt_url), end=cst.star)
     else:
-        print("WILL NOW LEECH Channel [ {} ] ...".format(ch.title), end=cst.star)
+        print("WILL NOW LEECH Channel [ {} ] — {} ...".format(ch.title, ch.yt_url), end=cst.star)
 
 
     ## get all videos links
@@ -28,9 +27,9 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
     print("total videos published in [ {} ] : {}".format(ch.title, len(vids_urls)), end=cst.star)
 
     ### compares old videos number with new number of videos found
-    if len(vids_urls) > (row_ch.published_videos): 
-        row_ch.more_vids = True
-        row_ch.published_videos = len(vids_urls)
+    if row_ch.published_videos and row_ch.published_videos < len(vids_urls): row_ch.more_vids = True
+    ### then assign new videos number
+    row_ch.published_videos = len(vids_urls)
     ### records time of last inspection and update
     row_ch.updated_on = datetime.now()
 
@@ -64,14 +63,14 @@ def channel_or_playlist(ch, row_ch, my_playlists=False):
             print(cst.star.replace("\n",""))
 
             ### 2) video infos
-            videoInfosInCollection(ch, vids_urls, plsts)
+            insert.videoInfosInCollection(ch, vids_urls, plsts)
             #row_ch.infos_status = "Finished" 
             row_ch.indexed = True
 
         else: 
             print("all infos are already scraped and don't need any update.")
 
-        print("CONGRATS !!! YOU LEECHED THE CHANNEL [ {} ] !!!".format(ch.title), end=cst.star)
+        print("CONGRATS !!! YOU LEECHED THE CHANNEL [ {} ] :-)".format(ch.title), end=cst.star)
     else:
         print("!!! THE CHANNEL [ {} ] DOESNT HAVE AN EPISODES_URL. SKIPPING...".format(ch.title), end=cst.star)    
         

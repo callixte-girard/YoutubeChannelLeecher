@@ -14,7 +14,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
     time_counter = 0
     for vid_url in vids_urls:
         ### filter forbidden urls (videos that create unhandled bugs)
-        print(vid_url, cst.skip_urls[0])
+        # print(vid_url, cst.skip_urls[0])
         if vid_url in cst.skip_urls:
         # if False:
             print("video at [ {} ] is forbidden because it has unhandled bugs. Skipping...".format(vid_url), end=cst.line)

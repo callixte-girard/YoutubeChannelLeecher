@@ -39,7 +39,7 @@ def app(mode=1):
 		for row in rows:
 			if mode==1:
 				ch = Channel(row.title, str(row.uri), row.episodes_url, row.language)
-				if (ch.yt_url != "" and row.uri != "—" and row.published_videos < cst.videos_number_limit and row.to_index):
+				if (row.to_index and ch.yt_url != "" and row.uri != "—"):
 					leech.channel_or_playlist(ch, row)
 
 			elif mode==2:
