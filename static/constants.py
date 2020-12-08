@@ -1,6 +1,6 @@
 ### cool shortcuts for lazy dev ;)
-line = "\n—————————————————————————————————————————————————————————————————————————————————\n"
-star = "\n*********************************************************************************\n"
+line = "\n{}\n".format("—" * 80)
+star = "\n{}\n".format("*" * 80)
 
 ### Notion.so paths
 notion_token = "a6ed6fe70ca4b44c588c640618b27bac91cc7a0b94847f2d2f3cb0aac19992447a4a4b459027605b8e5dd9c325d8b9b515b6056485e11ad51a39e6e30b1d0582e62aca0b1575330e15e75d74ae95"
@@ -26,8 +26,7 @@ notion_title_error = "—— Error while trying to leech video"
 notion_title_blank = "!!! The title of this video was blank on YouTube !!!"
 
 ### URLs to skip (problematic videos)
-skip_urls = [
-    ### enter partials urls
+skip_urls = [ ### enter partials urls
     "/watch?v=NLhHZdre6ZA",
 ]
 

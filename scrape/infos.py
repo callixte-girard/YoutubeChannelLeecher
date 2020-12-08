@@ -7,6 +7,7 @@ from objects.Channel import removeChannelUrlPrefix
 from bs4 import BeautifulSoup as bs
 from datetime import datetime, timedelta
 import locale
+from static.methods import my_pp as pp
 
 
 ### channel_name must be written exactly like in its urls. Check the channel's url on the real yt if you're not sure
@@ -45,8 +46,8 @@ def scrapeVideoInfosFromLink(vid_url):
     ### 0) special case : "x hours ago"
     if (
         # 0.1) very close in terms of time : en, fr
-        "ago" in published_on
-        or "il y a" in published_on
+        "ago" in published_on.lower()
+        or "il y a" in published_on.lower()
     ):
         for i in range(len(date_spl)-1):
             try:
@@ -61,13 +62,7 @@ def scrapeVideoInfosFromLink(vid_url):
                 break
             except:
                 pass
-    elif (
-        # 0.2) to be released soon : en, fr
-        "premiere" in published_on.lower() 
-        or "première" in published_on.lower()
-    ):
-        pp(">>> première:", date_spl)
-    else:
+    else: # Includes "première"/"premiere"
         ### 1) get only three last parts (for example, if there is a prefix before date)
         date_spl = date_spl[len(date_spl)-3:]
         ### 2) horrible fix for juin = jui (normal) | juil = jul (july)
@@ -87,7 +82,7 @@ def scrapeVideoInfosFromLink(vid_url):
             else: raise ValueError(">>> bon y a un pb là...")
 
     ### truncate title to get episode title + episode number
-    # spl = separateVideoTitleAndNumber(title)
+    # spl = __separateVideoTitleAndNumber(title)
     # if spl is not None: ### splitted has occured
     #     title = spl[0]
     #     number = spl[1]
@@ -114,7 +109,7 @@ def __tryToParseDateWithLocale(date_str, index):
     else: return None
 
 
-def separateVideoTitleAndNumber(title_raw):
+def __separateVideoTitleAndNumber(title_raw):
     possible_separators = [
         " - ",
         " — ", ### special hyphen (`alt + -`)
@@ -138,5 +133,5 @@ def separateVideoTitleAndNumber(title_raw):
             except:
                 number = -1
             spl = [ reassembled_title, number ]            
-            print("spl:", spl)
+            pp("spl:", spl)
             return spl

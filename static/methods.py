@@ -1,7 +1,23 @@
 from static import constants as cst
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from os import listdir
+import os
+import time
+from pprint import pp
+
+
+def my_pp(*args, end=""):
+    for arg in args:
+        pp(arg)
+        if end != "": pp(end)
+        elif end == "*": pp(cst.star)
+        elif end == "—": pp(cst.line)
+
+
+def beep(number_beeps, delay_beep):
+    for i in range(number_beeps): 
+        os.system("osascript -e 'beep'")
+        time.sleep(delay_beep)
 
 
 def addParamsToUrl(url, params_names, params_values):
@@ -15,7 +31,6 @@ def addParamsToUrl(url, params_names, params_values):
     return url
 
 
-### to init browser with proper settings
 def initChromiumConfiguredProperly():
     ### install addons (adblock plus)
     options = Options()

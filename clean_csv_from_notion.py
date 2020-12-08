@@ -1,6 +1,6 @@
 """ 12 THIS IS A TEST """
 
-from pprint import pp
+from static.methods import my_pp as pp
 import csv
 import sys
 import os

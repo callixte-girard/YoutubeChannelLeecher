@@ -17,7 +17,7 @@ def videoInfosInCollection(ch, vids_urls, plsts):
         # print(vid_url, cst.skip_urls[0])
         if vid_url in cst.skip_urls:
         # if False:
-            print("video at [ {} ] is forbidden because it has unhandled bugs. Skipping...".format(vid_url), end=cst.line)
+            print("video at [ {} ] has been manually forbidden because it has unhandled bugs. Skipping...".format(vid_url), end=cst.line)
         else:
             vid_counter += 1
             # print("before loading")
