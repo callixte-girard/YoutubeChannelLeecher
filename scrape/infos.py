@@ -1,6 +1,7 @@
 from static import constants as cst
 from static import methods as mth
 from static import variables as var
+from pprint import pp
 from objects.Video import Video
 from objects.Channel import removeChannelUrlPrefix
 from bs4 import BeautifulSoup as bs
@@ -65,7 +66,7 @@ def scrapeVideoInfosFromLink(vid_url):
         "premiere" in published_on.lower() 
         or "première" in published_on.lower()
     ):
-        pp.pprint(">>> première:", date_spl)
+        pp(">>> première:", date_spl)
     else:
         ### 1) get only three last parts (for example, if there is a prefix before date)
         date_spl = date_spl[len(date_spl)-3:]
