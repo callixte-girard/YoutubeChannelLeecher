@@ -1,13 +1,15 @@
 from static import constants as cst
 print(">>> welcome to YoutubePlaylistLeecher.", end=cst.star)
 from static import variables as var
+from static import collections
+from static import methods as mth
 from scrape import leech
 from scrape.insert import videoInfosInCollection
-from static import collections
 import itertools
 import os
 import time
 import requests
+from static.methods import my_pp as pp
 from objects.Channel import Channel
 from objects.Playlist import Playlist
 from objects.Url import Url
@@ -49,25 +51,22 @@ def app(mode=1):
 	# except requests.exceptions.HTTPError as httpError:
 	except Exception as exc:
 		print("!!! The following error has occured :", exc, end=cst.line)
-		# make a sound to alert user
+		# mth.beep(cst.beeps_number_crash, 0.5) # alert user
 		
-		for i in range(cst.beeps_number_crash): 
-			os.system("osascript -e 'beep'")
-			time.sleep(0.5)
+		# Raise it and stop or continue and retry ?
+		raise exc
 		# restart = True
+
 	finally:
-		var.driver.quit() ### empty process in RAM at each KeyboardInterrupt
+		var.driver.quit() # always empty process in RAM whatever happens
 
 	# Check if it should restart or no (yes if there has been a network / hasardous error, no if everything was successful)
 	if restart: 
 		print(">>> Will now restart software...", end=cst.star)
 		app(mode)
 		return
-	else:
-		# After everything :
-		for i in range(cst.beeps_number_finish): 
-			os.system("osascript -e 'beep'")
-			time.sleep(0.3)
+	else: # finish stuff and beep to tell user
+		mth.beep(cst.beeps_number_finish, 0.2)
 
 
 ##################################################################
