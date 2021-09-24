@@ -34,7 +34,22 @@
 
 <br>
 
-# PROGRESS
+
+# BEFORE RUNNING
+
+## First of all, check this
+### Variables in `constants.py` are up to date
+- Your Notion token
+- Your Notion collection URLs
+
+### States of the channels you want to have their infos scraped have the proper values in
+- The column __To index__ set to True.
+- The column __Has episodes table__ set to True. If not, update the link of the subcollection containing the infos on the subpage in the column __Episodes URL__.
+
+If now it still doesn't work, cry. :D
+
+
+# PROJECT PROGRESS
 
 ## To-do
 - add multithreading support (with promises etc)

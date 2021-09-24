@@ -1,5 +1,6 @@
 from static import constants as cst
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import os
 import time
@@ -44,7 +45,10 @@ def initChromiumConfiguredProperly():
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     ### launch chromium with options
-    browser = webdriver.Chrome(options=options, executable_path=cst.path_executable)
+    # browser = webdriver.Chrome(ChromeDriverManager().install())
+    # browser = webdriver.Chrome('/Users/c/Local Code/# Selenium ChromeDriver versions/')  # Optional argument, if not specified will search path.
+    browser = webdriver.Chrome(options=options)
+    # browser = webdriver.Chrome(options=options, executable_path=cst.path_executable)
     # browser = webdriver.Chrome(executable_path=cst.path_executable)
     ### set half-part size for window
     browser.maximize_window()

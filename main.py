@@ -1,3 +1,10 @@
+import os
+
+## Making sure that the working directory is the directory of the script
+script_dir = os.path.dirname(os.path.realpath(__file__))
+os.chdir(script_dir)
+os.environ["PATH"] += os.pathsep + script_dir
+
 from static import constants as cst
 print(">>> welcome to YoutubePlaylistLeecher.", end=cst.star)
 from static import variables as var
@@ -6,7 +13,6 @@ from static import methods as mth
 from scrape import leech
 from scrape.insert import videoInfosInCollection
 import itertools
-import os
 import time
 import requests
 from static.methods import my_pp as pp
@@ -18,14 +24,10 @@ from scrape import playlists
 
 
 ##################################################################
-# Making sure that the working directory is the directory of the script
-script_dir = os.path.dirname(os.path.realpath(__file__))
-os.chdir(script_dir)
-os.environ["PATH"] += os.pathsep + script_dir
 
 
 def app(mode=1):
-	restart = False # By default. If a network error occurs somewhere, this will turn True and restart automatically
+	restart = False ## By default. If a network error occurs somewhere, this will turn True and restart automatically
 
 	if mode==1:
 		print("getting channels from Notion — All YouTube Channels ... please wait")
@@ -53,14 +55,14 @@ def app(mode=1):
 		print("!!! The following error has occured :", exc, end=cst.line)
 		# mth.beep(cst.beeps_number_crash, 0.5) # alert user
 		
-		# Raise it and stop or continue and retry ?
+		## Raise it and stop or continue and retry ?
 		raise exc
 		# restart = True
 
 	finally:
-		var.driver.quit() # always empty process in RAM whatever happens
+		var.driver.quit() ## Always empty process in RAM whatever happens
 
-	# Check if it should restart or no (yes if there has been a network / hasardous error, no if everything was successful)
+	## Check if it should restart or no (yes if there has been a network / hasardous error, no if everything was successful)
 	if restart: 
 		print(">>> Will now restart software...", end=cst.star)
 		app(mode)
